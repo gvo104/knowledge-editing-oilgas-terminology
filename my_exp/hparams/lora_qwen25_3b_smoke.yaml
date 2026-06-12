@@ -1,0 +1,20 @@
+alg_name: "LoRA"
+model_name: "./my_exp/models/Qwen2.5-3B"
+device: 0
+
+lora_type: "lora"
+rank: 8
+lora_alpha: 16
+layers: []
+kl_factor: 0
+norm_constraint: false
+lora_dropout: 0.05
+target_modules: ["q_proj", "v_proj"]
+
+num_steps: 15
+batch_size: 1
+max_length: 64
+lr: 5e-3
+weight_decay: 0.0
+
+model_parallel: false

@@ -8,7 +8,7 @@ examples/wiki_recent
 logs
 results
 outputs
-scripts
+my_exp/stats/
 vectors
 **/.cache/
 *.log
@@ -20,8 +20,11 @@ delta.txt
 **/*_test_reps*
 *test_reps
 *test_reps.*
+easyeditor/models/melo/peft_egg/scripts
+demo/EasySteer_demo/demo_vector/
+demo/
 # models
 generation
 judge
 my_exp/models
-my_exp/
+my_exp/data_processing/PubTator
