@@ -28,3 +28,5 @@ generation
 judge
 my_exp/models
 my_exp/data_processing/PubTator
+current_result.md
+finish_result.md
