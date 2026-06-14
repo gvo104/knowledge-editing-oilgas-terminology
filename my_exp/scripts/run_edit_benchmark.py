@@ -1,4 +1,5 @@
 import argparse
+import contextlib
 import csv
 import gc
 import json
@@ -10,9 +11,13 @@ import traceback
 from statistics import mean
 from typing import Any, Dict, List, Optional
 
+from tqdm import tqdm
+
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
+
+from my_exp.scripts.generate_benchmark_report import build_report, choose_case_ids, load_case_results
 
 METHOD_HPARAM_PATHS = {
     "LoRA": os.path.join(ROOT, "my_exp", "hparams", "lora_qwen25_3b_smoke.yaml"),
@@ -148,6 +153,12 @@ def metric_mean(value: Any) -> Optional[float]:
     if isinstance(value, (int, float)):
         return float(value)
     return None
+
+
+def fmt(value: Optional[float], digits: int = 3) -> str:
+    if value is None:
+        return "-"
+    return f"{value:.{digits}f}"
 
 
 def extract_nested_accuracy(metrics: Dict[str, Any], phase: str, bucket: str) -> Optional[float]:
@@ -300,6 +311,24 @@ def run_case(editor: Any, case: Dict[str, Any], gpu_stats_fn: Any, reset_gpu_pea
     }
 
 
+def format_eta(seconds: Optional[float]) -> str:
+    if seconds is None:
+        return "n/a"
+    total = max(0, int(round(seconds)))
+    minutes, sec = divmod(total, 60)
+    hours, minutes = divmod(minutes, 60)
+    if hours > 0:
+        return f"{hours:d}h {minutes:02d}m {sec:02d}s"
+    return f"{minutes:02d}m {sec:02d}s"
+
+
+@contextlib.contextmanager
+def suppress_stdio():
+    with open(os.devnull, "w", encoding="utf-8") as devnull:
+        with contextlib.redirect_stdout(devnull), contextlib.redirect_stderr(devnull):
+            yield
+
+
 def run_method_worker(method_name: str, dataset_path: str, max_cases: Optional[int], output_dir: str) -> Dict[str, Any]:
     torch, reset_gpu_peak_fn, gpu_stats_fn = worker_gpu_helpers()
     BaseEditor, hparams_cls, hparams_path = worker_method_components(method_name)
@@ -307,42 +336,126 @@ def run_method_worker(method_name: str, dataset_path: str, max_cases: Optional[i
     cases = load_cases(dataset_path, max_cases=max_cases)
     method_dir = os.path.join(output_dir, method_name.lower())
     os.makedirs(method_dir, exist_ok=True)
+    stdout_path = os.path.join(method_dir, "stdout.log")
+    stderr_path = os.path.join(method_dir, "stderr.log")
 
-    hparams = hparams_cls.from_hparams(hparams_path)
-    editor = BaseEditor.from_hparams(hparams)
+    with open(stdout_path, "w", encoding="utf-8") as method_log, open(stderr_path, "w", encoding="utf-8") as error_log:
+        hparams = hparams_cls.from_hparams(hparams_path)
+        with suppress_stdio():
+            editor = BaseEditor.from_hparams(hparams)
 
-    case_results: List[Dict[str, Any]] = []
-    for case in cases:
-        print(f"[{method_name}] case_id={case['case_id']} prompt={case['prompt']}", flush=True)
-        try:
-            result = run_case(editor, case, gpu_stats_fn, reset_gpu_peak_fn)
-        except Exception as exc:
-            result = {
-                "status": "error",
-                "case_id": case["case_id"],
-                "time_sec": None,
-                "gpu": gpu_stats_fn(),
-                "input_case": case,
-                "normalized_metrics": {},
-                "error": {
-                    "type": type(exc).__name__,
-                    "message": str(exc),
-                    "traceback": traceback.format_exc(),
-                },
-            }
-        case_results.append(result)
-        write_json(os.path.join(method_dir, f"case_{int(case['case_id']):04d}.json"), result)
+        case_results: List[Dict[str, Any]] = []
+        total_cases = len(cases)
+        method_start_time = time.time()
+        method_log.write(f"[start] method={method_name} total_cases={total_cases}\n")
+        method_log.flush()
 
-    summary = summarize_method(method_name, case_results)
-    write_json(os.path.join(method_dir, "summary.json"), summary)
+        print(
+            "__PROGRESS__ " + json.dumps({"event": "method_start", "method": method_name, "total_cases": total_cases}),
+            flush=True,
+        )
 
-    del editor
-    gc.collect()
-    if torch.cuda.is_available():
-        torch.cuda.empty_cache()
-        torch.cuda.synchronize()
+        for idx, case in enumerate(cases, start=1):
+            try:
+                with suppress_stdio():
+                    result = run_case(editor, case, gpu_stats_fn, reset_gpu_peak_fn)
+            except Exception as exc:
+                result = {
+                    "status": "error",
+                    "case_id": case["case_id"],
+                    "time_sec": None,
+                    "gpu": gpu_stats_fn(),
+                    "input_case": case,
+                    "normalized_metrics": {},
+                    "error": {
+                        "type": type(exc).__name__,
+                        "message": str(exc),
+                        "traceback": traceback.format_exc(),
+                    },
+                }
+                error_log.write(result["error"]["traceback"] + "\n")
+                error_log.flush()
 
-    return summary
+            case_results.append(result)
+            write_json(os.path.join(method_dir, f"case_{int(case['case_id']):04d}.json"), result)
+
+            elapsed_total = time.time() - method_start_time
+            avg_per_case = elapsed_total / idx if idx else None
+            eta_seconds = avg_per_case * (total_cases - idx) if avg_per_case is not None else None
+            nm = result.get("normalized_metrics", {})
+            method_log.write(
+                "[case] {idx}/{total} case_id={case_id} status={status} time={time_sec} "
+                "rewrite={rewrite} rephrase={rephrase} portability={portability} locality={locality} "
+                "elapsed={elapsed} eta={eta}\n".format(
+                    idx=idx,
+                    total=total_cases,
+                    case_id=case["case_id"],
+                    status=result["status"],
+                    time_sec=format_eta(result.get("time_sec")),
+                    rewrite=fmt(nm.get("post_rewrite_acc")),
+                    rephrase=fmt(nm.get("post_rephrase_acc")),
+                    portability=fmt(nm.get("post_portability_acc")),
+                    locality=fmt(nm.get("post_locality_acc")),
+                    elapsed=format_eta(elapsed_total),
+                    eta=format_eta(eta_seconds),
+                )
+            )
+            method_log.flush()
+
+            print(
+                "__PROGRESS__ "
+                + json.dumps(
+                    {
+                        "event": "case_done",
+                        "method": method_name,
+                        "current": idx,
+                        "total": total_cases,
+                        "case_id": case["case_id"],
+                        "status": result["status"],
+                        "time_sec": result.get("time_sec"),
+                    }
+                ),
+                flush=True,
+            )
+
+        summary = summarize_method(method_name, case_results)
+        write_json(os.path.join(method_dir, "summary.json"), summary)
+        method_log.write(
+            "[done] method={method} success={success}/{total} mean_time={mean_time} "
+            "rewrite={rewrite} rephrase={rephrase} portability={portability} locality={locality}\n".format(
+                method=method_name,
+                success=summary["successful_cases"],
+                total=summary["total_cases"],
+                mean_time=format_eta(summary.get("mean_time_sec")),
+                rewrite=fmt(summary.get("mean_post_rewrite_acc")),
+                rephrase=fmt(summary.get("mean_post_rephrase_acc")),
+                portability=fmt(summary.get("mean_post_portability_acc")),
+                locality=fmt(summary.get("mean_post_locality_acc")),
+            )
+        )
+        method_log.flush()
+
+        del editor
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+            torch.cuda.synchronize()
+
+        print(
+            "__PROGRESS__ "
+            + json.dumps(
+                {
+                    "event": "method_done",
+                    "method": method_name,
+                    "successful_cases": summary["successful_cases"],
+                    "total_cases": summary["total_cases"],
+                    "mean_time_sec": summary.get("mean_time_sec"),
+                }
+            ),
+            flush=True,
+        )
+
+        return summary
 
 
 def run_method_subprocess(method_name: str, args: argparse.Namespace) -> Dict[str, Any]:
@@ -364,14 +477,39 @@ def run_method_subprocess(method_name: str, args: argparse.Namespace) -> Dict[st
     if args.max_cases is not None:
         command.extend(["--max-cases", str(args.max_cases)])
 
-    with open(stdout_path, "w", encoding="utf-8") as stdout_f, open(stderr_path, "w", encoding="utf-8") as stderr_f:
-        completed = subprocess.run(
+    progress_events: List[Dict[str, Any]] = []
+    with open(stderr_path, "a", encoding="utf-8") as stderr_f:
+        process = subprocess.Popen(
             command,
             cwd=ROOT,
-            stdout=stdout_f,
-            stderr=stderr_f,
-            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1,
         )
+
+        assert process.stdout is not None
+        for line in process.stdout:
+            if line.startswith("__PROGRESS__ "):
+                try:
+                    progress_events.append(json.loads(line[len("__PROGRESS__ ") :]))
+                except json.JSONDecodeError:
+                    stderr_f.write(line)
+                    stderr_f.flush()
+            else:
+                stderr_f.write(line)
+                stderr_f.flush()
+
+        completed_returncode = process.wait()
+
+        if completed_returncode != 0:
+            stderr_f.write(f"Subprocess exited with return code {completed_returncode}\n")
+
+        class Completed:
+            def __init__(self, returncode: int):
+                self.returncode = returncode
+
+        completed = Completed(completed_returncode)
 
     summary_path = os.path.join(method_dir, "summary.json")
     if os.path.exists(summary_path):
@@ -404,6 +542,7 @@ def run_method_subprocess(method_name: str, args: argparse.Namespace) -> Dict[st
     summary["returncode"] = completed.returncode
     summary["stdout_log"] = stdout_path
     summary["stderr_log"] = stderr_path
+    summary["_progress_events"] = progress_events
     return summary
 
 
@@ -418,10 +557,19 @@ def main() -> None:
     dataset_copy_path = ensure_dataset_copy(args.dataset, args.output_dir, args.max_cases)
 
     summary_rows = []
+    total_cases = len(load_cases(args.dataset, max_cases=args.max_cases))
+    total_units = total_cases * len(args.methods)
+    progress = tqdm(total=total_units, desc="Benchmark", unit="run")
     for method_name in args.methods:
-        print(f"[parent] starting isolated run for {method_name}", flush=True)
         method_summary = run_method_subprocess(method_name, args)
+        for event in method_summary.pop("_progress_events", []):
+            if event.get("event") == "case_done":
+                progress.update(1)
+                progress.set_postfix_str(
+                    f"{event.get('method')} case_id={event.get('case_id')} status={event.get('status')}"
+                )
         summary_rows.append(method_summary)
+    progress.close()
 
     overall_summary = {
         "dataset": os.path.abspath(args.dataset),
@@ -435,6 +583,19 @@ def main() -> None:
 
     write_json(os.path.join(args.output_dir, "summary.json"), overall_summary)
     write_summary_csv(os.path.join(args.output_dir, "summary.csv"), summary_rows)
+
+    try:
+        cases = load_case_results(args.output_dir, args.methods)
+        case_ids = choose_case_ids(cases, args.methods, explicit_case_ids=None, num_cases=5)
+        report = build_report(args.output_dir, overall_summary, case_ids, cases)
+        report_path = os.path.join(args.output_dir, "report.md")
+        with open(report_path, "w", encoding="utf-8") as f:
+            f.write(report)
+    except Exception as exc:
+        error_path = os.path.join(args.output_dir, "report_error.log")
+        with open(error_path, "w", encoding="utf-8") as f:
+            f.write(traceback.format_exc())
+        print(f"[warn] report generation failed: {exc}", flush=True)
 
     print(json.dumps(overall_summary, ensure_ascii=False, indent=2))
 
