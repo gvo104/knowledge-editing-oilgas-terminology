@@ -33,6 +33,36 @@ GENERIC_MARKERS = (
     "это понятие",
 )
 
+DEFINITION_STYLE_MARKERS = (
+    " это ",
+    " является ",
+    " называют ",
+)
+
+DEFINITION_OBJECT_MARKERS = (
+    "процесс",
+    "показатель",
+    "способность",
+    "смесь",
+    "материал",
+    "термин",
+    "понятие",
+)
+
+PROMPT_LEAKAGE_PREFIXES = (
+    "ответ",
+    "ответ пол",
+    "ответ полный",
+    "ответ кратко",
+)
+
+DEFINITION_QUESTION_PREFIXES = (
+    "что такое",
+    "кто такой",
+    "что представляет собой",
+    "что называется",
+)
+
 STOPWORDS = {
     "и",
     "или",
@@ -93,6 +123,10 @@ def validate_target_old_answer(answer: str, max_words: int = 24, max_chars: int 
         reasons.append("no_alnum")
     if "?" in raw:
         reasons.append("contains_question")
+    if any(normalized.startswith(prefix) for prefix in PROMPT_LEAKAGE_PREFIXES):
+        reasons.append("prompt_leakage")
+    if normalized in {"ответ", "ответ пол", "ответ полный", "ответ кратко"}:
+        reasons.append("fragment")
     if any(marker in normalized for marker in REFUSAL_MARKERS):
         reasons.append("refusal")
     if any(marker in normalized for marker in UNCERTAIN_MARKERS):
@@ -109,6 +143,49 @@ def validate_target_old_answer(answer: str, max_words: int = 24, max_chars: int 
 
 def answer_signature(normalized_answer: str) -> set[str]:
     return {token for token in normalized_answer.split() if token not in STOPWORDS and len(token) > 1}
+
+
+def is_definition_question(question: str) -> bool:
+    normalized_question = normalize_text(question)
+    return any(normalized_question.startswith(prefix) for prefix in DEFINITION_QUESTION_PREFIXES)
+
+
+def answer_quality_score(case: Dict[str, Any], question: str, normalized_answer: str) -> int:
+    score = 0
+    answer_tokens = normalized_answer.split()
+    subject = str(case.get("original_subject") or case.get("subject") or "")
+    normalized_subject = normalize_text(subject)
+    question_signature = answer_signature(normalize_text(question))
+    answer_sig = answer_signature(normalized_answer)
+
+    if len(answer_tokens) <= 6:
+        score += 3
+    elif len(answer_tokens) <= 12:
+        score += 2
+    elif len(answer_tokens) <= 18:
+        score += 1
+
+    if normalized_subject and normalized_answer.startswith(normalized_subject):
+        score -= 2
+    if normalized_subject and normalized_subject in normalized_answer and not is_definition_question(question):
+        score -= 1
+    if any(normalized_answer.startswith(prefix) for prefix in PROMPT_LEAKAGE_PREFIXES):
+        score -= 4
+
+    if not is_definition_question(question):
+        if any(marker in f" {normalized_answer} " for marker in DEFINITION_STYLE_MARKERS):
+            score -= 1
+        if any(marker in normalized_answer for marker in DEFINITION_OBJECT_MARKERS):
+            score -= 1
+
+    if question_signature and answer_sig:
+        overlap = len(question_signature & answer_sig) / max(1, min(len(question_signature), len(answer_sig)))
+        if overlap >= 0.75:
+            score -= 2
+        elif overlap >= 0.5:
+            score -= 1
+
+    return score
 
 
 def answers_are_stable(valid_results: List[Dict[str, Any]]) -> bool:
@@ -128,7 +205,7 @@ def answers_are_stable(valid_results: List[Dict[str, Any]]) -> bool:
 
 
 def invalid_results_are_generation_noise(probe_results: List[Dict[str, Any]]) -> bool:
-    noise_reasons = {"empty", "contains_question", "no_alnum"}
+    noise_reasons = {"empty", "contains_question", "no_alnum", "prompt_leakage", "fragment"}
     invalid_results = [result for result in probe_results if not result["is_valid"]]
     if not invalid_results:
         return True
@@ -174,6 +251,7 @@ def resolve_target_old(
     for question in target_old_probe_questions(case, max(1, max_probes)):
         raw_answer = ask_model(model, tokenizer, question, device=device, max_new_tokens=max_new_tokens)
         validation = validate_target_old_answer(raw_answer)
+        quality_score = answer_quality_score(case, question, validation["normalized_answer"])
         probe_results.append(
             {
                 "question": question,
@@ -181,14 +259,23 @@ def resolve_target_old(
                 "is_valid": validation["is_valid"],
                 "normalized_answer": validation["normalized_answer"],
                 "validation_reasons": validation["reasons"],
+                "quality_score": quality_score,
             }
         )
 
     valid_results = [result for result in probe_results if result["is_valid"]]
+    valid_results = sorted(
+        valid_results,
+        key=lambda result: (
+            result.get("quality_score", -999),
+            -len(result.get("normalized_answer", "").split()),
+        ),
+        reverse=True,
+    )
     all_probes_valid = len(valid_results) == len(probe_results)
     stable = answers_are_stable(valid_results)
     invalids_are_noise = invalid_results_are_generation_noise(probe_results)
-    if valid_results and stable and (all_probes_valid or invalids_are_noise):
+    if valid_results and valid_results[0].get("quality_score", -999) >= 2 and stable and (all_probes_valid or invalids_are_noise):
         first_valid = valid_results[0]
         return {
             "resolved_target_old": first_valid["raw_model_answer"],
@@ -198,6 +285,7 @@ def resolve_target_old(
             "raw_model_answer": probe_results[0]["raw_model_answer"] if probe_results else None,
             "probe_results": probe_results,
             "accepted_with_partial_probes": not all_probes_valid,
+            "accepted_quality_score": first_valid.get("quality_score"),
         }
 
     return {
@@ -212,5 +300,6 @@ def resolve_target_old(
             "all_probes_valid": all_probes_valid,
             "invalids_are_generation_noise": invalids_are_noise,
             "stable": stable,
+            "best_quality_score": valid_results[0].get("quality_score") if valid_results else None,
         },
     }
