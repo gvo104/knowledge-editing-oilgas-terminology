@@ -16,6 +16,7 @@ delta.txt
 .history
 **/.hydra/
 **/.gradio/
+**/.pytest_cache/
 **/temp/
 **/*_test_reps*
 *test_reps
@@ -27,6 +28,11 @@ demo/
 generation
 judge
 my_exp/models
+my_exp_2/outputs/
+my_exp_2/outputs/**
 my_exp/data_processing/PubTator
+.DS_Store
+.env
+.venv
 current_result.md
 finish_result.md
