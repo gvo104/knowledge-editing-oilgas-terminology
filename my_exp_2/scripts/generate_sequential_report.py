@@ -125,6 +125,15 @@ def seq_metric(payload: Dict[str, Any], key: str) -> Optional[float]:
     return (payload.get("sequential_metrics") or {}).get(key)
 
 
+def shorten_text(value: Any, limit: int = 140) -> str:
+    text = str(value or "").replace("\n", " ").strip()
+    if not text:
+        return "-"
+    if len(text) <= limit:
+        return text
+    return text[: limit - 3].rstrip() + "..."
+
+
 def build_steps_section(sequential_edit_dir: str, methods: List[str], num_steps: int) -> str:
     by_step = load_step_results(sequential_edit_dir)
     lines = ["## Selected Steps", ""]
@@ -135,7 +144,6 @@ def build_steps_section(sequential_edit_dir: str, methods: List[str], num_steps:
         method_map = by_step[(step_index, fact_id)]
         reference = next(iter(method_map.values()))
         edit_request = reference.get("input_edit_request") or {}
-        target_old = reference.get("target_old_resolution") or {}
         lines.extend(
             [
                 f"### Step {step_index}: {fact_id}",
@@ -143,22 +151,24 @@ def build_steps_section(sequential_edit_dir: str, methods: List[str], num_steps:
                 f"- Prompt: `{edit_request.get('prompt')}`",
                 f"- Subject: `{edit_request.get('subject')}`",
                 f"- Target new: `{edit_request.get('target_new')}`",
-                f"- Target old source: `{target_old.get('target_old_source')}`",
-                f"- Raw model answer: `{target_old.get('raw_model_answer')}`",
                 "",
-                "| Method | Status | Current rel | Current gen | Retention | Global locality | Domain score | Sequential quality | Time (s) |",
-                "|---|---|---:|---:|---:|---:|---:|---:|---:|",
+                "| Method | Status | Target old source | Accepted quality | Raw model answer | Current rel | Current gen | Retention | Global locality | Domain score | Sequential quality | Time (s) |",
+                "|---|---|---|---:|---|---:|---:|---:|---:|---:|---:|---:|",
             ]
         )
         for method in methods:
             payload = method_map.get(method) or method_map.get(method.lower())
             if not payload:
-                lines.append(f"| {method} | missing | - | - | - | - | - | - | - |")
+                lines.append(f"| {method} | missing | - | - | - | - | - | - | - | - | - | - |")
                 continue
+            target_old = payload.get("target_old_resolution") or {}
             lines.append(
-                "| {method} | {status} | {rel} | {gen} | {ret} | {glob} | {domain} | {quality} | {time} |".format(
+                "| {method} | {status} | {source} | {accepted_quality} | {raw_answer} | {rel} | {gen} | {ret} | {glob} | {domain} | {quality} | {time} |".format(
                     method=method,
                     status=payload.get("status"),
+                    source=target_old.get("target_old_source") or "-",
+                    accepted_quality=fmt(target_old.get("accepted_quality_score")),
+                    raw_answer=shorten_text(target_old.get("raw_model_answer")),
                     rel=fmt(seq_metric(payload, "current_reliability")),
                     gen=fmt(seq_metric(payload, "current_generalization")),
                     ret=fmt(seq_metric(payload, "retention")),

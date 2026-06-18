@@ -121,6 +121,8 @@ def validate_target_old_answer(answer: str, max_words: int = 24, max_chars: int 
         reasons.append("too_many_words")
     if not any(char.isalnum() for char in normalized):
         reasons.append("no_alnum")
+    if looks_repetitive_answer(raw, normalized):
+        reasons.append("repetitive_gibberish")
     if "?" in raw:
         reasons.append("contains_question")
     if any(normalized.startswith(prefix) for prefix in PROMPT_LEAKAGE_PREFIXES):
@@ -145,6 +147,52 @@ def answer_signature(normalized_answer: str) -> set[str]:
     return {token for token in normalized_answer.split() if token not in STOPWORDS and len(token) > 1}
 
 
+def token_diversity_score(normalized_answer: str) -> float:
+    tokens = normalized_answer.split()
+    if not tokens:
+        return 0.0
+    return len(set(tokens)) / len(tokens)
+
+
+def repeated_pattern(token: str, max_pattern_len: int = 3, min_repeats: int = 3) -> bool:
+    if len(token) < max_pattern_len * min_repeats:
+        return False
+    for pattern_len in range(1, min(max_pattern_len, len(token) // min_repeats) + 1):
+        if len(token) % pattern_len != 0:
+            continue
+        pattern = token[:pattern_len]
+        if pattern * (len(token) // pattern_len) == token:
+            return True
+    return False
+
+
+def looks_repetitive_answer(raw: str, normalized_answer: str) -> bool:
+    tokens = normalized_answer.split()
+    if not tokens:
+        return False
+
+    if len(tokens) == 1:
+        token = tokens[0]
+        if len(token) >= 8 and repeated_pattern(token):
+            return True
+        if len(token) >= 8 and len(set(token)) <= 3:
+            return True
+        return False
+
+    diversity = token_diversity_score(normalized_answer)
+    if len(tokens) >= 4 and diversity < 0.34:
+        return True
+
+    counts: Dict[str, int] = {}
+    for token in tokens:
+        counts[token] = counts.get(token, 0) + 1
+    most_common = max(counts.values())
+    if len(tokens) >= 4 and most_common / len(tokens) >= 0.8:
+        return True
+
+    return False
+
+
 def is_definition_question(question: str) -> bool:
     normalized_question = normalize_text(question)
     return any(normalized_question.startswith(prefix) for prefix in DEFINITION_QUESTION_PREFIXES)
@@ -157,6 +205,7 @@ def answer_quality_score(case: Dict[str, Any], question: str, normalized_answer:
     normalized_subject = normalize_text(subject)
     question_signature = answer_signature(normalize_text(question))
     answer_sig = answer_signature(normalized_answer)
+    diversity = token_diversity_score(normalized_answer)
 
     if len(answer_tokens) <= 6:
         score += 3
@@ -171,12 +220,19 @@ def answer_quality_score(case: Dict[str, Any], question: str, normalized_answer:
         score -= 1
     if any(normalized_answer.startswith(prefix) for prefix in PROMPT_LEAKAGE_PREFIXES):
         score -= 4
+    if looks_repetitive_answer(normalized_answer, normalized_answer):
+        score -= 6
 
     if not is_definition_question(question):
         if any(marker in f" {normalized_answer} " for marker in DEFINITION_STYLE_MARKERS):
             score -= 1
         if any(marker in normalized_answer for marker in DEFINITION_OBJECT_MARKERS):
             score -= 1
+
+    if diversity < 0.34:
+        score -= 3
+    elif diversity < 0.5:
+        score -= 1
 
     if question_signature and answer_sig:
         overlap = len(question_signature & answer_sig) / max(1, min(len(question_signature), len(answer_sig)))
