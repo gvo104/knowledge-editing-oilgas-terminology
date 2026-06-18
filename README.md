@@ -31,6 +31,72 @@ Additional project docs:
 - Reproducibility notes: [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
 - Upstream framework reference: [docs/EASYEDIT_UPSTREAM_REFERENCE.md](docs/EASYEDIT_UPSTREAM_REFERENCE.md)
 
+## Research Overview
+
+This repository studies `knowledge editing` as a practical alternative to full domain retraining.
+
+The concrete scenario is the following:
+
+- a base LLM does not reliably know a set of oil and gas facts;
+- we want to add or correct those facts;
+- we want to avoid full retraining;
+- we still need the model to preserve nearby knowledge, general knowledge, and earlier edits.
+
+The current experimental domain is oil and gas terminology. The working benchmark consists of 20 domain facts represented as structured triplets and connected evaluation questions.
+
+Example fact pattern:
+
+```text
+Кероген -> является источником -> углеводородов
+Гидроразрыв пласта -> создаёт -> трещины в продуктивном пласте
+Проппант -> удерживает -> трещины гидроразрыва открытыми
+```
+
+## Methods and Experimental Modes
+
+The current implemented comparison includes three methods:
+
+- `LoRA`
+- `ROME`
+- `MEMIT`
+
+These methods are evaluated in two regimes.
+
+### Single-edit
+
+One fact is edited, evaluated, then discarded before the next fact.
+
+This regime answers:
+
+- can the method inject one domain fact successfully;
+- does the edit generalize to paraphrases;
+- how much nearby and global knowledge is disturbed by one isolated edit.
+
+### Sequential-edit
+
+Facts are edited one after another on the same evolving model.
+
+This regime answers:
+
+- does the method preserve earlier inserted facts;
+- how quickly does quality degrade as edits accumulate;
+- does repeated editing damage broader domain knowledge or general knowledge.
+
+## What Is Reused from EasyEdit
+
+This repository is not a reimplementation of editing algorithms from scratch.
+
+It reuses `EasyEdit` as the editing backend and adds a project-specific research layer on top:
+
+- oil and gas data format;
+- baseline evaluation;
+- single-edit orchestration;
+- sequential-edit orchestration;
+- `target_old` runtime resolution;
+- aggregation and markdown reporting.
+
+This is why the repository keeps the framework code together with the experiment code: the goal is reproducibility of the actual research workflow, not only publication of standalone scripts.
+
 ## Repository Layout
 
 ```text
@@ -54,6 +120,36 @@ This repository is built on top of the `EasyEdit` framework:
 - Additional upstream steering README: [README_2.md](README_2.md)
 
 In this repository, `EasyEdit` is used as the framework base, while `my_exp_2/` contains the research-specific data layout, experiment orchestration, and reporting logic.
+
+## Metrics
+
+The experiments do not evaluate only one prompt per edit. They use several metric groups.
+
+### Single-edit metrics
+
+- `reliability`: direct success on the edited fact.
+- `generalization`: success on paraphrased formulations of the same fact.
+- `reverse`: consistency on reverse questions.
+- `neighbor`: behavior on nearby domain questions.
+- `fact_locality`: preservation of closely related fact-level knowledge.
+- `global_locality`: preservation on general non-domain questions.
+- `domain_score`: preservation on the broader oil and gas evaluation set.
+- `edit_quality`: compact combined quality indicator.
+
+### Sequential-edit metrics
+
+- `current_reliability`: direct success on the current sequential step.
+- `current_generalization`: paraphrase success on the current step.
+- `retention`: preservation of previously inserted facts.
+- `global_locality`: preservation on general questions after accumulated edits.
+- `domain_score`: preservation on broader domain questions after accumulated edits.
+- `sequential_quality`: compact combined sequential indicator.
+
+These metrics are interpreted together. For example:
+
+- high edit success with low locality means the method writes the fact but damages surrounding knowledge;
+- high current-step quality with low retention means the method can add new facts but forgets previous ones;
+- high global locality means the edit remains relatively contained outside the target domain behavior.
 
 ## Requirements
 
