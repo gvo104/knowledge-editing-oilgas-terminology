@@ -127,6 +127,18 @@ def answers_are_stable(valid_results: List[Dict[str, Any]]) -> bool:
     return True
 
 
+def invalid_results_are_generation_noise(probe_results: List[Dict[str, Any]]) -> bool:
+    noise_reasons = {"empty", "contains_question", "no_alnum"}
+    invalid_results = [result for result in probe_results if not result["is_valid"]]
+    if not invalid_results:
+        return True
+    for result in invalid_results:
+        reasons = set(result.get("validation_reasons", []))
+        if not reasons or not reasons.issubset(noise_reasons):
+            return False
+    return True
+
+
 def target_old_probe_questions(case: Dict[str, Any], max_probes: int) -> List[str]:
     questions = [case["prompt"]]
     for bucket in ("direct_questions", "paraphrase_questions"):
@@ -175,7 +187,8 @@ def resolve_target_old(
     valid_results = [result for result in probe_results if result["is_valid"]]
     all_probes_valid = len(valid_results) == len(probe_results)
     stable = answers_are_stable(valid_results)
-    if valid_results and all_probes_valid and stable:
+    invalids_are_noise = invalid_results_are_generation_noise(probe_results)
+    if valid_results and stable and (all_probes_valid or invalids_are_noise):
         first_valid = valid_results[0]
         return {
             "resolved_target_old": first_valid["raw_model_answer"],
@@ -184,6 +197,7 @@ def resolve_target_old(
             "target_old_is_stable": True,
             "raw_model_answer": probe_results[0]["raw_model_answer"] if probe_results else None,
             "probe_results": probe_results,
+            "accepted_with_partial_probes": not all_probes_valid,
         }
 
     return {
@@ -196,6 +210,7 @@ def resolve_target_old(
         "fallback_reasons": {
             "has_valid_answer": bool(valid_results),
             "all_probes_valid": all_probes_valid,
+            "invalids_are_generation_noise": invalids_are_noise,
             "stable": stable,
         },
     }
