@@ -2,6 +2,10 @@ PYTHON := conda run -n EasyEdit python
 
 DATA_DIR := my_exp_2/data
 MODEL := my_exp/models/Qwen2.5-3B
+METHODS := LoRA ROME MEMIT WISE
+RUN_NAME := oilgas_qwen25_3b_full_20facts
+MAX_FACTS := 20
+FULL_PIPELINE_ROOT := my_exp_2/outputs/full_pipeline
 
 BASELINE_SMOKE_DIR := my_exp_2/outputs/baseline_smoke
 BASELINE_FULL_DIR := my_exp_2/outputs/baseline_full_20facts
@@ -18,7 +22,9 @@ SEQUENTIAL_METRICS_FULL_DIR := my_exp_2/outputs/metrics/sequential/full_20steps_
 	baseline-smoke baseline-full \
 	single-smoke-wise single-full single-metrics single-report single-full-pipeline \
 	sequential-smoke-wise sequential-full sequential-metrics sequential-report sequential-full-pipeline \
-	full-pipeline
+	full-pipeline \
+	big-preflight big-smoke-single big-smoke-sequential big-smoke-pipeline \
+	big-run big-run-resume big-reports
 
 help:
 	@printf "%s\n" \
@@ -35,7 +41,21 @@ help:
 	"  sequential-metrics          Aggregate full sequential results" \
 	"  sequential-report           Generate markdown report and graphs for full sequential results" \
 	"  sequential-full-pipeline    baseline-full + sequential-full + sequential-metrics + sequential-report" \
-	"  full-pipeline               baseline-full + single-full-pipeline + sequential-full-pipeline"
+	"  full-pipeline               baseline-full + single-full-pipeline + sequential-full-pipeline" \
+	"" \
+	"Big unified pipeline targets:" \
+	"  big-preflight               Run only preflight for the unified full pipeline" \
+	"  big-smoke-single            Run unified pipeline through single stage on 1 WISE fact" \
+	"  big-smoke-sequential        Run unified pipeline through sequential stage on 2 ROME/WISE facts" \
+	"  big-smoke-pipeline          Run small end-to-end unified pipeline on 2 ROME/WISE facts" \
+	"  big-run                     Run full unified single + sequential experiment" \
+	"  big-run-resume              Resume full unified experiment" \
+	"  big-reports                 Rebuild reports for an existing full unified run" \
+	"" \
+	"Override examples:" \
+	"  make big-run RUN_NAME=my_run MODEL=/path/to/model" \
+	"  make big-run-resume RUN_NAME=my_run" \
+	"  make big-smoke-pipeline METHODS='ROME WISE' MAX_FACTS=2"
 
 baseline-smoke:
 	$(PYTHON) my_exp_2/scripts/run_baseline_eval.py \
@@ -125,3 +145,133 @@ sequential-report:
 sequential-full-pipeline: baseline-full sequential-full sequential-metrics sequential-report
 
 full-pipeline: baseline-full single-full single-metrics single-report sequential-full sequential-metrics sequential-report
+
+# Цели для тяжелого единого pipeline.
+# Рекомендуемый порядок на новой машине:
+#   1. make big-preflight
+#   2. make big-smoke-pipeline
+#   3. make big-run
+# Если полный запуск прервался, использовать:
+#   make big-run-resume
+# Если raw-результаты уже есть и нужно только пересобрать метрики/отчеты:
+#   make big-reports
+#
+# Часто используемые переопределения параметров:
+#   make big-run RUN_NAME=my_run MODEL=/path/to/model
+#   make big-run METHODS='ROME WISE' MAX_FACTS=2
+
+# Проверяет CUDA, загрузку модели, данные и smoke-прогоны перед тяжелым запуском.
+big-preflight:
+	$(PYTHON) my_exp_2/scripts/run_full_experiment_pipeline.py \
+		--run-name $(RUN_NAME) \
+		--methods $(METHODS) \
+		--data-dir $(DATA_DIR) \
+		--model $(MODEL) \
+		--output-root $(FULL_PIPELINE_ROOT) \
+		--max-facts $(MAX_FACTS) \
+		--eval-scope full \
+		--single-eval-mode full \
+		--sequential-eval-mode full \
+		--generation-max-new-tokens 32 \
+		--target-old-max-new-tokens 32 \
+		--stop-after preflight
+
+# Маленькая проверка WISE в single-edit: hparams и интеграция с editor.
+big-smoke-single:
+	$(PYTHON) my_exp_2/scripts/run_full_experiment_pipeline.py \
+		--run-name smoke_single_wise \
+		--methods WISE \
+		--data-dir $(DATA_DIR) \
+		--model $(MODEL) \
+		--output-root $(FULL_PIPELINE_ROOT) \
+		--max-facts 1 \
+		--eval-scope fact-only \
+		--single-eval-mode sample \
+		--sequential-eval-mode sample \
+		--generation-max-new-tokens 32 \
+		--target-old-max-new-tokens 32 \
+		--stop-after single \
+		--overwrite
+
+# Маленькая sequential-проверка ROME + WISE на двух фактах без полной стоимости eval.
+big-smoke-sequential:
+	$(PYTHON) my_exp_2/scripts/run_full_experiment_pipeline.py \
+		--run-name smoke_seq_rome_wise \
+		--methods ROME WISE \
+		--data-dir $(DATA_DIR) \
+		--model $(MODEL) \
+		--output-root $(FULL_PIPELINE_ROOT) \
+		--max-facts 2 \
+		--eval-scope fact-only \
+		--single-eval-mode sample \
+		--sequential-eval-mode sample \
+		--generation-max-new-tokens 32 \
+		--target-old-max-new-tokens 32 \
+		--stop-after sequential \
+		--overwrite
+
+# Маленькая end-to-end проверка: preflight, baseline, single, sequential и отчеты на двух фактах.
+big-smoke-pipeline:
+	$(PYTHON) my_exp_2/scripts/run_full_experiment_pipeline.py \
+		--run-name smoke_full_pipeline_2facts \
+		--methods ROME WISE \
+		--data-dir $(DATA_DIR) \
+		--model $(MODEL) \
+		--output-root $(FULL_PIPELINE_ROOT) \
+		--max-facts 2 \
+		--eval-scope full \
+		--single-eval-mode full \
+		--sequential-eval-mode full \
+		--generation-max-new-tokens 32 \
+		--target-old-max-new-tokens 32 \
+		--overwrite
+
+# Основной тяжелый серверный запуск: single-edit + sequential-edit + аналитика + отчеты.
+big-run:
+	$(PYTHON) my_exp_2/scripts/run_full_experiment_pipeline.py \
+		--run-name $(RUN_NAME) \
+		--methods $(METHODS) \
+		--data-dir $(DATA_DIR) \
+		--model $(MODEL) \
+		--output-root $(FULL_PIPELINE_ROOT) \
+		--max-facts $(MAX_FACTS) \
+		--eval-scope full \
+		--single-eval-mode full \
+		--sequential-eval-mode full \
+		--generation-max-new-tokens 32 \
+		--target-old-max-new-tokens 32
+
+# Продолжает тяжелый запуск после обрыва, используя маркеры завершенных стадий.
+big-run-resume:
+	$(PYTHON) my_exp_2/scripts/run_full_experiment_pipeline.py \
+		--run-name $(RUN_NAME) \
+		--methods $(METHODS) \
+		--data-dir $(DATA_DIR) \
+		--model $(MODEL) \
+		--output-root $(FULL_PIPELINE_ROOT) \
+		--max-facts $(MAX_FACTS) \
+		--eval-scope full \
+		--single-eval-mode full \
+		--sequential-eval-mode full \
+		--generation-max-new-tokens 32 \
+		--target-old-max-new-tokens 32 \
+		--resume
+
+# Пересобирает метрики и markdown-отчеты из уже существующих raw single/sequential результатов.
+big-reports:
+	$(PYTHON) my_exp_2/scripts/run_full_experiment_pipeline.py \
+		--run-name $(RUN_NAME) \
+		--methods $(METHODS) \
+		--data-dir $(DATA_DIR) \
+		--model $(MODEL) \
+		--output-root $(FULL_PIPELINE_ROOT) \
+		--max-facts $(MAX_FACTS) \
+		--eval-scope full \
+		--single-eval-mode full \
+		--sequential-eval-mode full \
+		--generation-max-new-tokens 32 \
+		--target-old-max-new-tokens 32 \
+		--skip-preflight \
+		--skip-baseline \
+		--resume \
+		--stop-after reports

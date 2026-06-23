@@ -47,6 +47,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--max-steps", type=int, default=None)
     parser.add_argument("--eval-scope", choices=["fact-only", "fact-plus-general", "full"], default="fact-plus-general")
+    parser.add_argument(
+        "--eval-mode",
+        choices=["sample", "full"],
+        default="sample",
+        help="sample uses configured limits; full evaluates all seen facts and all selected global/domain questions.",
+    )
     parser.add_argument("--retention-fact-limit", type=int, default=5)
     parser.add_argument("--general-limit", type=int, default=5)
     parser.add_argument("--domain-limit", type=int, default=5)
@@ -67,6 +73,15 @@ def parse_args() -> argparse.Namespace:
 def sequential_fact_ids(data: Dict[str, Any], max_steps: Optional[int]) -> List[str]:
     fact_ids = [str(fact_id) for fact_id in data["sequential_order"]]
     return fact_ids[:max_steps] if max_steps is not None else fact_ids
+
+
+def apply_eval_mode_defaults(args: argparse.Namespace) -> None:
+    if args.eval_mode != "full":
+        return
+    args.retention_fact_limit = None
+    args.general_limit = None
+    args.domain_limit = None
+    args.save_generation_details = True
 
 
 def device_string(device: Any) -> str:
@@ -570,10 +585,12 @@ def run_method_subprocess(method_name: str, args: argparse.Namespace) -> Dict[st
         args.output_dir,
         "--eval-scope",
         args.eval_scope,
+        "--eval-mode",
+        args.eval_mode,
         "--general-limit",
-        str(args.general_limit),
+        str(args.general_limit if args.general_limit is not None else -1),
         "--domain-limit",
-        str(args.domain_limit),
+        str(args.domain_limit if args.domain_limit is not None else -1),
         "--target-old-probes",
         str(args.target_old_probes),
         "--target-old-max-new-tokens",
@@ -633,6 +650,11 @@ def run_method_subprocess(method_name: str, args: argparse.Namespace) -> Dict[st
 
 def main() -> None:
     args = parse_args()
+    if args.general_limit == -1:
+        args.general_limit = None
+    if args.domain_limit == -1:
+        args.domain_limit = None
+    apply_eval_mode_defaults(args)
     os.makedirs(args.output_dir, exist_ok=True)
     ensure_cuda_or_raise(args.allow_cpu, "parent")
 
@@ -662,6 +684,7 @@ def main() -> None:
         "steps_requested": args.max_steps,
         "steps_loaded": len(fact_ids),
         "eval_scope": args.eval_scope,
+        "eval_mode": args.eval_mode,
         "target_old_resolution": {
             "enabled": not args.disable_target_old_resolution,
             "methods_requiring_target_old": sorted(METHODS_REQUIRING_TARGET_OLD),
@@ -673,6 +696,7 @@ def main() -> None:
             "retention_fact_limit": args.retention_fact_limit,
             "general_limit": args.general_limit,
             "domain_limit": args.domain_limit,
+            "full_generation_details": args.save_generation_details,
         },
         "runtime_options": {
             "allow_cpu": args.allow_cpu,

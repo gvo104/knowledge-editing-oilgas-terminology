@@ -4,7 +4,8 @@ import glob
 import json
 import os
 import sys
-from typing import Any, Dict, List
+from collections import defaultdict
+from typing import Any, Dict, List, Optional
 
 SCRIPT_DIR = os.path.dirname(__file__)
 if SCRIPT_DIR not in sys.path:
@@ -79,6 +80,90 @@ def collect_failed_cases(single_edit_dir: str) -> List[Dict[str, Any]]:
     return failed
 
 
+def metric(payload: Dict[str, Any], key: str) -> Optional[float]:
+    return (payload.get("metrics") or {}).get(key)
+
+
+def target_old_mode(payload: Dict[str, Any]) -> str:
+    source = (payload.get("target_old_resolution") or {}).get("target_old_source")
+    if source == "model_current_answer":
+        return "replacement"
+    if source == "fallback_to_target_new":
+        return "insertion"
+    return str(source or "unknown")
+
+
+def collect_case_rows(single_edit_dir: str) -> List[Dict[str, Any]]:
+    rows = []
+    for path in sorted(glob.glob(os.path.join(single_edit_dir, "*", "case_*.json"))):
+        payload = load_json(path)
+        fact = payload.get("fact") or {}
+        target_old = payload.get("target_old_resolution") or {}
+        gpu = payload.get("gpu") or {}
+        rows.append(
+            {
+                "method": payload.get("method"),
+                "fact_id": payload.get("fact_id"),
+                "status": payload.get("status"),
+                "subject": fact.get("subject"),
+                "relation": fact.get("relation"),
+                "object": fact.get("object"),
+                "level": fact.get("level"),
+                "subject_len": len(str(fact.get("subject") or "")),
+                "target_len": len(str(fact.get("object") or "")),
+                "target_old_source": target_old.get("target_old_source"),
+                "edit_mode": target_old_mode(payload),
+                "target_old_is_valid": target_old.get("target_old_is_valid"),
+                "target_old_is_stable": target_old.get("target_old_is_stable"),
+                "accepted_quality_score": target_old.get("accepted_quality_score"),
+                "reliability": metric(payload, "reliability"),
+                "generalization": metric(payload, "generalization"),
+                "reverse": metric(payload, "reverse"),
+                "neighbor": metric(payload, "neighbor"),
+                "fact_locality": metric(payload, "fact_locality"),
+                "global_locality": metric(payload, "global_locality"),
+                "domain_score": metric(payload, "domain_score"),
+                "edit_quality": metric(payload, "edit_quality"),
+                "time_sec": payload.get("time_sec"),
+                "peak_gpu_gb": gpu.get("peak_allocated_gb"),
+                "error_type": (payload.get("error") or {}).get("type"),
+                "path": path,
+            }
+        )
+    return rows
+
+
+def mean(values: List[Any]) -> Optional[float]:
+    clean = [float(value) for value in values if isinstance(value, (int, float))]
+    if not clean:
+        return None
+    return round(sum(clean) / len(clean), 6)
+
+
+def grouped_analysis(rows: List[Dict[str, Any]], group_keys: List[str]) -> List[Dict[str, Any]]:
+    grouped: Dict[tuple, List[Dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        grouped[tuple(row.get(key) for key in group_keys)].append(row)
+    result = []
+    for key, records in sorted(grouped.items()):
+        item = {group_key: value for group_key, value in zip(group_keys, key)}
+        item.update(
+            {
+                "count": len(records),
+                "success_count": sum(1 for record in records if record.get("status") == "success"),
+                "mean_reliability": mean([record.get("reliability") for record in records]),
+                "mean_generalization": mean([record.get("generalization") for record in records]),
+                "mean_fact_locality": mean([record.get("fact_locality") for record in records]),
+                "mean_global_locality": mean([record.get("global_locality") for record in records]),
+                "mean_domain_score": mean([record.get("domain_score") for record in records]),
+                "mean_edit_quality": mean([record.get("edit_quality") for record in records]),
+                "mean_time_sec": mean([record.get("time_sec") for record in records]),
+            }
+        )
+        result.append(item)
+    return result
+
+
 def main() -> None:
     args = parse_args()
     os.makedirs(args.output_dir, exist_ok=True)
@@ -99,6 +184,13 @@ def main() -> None:
         rows = flatten_single_edit_summary(single_summary)
         write_csv(os.path.join(args.output_dir, "single_edit_summary.csv"), rows)
         write_json(os.path.join(args.output_dir, "single_edit_summary.json"), rows)
+        case_rows = collect_case_rows(args.single_edit_dir)
+        write_csv(os.path.join(args.output_dir, "case_metrics.csv"), case_rows)
+        write_json(os.path.join(args.output_dir, "case_metrics.json"), case_rows)
+        write_csv(os.path.join(args.output_dir, "fact_metrics.csv"), case_rows)
+        write_json(os.path.join(args.output_dir, "fact_metrics.json"), case_rows)
+        write_csv(os.path.join(args.output_dir, "subject_relation_analysis.csv"), grouped_analysis(case_rows, ["method", "level", "relation"]))
+        write_csv(os.path.join(args.output_dir, "replacement_vs_insertion.csv"), grouped_analysis(case_rows, ["method", "edit_mode"]))
 
     print(json.dumps({"output_dir": args.output_dir, "has_baseline": baseline_summary is not None, "has_single_edit": single_summary is not None}, ensure_ascii=False, indent=2))
 

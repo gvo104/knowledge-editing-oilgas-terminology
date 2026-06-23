@@ -4,6 +4,7 @@ import glob
 import json
 import os
 import sys
+from collections import defaultdict
 from typing import Any, Dict, List, Optional
 
 SCRIPT_DIR = os.path.dirname(__file__)
@@ -76,15 +77,23 @@ def collect_step_rows(sequential_edit_dir: str) -> List[Dict[str, Any]]:
         payload = load_json(path)
         target_old = payload.get("target_old_resolution") or {}
         global_eval = payload.get("global_eval") or {}
+        fact = payload.get("fact") or {}
         rows.append(
             {
                 "method": payload.get("method"),
                 "fact_id": payload.get("fact_id"),
                 "step_index": payload.get("step_index"),
                 "status": payload.get("status"),
+                "subject": fact.get("subject"),
+                "relation": fact.get("relation"),
+                "object": fact.get("object"),
+                "level": fact.get("level"),
+                "subject_len": len(str(fact.get("subject") or "")),
+                "target_len": len(str(fact.get("object") or "")),
                 "time_sec": payload.get("time_sec"),
                 "peak_gpu_gb": ((payload.get("gpu") or {}).get("peak_allocated_gb")),
                 "target_old_source": target_old.get("target_old_source"),
+                "edit_mode": target_old_mode(payload),
                 "target_old_is_valid": target_old.get("target_old_is_valid"),
                 "target_old_is_stable": target_old.get("target_old_is_stable"),
                 "accepted_quality_score": target_old.get("accepted_quality_score"),
@@ -105,6 +114,68 @@ def collect_step_rows(sequential_edit_dir: str) -> List[Dict[str, Any]]:
                 "path": path,
             }
         )
+    return rows
+
+
+def target_old_mode(payload: Dict[str, Any]) -> str:
+    source = (payload.get("target_old_resolution") or {}).get("target_old_source")
+    if source == "model_current_answer":
+        return "replacement"
+    if source == "fallback_to_target_new":
+        return "insertion"
+    return str(source or "unknown")
+
+
+def mean(values: List[Any]) -> Optional[float]:
+    clean = [float(value) for value in values if isinstance(value, (int, float))]
+    if not clean:
+        return None
+    return round(sum(clean) / len(clean), 6)
+
+
+def grouped_analysis(rows: List[Dict[str, Any]], group_keys: List[str]) -> List[Dict[str, Any]]:
+    grouped: Dict[tuple, List[Dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        grouped[tuple(row.get(key) for key in group_keys)].append(row)
+    result = []
+    for key, records in sorted(grouped.items()):
+        item = {group_key: value for group_key, value in zip(group_keys, key)}
+        item.update(
+            {
+                "count": len(records),
+                "success_count": sum(1 for record in records if record.get("status") == "success"),
+                "mean_current_reliability": mean([record.get("current_reliability") for record in records]),
+                "mean_current_generalization": mean([record.get("current_generalization") for record in records]),
+                "mean_retention": mean([record.get("retention") for record in records]),
+                "mean_global_locality_generation": mean([record.get("global_locality_generation") for record in records]),
+                "mean_domain_score_generation": mean([record.get("domain_score_generation") for record in records]),
+                "mean_sequential_quality": mean([record.get("sequential_quality") for record in records]),
+                "mean_time_sec": mean([record.get("time_sec") for record in records]),
+            }
+        )
+        result.append(item)
+    return result
+
+
+def collect_retention_rows(sequential_edit_dir: str) -> List[Dict[str, Any]]:
+    rows = []
+    for path in sorted(glob.glob(os.path.join(sequential_edit_dir, "*", "step_*.json"))):
+        payload = load_json(path)
+        retention_eval = payload.get("retention_eval") or {}
+        for fact_row in retention_eval.get("per_fact", []):
+            rows.append(
+                {
+                    "method": payload.get("method"),
+                    "step_index": payload.get("step_index"),
+                    "current_fact_id": payload.get("fact_id"),
+                    "retained_fact_id": fact_row.get("fact_id"),
+                    "direct_accuracy": fact_row.get("direct_accuracy"),
+                    "paraphrase_accuracy": fact_row.get("paraphrase_accuracy"),
+                    "direct_total": fact_row.get("direct_total"),
+                    "paraphrase_total": fact_row.get("paraphrase_total"),
+                    "path": path,
+                }
+            )
     return rows
 
 
@@ -149,6 +220,13 @@ def main() -> None:
         step_rows = collect_step_rows(args.sequential_edit_dir)
         write_csv(os.path.join(args.output_dir, "step_metrics.csv"), step_rows)
         write_json(os.path.join(args.output_dir, "step_metrics.json"), step_rows)
+        write_csv(os.path.join(args.output_dir, "fact_metrics.csv"), step_rows)
+        write_json(os.path.join(args.output_dir, "fact_metrics.json"), step_rows)
+        retention_rows = collect_retention_rows(args.sequential_edit_dir)
+        write_csv(os.path.join(args.output_dir, "retention_matrix.csv"), retention_rows)
+        write_json(os.path.join(args.output_dir, "retention_matrix.json"), retention_rows)
+        write_csv(os.path.join(args.output_dir, "subject_relation_analysis.csv"), grouped_analysis(step_rows, ["method", "level", "relation"]))
+        write_csv(os.path.join(args.output_dir, "replacement_vs_insertion.csv"), grouped_analysis(step_rows, ["method", "edit_mode"]))
 
     print(
         json.dumps(
