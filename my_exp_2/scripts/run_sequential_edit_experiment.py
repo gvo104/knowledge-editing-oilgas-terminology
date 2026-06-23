@@ -30,6 +30,7 @@ from run_single_edit_experiment import (
     gpu_helpers,
     json_safe,
     method_components,
+    prepare_wise_runtime,
     suppress_stdio,
 )
 from target_old_resolver import resolve_target_old
@@ -457,6 +458,9 @@ def run_method_worker(method_name: str, args: argparse.Namespace) -> Dict[str, A
     with open(stdout_path, "w", encoding="utf-8") as method_log, open(stderr_path, "w", encoding="utf-8") as error_log:
         hparams = hparams_cls.from_hparams(hparams_path)
         hparams.model_name = args.model
+        if method_name == "WISE":
+            hparams.sequential_edit = True
+            prepare_wise_runtime()
         if args.allow_cpu and not torch.cuda.is_available() and isinstance(getattr(hparams, "device", None), int):
             hparams.device = "cpu"
         with suppress_stdio():
@@ -679,7 +683,7 @@ def main() -> None:
         "limitations": [
             "Sequential evaluation uses generation-based retention/domain/general checks.",
             "Current edit quality still comes from EasyEdit internal metrics for the current fact.",
-            "This MVP covers sequential LoRA/ROME/MEMIT only.",
+            "This MVP covers sequential LoRA/ROME/MEMIT/WISE only.",
         ],
     }
     write_json(os.path.join(args.output_dir, "summary.json"), overall)

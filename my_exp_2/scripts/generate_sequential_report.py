@@ -375,7 +375,7 @@ def main() -> None:
     limitations = (sequential_summary or {}).get("limitations") or [
         "Sequential evaluation uses generation-based retention/domain/general checks.",
         "Current edit quality still comes from EasyEdit internal metrics for the current fact.",
-        "This MVP covers sequential LoRA/ROME/MEMIT only.",
+        "This MVP covers sequential LoRA/ROME/MEMIT/WISE only.",
     ]
     step_rows = collect_step_rows(args.sequential_edit_dir)
     output_dir = os.path.dirname(args.output)

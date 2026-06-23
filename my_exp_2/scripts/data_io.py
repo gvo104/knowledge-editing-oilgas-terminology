@@ -217,6 +217,8 @@ def build_easyedit_kwargs(
         "ground_truth": case["ground_truth"],
         "target_new": case["target_new"],
         "subject": case["subject"],
+        # WISE expects loc_prompt in the prepared request and uses it as the in-scope phrase.
+        "loc_prompts": case["subject"],
         "keep_original_weight": True,
         "verbose": False,
     }

@@ -193,7 +193,7 @@ def main() -> None:
         "",
         "- This MVP covers single-edit experiments only.",
         "- Post-edit scoring is based on EasyEdit internal metrics.",
-        "- SFT, LocFT-BF and sequential-edit are planned as follow-up stages.",
+        "- SFT and LocFT-BF are planned as follow-up stages.",
         "",
     ]
 

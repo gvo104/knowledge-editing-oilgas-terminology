@@ -29,6 +29,7 @@ METHOD_HPARAM_PATHS = {
     "LoRA": os.path.join(ROOT, "my_exp", "hparams", "lora_qwen25_3b_smoke.yaml"),
     "MEMIT": os.path.join(ROOT, "my_exp", "hparams", "memit_qwen25_3b_smoke.yaml"),
     "ROME": os.path.join(ROOT, "my_exp", "hparams", "rome_qwen25_3b_smoke.yaml"),
+    "WISE": os.path.join(ROOT, "my_exp", "hparams", "wise_qwen25_3b_smoke.yaml"),
 }
 
 METHODS_REQUIRING_TARGET_OLD = {"LoRA", "ROME", "MEMIT"}
@@ -110,10 +111,17 @@ def gpu_helpers():
 
 
 def method_components(method_name: str):
-    from easyeditor import BaseEditor, LoRAHyperParams, MEMITHyperParams, ROMEHyperParams
+    from easyeditor import BaseEditor, LoRAHyperParams, MEMITHyperParams, ROMEHyperParams, WISEHyperParams
 
-    classes = {"LoRA": LoRAHyperParams, "MEMIT": MEMITHyperParams, "ROME": ROMEHyperParams}
+    classes = {"LoRA": LoRAHyperParams, "MEMIT": MEMITHyperParams, "ROME": ROMEHyperParams, "WISE": WISEHyperParams}
     return BaseEditor, classes[method_name], METHOD_HPARAM_PATHS[method_name]
+
+
+def prepare_wise_runtime() -> None:
+    # Avoid extra prompt-template generation inside WISE and keep memory use predictable.
+    from easyeditor.models.wise import utils as wise_utils
+
+    wise_utils.CONTEXT_TEMPLATES_CACHE = ["{}"]
 
 
 def fact_ids_for_run(data: Dict[str, Any], max_facts: Optional[int]) -> List[str]:
@@ -259,6 +267,9 @@ def run_method_worker(method_name: str, args: argparse.Namespace) -> Dict[str, A
     with open(stdout_path, "w", encoding="utf-8") as method_log, open(stderr_path, "w", encoding="utf-8") as error_log:
         hparams = hparams_cls.from_hparams(hparams_path)
         hparams.model_name = args.model
+        if method_name == "WISE":
+            hparams.sequential_edit = False
+            prepare_wise_runtime()
         with suppress_stdio():
             editor = BaseEditor.from_hparams(hparams)
 
@@ -305,6 +316,10 @@ def run_method_worker(method_name: str, args: argparse.Namespace) -> Dict[str, A
 
             results.append(result)
             write_json(os.path.join(method_dir, f"case_{fact_id}.json"), result)
+            gc.collect()
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+                torch.cuda.synchronize()
 
             elapsed_total = time.time() - method_started
             avg = elapsed_total / idx
@@ -465,7 +480,7 @@ def main() -> None:
         "limitations": [
             "MVP single-edit only.",
             "Post-edit scoring is based on EasyEdit internal metrics.",
-            "SFT, LocFT-BF and sequential-edit are not included in this first run.",
+            "SFT and LocFT-BF are not included in this first run.",
         ],
     }
     write_json(os.path.join(args.output_dir, "summary.json"), overall)

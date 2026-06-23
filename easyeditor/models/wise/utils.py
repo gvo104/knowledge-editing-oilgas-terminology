@@ -75,6 +75,7 @@ def get_logits(x):
 def tokenize(batch, tokenizer, device, context_templates=None, hparams=None):
     # Initialize lists to store the processed data from each batch entry
     len_temp = len(context_templates)
+    max_length = getattr(hparams, "max_length", None)
     prompts = [item['prompt'] for item in batch]
     labels = [item['target_new'] for item in batch]
     loc_prompts = [item['loc_prompt'] for item in batch]
@@ -87,14 +88,14 @@ def tokenize(batch, tokenizer, device, context_templates=None, hparams=None):
                         for templ in context_templates for p, l in zip(prompts, labels)]
         prompt_ids = tokenizer([tokenizer.apply_chat_template([{"role":"user", "content":templ.format(p)}],
                                     add_generation_prompt=True,
-                                    tokenize=False) for templ in context_templates for p in prompts], return_tensors="pt", padding=True, truncation=True)["input_ids"]
+                                    tokenize=False) for templ in context_templates for p in prompts], return_tensors="pt", padding=True, truncation=True, max_length=max_length)["input_ids"]
     else:
         full_prompt = [f"{templ.format(p + ' ' + l)}" for templ in context_templates for p, l in zip(prompts, labels)]
-        prompt_ids = tokenizer([f"{templ.format(p)}" for templ in context_templates for p in prompts], return_tensors="pt", padding=True, truncation=True)["input_ids"]
+        prompt_ids = tokenizer([f"{templ.format(p)}" for templ in context_templates for p in prompts], return_tensors="pt", padding=True, truncation=True, max_length=max_length)["input_ids"]
     full_prompt += loc_prompts  # add for subject activation
 
     num_prompt_toks = [len(i) for i in prompt_ids]
-    tokens = tokenizer(full_prompt, return_tensors="pt", padding=True, truncation=True)
+    tokens = tokenizer(full_prompt, return_tensors="pt", padding=True, truncation=True, max_length=max_length)
     tokens["labels"] = tokens["input_ids"].clone()
 
     # Mask the tokens based on hparams.objective_optimization
@@ -464,4 +465,3 @@ def get_context_templates(model, tok, length_params, device):
         # print(f"Cached context templates {CONTEXT_TEMPLATES_CACHE}")
 
     return CONTEXT_TEMPLATES_CACHE
-
