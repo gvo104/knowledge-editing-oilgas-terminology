@@ -4,7 +4,7 @@ import glob
 import json
 import os
 import sys
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 SCRIPT_DIR = os.path.dirname(__file__)
 if SCRIPT_DIR not in sys.path:
@@ -66,6 +66,48 @@ def flatten_sequential_summary(summary: Dict[str, Any]) -> List[Dict[str, Any]]:
     return rows
 
 
+def step_metric(payload: Dict[str, Any], key: str) -> Optional[float]:
+    return (payload.get("sequential_metrics") or {}).get(key)
+
+
+def collect_step_rows(sequential_edit_dir: str) -> List[Dict[str, Any]]:
+    rows: List[Dict[str, Any]] = []
+    for path in sorted(glob.glob(os.path.join(sequential_edit_dir, "*", "step_*.json"))):
+        payload = load_json(path)
+        target_old = payload.get("target_old_resolution") or {}
+        global_eval = payload.get("global_eval") or {}
+        rows.append(
+            {
+                "method": payload.get("method"),
+                "fact_id": payload.get("fact_id"),
+                "step_index": payload.get("step_index"),
+                "status": payload.get("status"),
+                "time_sec": payload.get("time_sec"),
+                "peak_gpu_gb": ((payload.get("gpu") or {}).get("peak_allocated_gb")),
+                "target_old_source": target_old.get("target_old_source"),
+                "target_old_is_valid": target_old.get("target_old_is_valid"),
+                "target_old_is_stable": target_old.get("target_old_is_stable"),
+                "accepted_quality_score": target_old.get("accepted_quality_score"),
+                "current_reliability": step_metric(payload, "current_reliability"),
+                "current_generalization": step_metric(payload, "current_generalization"),
+                "current_reverse": step_metric(payload, "current_reverse"),
+                "current_neighbor": step_metric(payload, "current_neighbor"),
+                "current_fact_locality": step_metric(payload, "current_fact_locality"),
+                "retention": step_metric(payload, "retention"),
+                "retained_generalization": step_metric(payload, "retained_generalization"),
+                "global_locality_generation": step_metric(payload, "global_locality_generation"),
+                "domain_score_generation": step_metric(payload, "domain_score_generation"),
+                "sequential_quality": step_metric(payload, "sequential_quality"),
+                "general_questions_total": ((global_eval.get("general_questions") or {}).get("total")),
+                "general_questions_accuracy": ((global_eval.get("general_questions") or {}).get("accuracy")),
+                "domain_questions_total": ((global_eval.get("domain_questions") or {}).get("total")),
+                "domain_questions_accuracy": ((global_eval.get("domain_questions") or {}).get("accuracy")),
+                "path": path,
+            }
+        )
+    return rows
+
+
 def collect_failed_steps(sequential_edit_dir: str) -> List[Dict[str, Any]]:
     failed = []
     for path in sorted(glob.glob(os.path.join(sequential_edit_dir, "*", "step_*.json"))):
@@ -104,6 +146,9 @@ def main() -> None:
         rows = flatten_sequential_summary(sequential_summary)
         write_csv(os.path.join(args.output_dir, "sequential_summary.csv"), rows)
         write_json(os.path.join(args.output_dir, "sequential_summary.json"), rows)
+        step_rows = collect_step_rows(args.sequential_edit_dir)
+        write_csv(os.path.join(args.output_dir, "step_metrics.csv"), step_rows)
+        write_json(os.path.join(args.output_dir, "step_metrics.json"), step_rows)
 
     print(
         json.dumps(
