@@ -7,6 +7,13 @@ RUN_NAME := oilgas_qwen25_3b_full_20facts
 MAX_FACTS := 20
 FULL_PIPELINE_ROOT := my_exp_2/outputs/full_pipeline
 
+DOCKER_IMAGE := galkin-easyedit:dgx
+DOCKER_CONTAINER := galkin-easyedit
+# GPU 7 is reserved for another group on DGX. Do not use DGX_GPU=7.
+DGX_GPU := 6
+DOCKER_SHM_SIZE := 32g
+DGX_METHODS := LoRA ROME MEMIT WISE
+
 BASELINE_SMOKE_DIR := my_exp_2/outputs/baseline_smoke
 BASELINE_FULL_DIR := my_exp_2/outputs/baseline_full_20facts
 
@@ -24,7 +31,9 @@ SEQUENTIAL_METRICS_FULL_DIR := my_exp_2/outputs/metrics/sequential/full_20steps_
 	sequential-smoke-wise sequential-full sequential-metrics sequential-report sequential-full-pipeline \
 	full-pipeline \
 	big-preflight big-smoke-single big-smoke-sequential big-smoke-pipeline \
-	big-run big-run-resume big-reports
+	big-run big-run-resume big-reports \
+	docker-build-dgx docker-run-dgx docker-shell-dgx docker-stop-dgx \
+	download-model dgx-preflight dgx-smoke dgx-run
 
 help:
 	@printf "%s\n" \
@@ -47,15 +56,59 @@ help:
 	"  big-preflight               Run only preflight for the unified full pipeline" \
 	"  big-smoke-single            Run unified pipeline through single stage on 1 WISE fact" \
 	"  big-smoke-sequential        Run unified pipeline through sequential stage on 2 ROME/WISE facts" \
-	"  big-smoke-pipeline          Run small end-to-end unified pipeline on 2 ROME/WISE facts" \
+	"  big-smoke-pipeline          Run small end-to-end unified pipeline with selected METHODS/MAX_FACTS" \
 	"  big-run                     Run full unified single + sequential experiment" \
 	"  big-run-resume              Resume full unified experiment" \
 	"  big-reports                 Rebuild reports for an existing full unified run" \
 	"" \
+	"DGX Docker targets:" \
+	"  docker-build-dgx            Build Docker image from Dockerfile.dgx" \
+	"  docker-run-dgx              Start detached DGX container on selected GPU" \
+	"                              DGX_GPU=7 is forbidden: reserved for another group" \
+	"  docker-shell-dgx            Open bash inside the DGX container" \
+	"  docker-stop-dgx             Stop the DGX container" \
+	"  download-model              Download Qwen/Qwen2.5-3B into my_exp/models/Qwen2.5-3B" \
+	"  dgx-preflight               Run big-preflight with all DGX methods" \
+	"  dgx-smoke                   Run big-smoke-pipeline with all DGX methods on 2 facts" \
+	"  dgx-run                     Run full DGX pipeline with all DGX methods" \
+	"" \
 	"Override examples:" \
 	"  make big-run RUN_NAME=my_run MODEL=/path/to/model" \
 	"  make big-run-resume RUN_NAME=my_run" \
-	"  make big-smoke-pipeline METHODS='ROME WISE' MAX_FACTS=2"
+	"  make big-smoke-pipeline METHODS='ROME WISE' MAX_FACTS=2" \
+	"  make docker-run-dgx DGX_GPU=6 DOCKER_CONTAINER=galkin-easyedit"
+
+docker-build-dgx:
+	docker build -f Dockerfile.dgx -t $(DOCKER_IMAGE) .
+
+docker-run-dgx:
+	docker run -dit \
+		--name $(DOCKER_CONTAINER) \
+		--gpus '"device=$(DGX_GPU)"' \
+		--ipc=host \
+		--shm-size=$(DOCKER_SHM_SIZE) \
+		-v "$(CURDIR)":/workspace/EasyEdit \
+		-w /workspace/EasyEdit \
+		$(DOCKER_IMAGE)
+
+docker-shell-dgx:
+	docker exec -it $(DOCKER_CONTAINER) bash
+
+docker-stop-dgx:
+	docker stop $(DOCKER_CONTAINER)
+
+download-model:
+	mkdir -p my_exp/models
+	conda run -n EasyEdit hf download Qwen/Qwen2.5-3B --local-dir $(MODEL)
+
+dgx-preflight:
+	$(MAKE) big-preflight METHODS="$(DGX_METHODS)" MODEL=$(MODEL) MAX_FACTS=$(MAX_FACTS) RUN_NAME=$(RUN_NAME)
+
+dgx-smoke:
+	$(MAKE) big-smoke-pipeline METHODS="$(DGX_METHODS)" MODEL=$(MODEL) MAX_FACTS=2
+
+dgx-run:
+	$(MAKE) big-run METHODS="$(DGX_METHODS)" MODEL=$(MODEL) MAX_FACTS=$(MAX_FACTS) RUN_NAME=$(RUN_NAME)
 
 baseline-smoke:
 	$(PYTHON) my_exp_2/scripts/run_baseline_eval.py \
@@ -210,15 +263,15 @@ big-smoke-sequential:
 		--stop-after sequential \
 		--overwrite
 
-# Маленькая end-to-end проверка: preflight, baseline, single, sequential и отчеты на двух фактах.
+# Маленькая end-to-end проверка: preflight, baseline, single, sequential и отчеты.
 big-smoke-pipeline:
 	$(PYTHON) my_exp_2/scripts/run_full_experiment_pipeline.py \
 		--run-name smoke_full_pipeline_2facts \
-		--methods ROME WISE \
+		--methods $(METHODS) \
 		--data-dir $(DATA_DIR) \
 		--model $(MODEL) \
 		--output-root $(FULL_PIPELINE_ROOT) \
-		--max-facts 2 \
+		--max-facts $(MAX_FACTS) \
 		--eval-scope full \
 		--single-eval-mode full \
 		--sequential-eval-mode full \

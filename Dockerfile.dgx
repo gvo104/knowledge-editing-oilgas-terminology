@@ -1,0 +1,45 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV CONDA_DIR=/opt/conda
+ENV PATH="${CONDA_DIR}/bin:${PATH}"
+
+WORKDIR /workspace/EasyEdit
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    bzip2 \
+    ca-certificates \
+    cmake \
+    curl \
+    g++ \
+    git \
+    less \
+    libglib2.0-0 \
+    libgl1 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    make \
+    nano \
+    procps \
+    tmux \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh \
+    && bash /tmp/miniconda.sh -b -p "${CONDA_DIR}" \
+    && rm /tmp/miniconda.sh \
+    && conda clean -afy
+
+RUN conda create -n EasyEdit python=3.10 -y \
+    && conda clean -afy
+
+COPY requirements.txt /tmp/requirements.txt
+
+RUN conda run -n EasyEdit python -m pip install --upgrade pip \
+    && conda run -n EasyEdit python -m pip install --no-cache-dir -r /tmp/requirements.txt \
+    && conda clean -afy
+
+SHELL ["conda", "run", "-n", "EasyEdit", "/bin/bash", "-c"]
+
+CMD ["bash"]
