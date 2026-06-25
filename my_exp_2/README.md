@@ -32,6 +32,7 @@ The working editing methods in this layer are:
 - `LoRA`
 - `ROME`
 - `MEMIT`
+- `WISE`
 
 The current public MVP does not yet cover:
 
@@ -132,6 +133,7 @@ my_exp_2/scripts/
 ├── run_baseline_eval.py
 ├── run_single_edit_experiment.py
 ├── run_sequential_edit_experiment.py
+├── run_full_experiment_pipeline.py
 ├── compute_metrics.py
 ├── compute_sequential_metrics.py
 ├── generate_report.py
@@ -147,6 +149,7 @@ my_exp_2/scripts/
 - `run_baseline_eval.py`: evaluates the untouched model.
 - `run_single_edit_experiment.py`: isolated single-edit benchmark.
 - `run_sequential_edit_experiment.py`: sequential benchmark with retention/general/domain checks.
+- `run_full_experiment_pipeline.py`: unified launcher for preflight, baseline, single-edit, sequential-edit, metrics, and reports.
 - `compute_metrics.py`: aggregates single-edit outputs.
 - `compute_sequential_metrics.py`: aggregates sequential outputs.
 - `generate_report.py`: builds single-edit markdown reports.
@@ -210,6 +213,11 @@ The runners support three evaluation scopes:
 
 This is useful because `full` runs are noticeably heavier than fact-only smoke checks.
 
+For practical execution there are also two run modes:
+
+- `sample`: bounded retention/general/domain subsets for cheaper experiments;
+- `full`: full configured coverage with more detailed saved artifacts.
+
 ## Outputs
 
 Default output root:
@@ -227,7 +235,53 @@ Typical artifacts:
 - raw single-edit case JSON files;
 - raw sequential step JSON files;
 - `summary.json` and `summary.csv`;
-- generated `report.md`.
+- generated `report.md`;
+- grouped CSV/JSON analytics by method, relation, level, and edit mode;
+- unified pipeline outputs under `my_exp_2/outputs/full_pipeline/<run_name>/`.
+
+## Unified Pipeline
+
+For server-side or long GPU runs the main entry point is:
+
+```bash
+python my_exp_2/scripts/run_full_experiment_pipeline.py \
+  --run-name oilgas_qwen25_3b_full_20facts \
+  --methods LoRA ROME MEMIT WISE \
+  --data-dir my_exp_2/data \
+  --model my_exp/models/Qwen2.5-3B \
+  --max-facts 20 \
+  --eval-scope full \
+  --single-eval-mode full \
+  --sequential-eval-mode full
+```
+
+This launcher runs:
+
+1. `preflight`
+2. `baseline`
+3. `single`
+4. `sequential`
+5. `reports`
+
+Supported operational flags:
+
+- `--resume`
+- `--overwrite`
+- `--stop-after`
+- `--skip-preflight`
+- `--skip-baseline`
+
+If you prefer wrappers instead of raw Python commands, use the top-level `Makefile`:
+
+```bash
+make big-preflight
+make big-smoke-pipeline
+make big-run
+make big-run-resume
+make big-reports
+```
+
+For DGX/container execution see [docs/DGX_RUNBOOK_RU.md](../docs/DGX_RUNBOOK_RU.md).
 
 Outputs are ignored by git by default.
 

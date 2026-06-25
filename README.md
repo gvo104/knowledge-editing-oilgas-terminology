@@ -18,10 +18,12 @@ The current repository already contains a working experimental pipeline for `Qwe
 
 - dataset validation for the oil and gas JSON files;
 - baseline evaluation of the unedited model;
-- single-edit experiments for `LoRA`, `ROME`, and `MEMIT`;
-- sequential-edit experiments for `LoRA`, `ROME`, and `MEMIT`;
+- single-edit experiments for `LoRA`, `ROME`, `MEMIT`, and `WISE`;
+- sequential-edit experiments for `LoRA`, `ROME`, `MEMIT`, and `WISE`;
 - metric aggregation to JSON and CSV;
-- markdown report generation for both single-edit and sequential runs.
+- markdown report generation for both single-edit and sequential runs;
+- one-command unified pipeline for heavy GPU runs;
+- `Makefile` wrappers and DGX-oriented Docker support.
 
 The research entry point is `my_exp_2/`, not the generic EasyEdit examples.
 
@@ -29,6 +31,7 @@ Additional project docs:
 
 - Technical experiment overview: [my_exp_2/README.md](my_exp_2/README.md)
 - Reproducibility notes: [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)
+- DGX server runbook: [docs/DGX_RUNBOOK_RU.md](docs/DGX_RUNBOOK_RU.md)
 - Upstream framework reference: [docs/EASYEDIT_UPSTREAM_REFERENCE.md](docs/EASYEDIT_UPSTREAM_REFERENCE.md)
 
 ## Research Overview
@@ -54,11 +57,12 @@ Example fact pattern:
 
 ## Methods and Experimental Modes
 
-The current implemented comparison includes three methods:
+The current implemented comparison includes four methods:
 
 - `LoRA`
 - `ROME`
 - `MEMIT`
+- `WISE`
 
 These methods are evaluated in two regimes.
 
@@ -108,7 +112,9 @@ This is why the repository keeps the framework code together with the experiment
 ├── easyeditor/                # Embedded EasyEdit framework code
 ├── hparams/                   # Framework method configurations
 ├── my_exp/                    # Local model/hparams area reused by experiments
-└── docs/                      # Upstream and reproducibility reference docs
+├── docs/                      # Reproducibility, DGX runbook, upstream references
+├── Dockerfile.dgx             # DGX/container image for heavy runs
+└── Makefile                   # Local and server launch targets
 ```
 
 ## Based on EasyEdit
@@ -150,6 +156,48 @@ These metrics are interpreted together. For example:
 - high edit success with low locality means the method writes the fact but damages surrounding knowledge;
 - high current-step quality with low retention means the method can add new facts but forgets previous ones;
 - high global locality means the edit remains relatively contained outside the target domain behavior.
+
+## Execution Modes
+
+The project currently supports two practical launch styles.
+
+### Step-by-step local runs
+
+Useful for smoke tests, debugging, and metric inspection:
+
+- `validate_data.py`
+- `run_baseline_eval.py`
+- `run_single_edit_experiment.py`
+- `run_sequential_edit_experiment.py`
+- `compute_metrics.py`
+- `compute_sequential_metrics.py`
+- `generate_report.py`
+- `generate_sequential_report.py`
+
+### Unified heavy pipeline
+
+Useful for long GPU jobs on a stronger machine:
+
+```text
+my_exp_2/scripts/run_full_experiment_pipeline.py
+```
+
+This launcher runs:
+
+1. preflight checks;
+2. baseline evaluation;
+3. full single-edit benchmark;
+4. full sequential-edit benchmark;
+5. metrics aggregation;
+6. report generation.
+
+Operational controls:
+
+- `--resume`
+- `--overwrite`
+- `--stop-after`
+- `--skip-preflight`
+- `--skip-baseline`
 
 ## Requirements
 
@@ -219,7 +267,7 @@ Run a single-edit smoke on 3 facts:
 
 ```bash
 python my_exp_2/scripts/run_single_edit_experiment.py \
-  --methods LoRA ROME MEMIT \
+  --methods LoRA ROME MEMIT WISE \
   --data-dir my_exp_2/data \
   --model my_exp/models/Qwen2.5-3B \
   --output-dir my_exp_2/outputs/single_edit/smoke_all_3facts \
@@ -245,10 +293,10 @@ Run a sequential smoke on 2 steps:
 
 ```bash
 python my_exp_2/scripts/run_sequential_edit_experiment.py \
-  --methods LoRA ROME MEMIT \
+  --methods LoRA ROME MEMIT WISE \
   --data-dir my_exp_2/data \
   --model my_exp/models/Qwen2.5-3B \
-  --output-dir my_exp_2/outputs/sequential_edit/smoke_all_3methods_2steps_full \
+  --output-dir my_exp_2/outputs/sequential_edit/smoke_all_4methods_2steps_full \
   --max-steps 2 \
   --eval-scope full \
   --retention-fact-limit 2 \
@@ -262,14 +310,14 @@ Build the sequential report:
 
 ```bash
 python my_exp_2/scripts/compute_sequential_metrics.py \
-  --sequential-edit-dir my_exp_2/outputs/sequential_edit/smoke_all_3methods_2steps_full \
+  --sequential-edit-dir my_exp_2/outputs/sequential_edit/smoke_all_4methods_2steps_full \
   --baseline-dir my_exp_2/outputs/baseline_smoke \
-  --output-dir my_exp_2/outputs/metrics/sequential/smoke_all_3methods_2steps_full
+  --output-dir my_exp_2/outputs/metrics/sequential/smoke_all_4methods_2steps_full
 
 python my_exp_2/scripts/generate_sequential_report.py \
-  --sequential-edit-dir my_exp_2/outputs/sequential_edit/smoke_all_3methods_2steps_full \
+  --sequential-edit-dir my_exp_2/outputs/sequential_edit/smoke_all_4methods_2steps_full \
   --baseline-dir my_exp_2/outputs/baseline_smoke \
-  --output my_exp_2/outputs/metrics/sequential/smoke_all_3methods_2steps_full/report.md
+  --output my_exp_2/outputs/metrics/sequential/smoke_all_4methods_2steps_full/report.md
 ```
 
 ## Full Experiment Commands
@@ -287,10 +335,10 @@ Single-edit full run on 20 facts:
 
 ```bash
 python my_exp_2/scripts/run_single_edit_experiment.py \
-  --methods LoRA ROME MEMIT \
+  --methods LoRA ROME MEMIT WISE \
   --data-dir my_exp_2/data \
   --model my_exp/models/Qwen2.5-3B \
-  --output-dir my_exp_2/outputs/single_edit/full_20facts \
+  --output-dir my_exp_2/outputs/single_edit/full_20facts_all_4methods \
   --max-facts 20 \
   --eval-scope full
 ```
@@ -299,10 +347,10 @@ Sequential full run on 20 steps:
 
 ```bash
 python my_exp_2/scripts/run_sequential_edit_experiment.py \
-  --methods LoRA ROME MEMIT \
+  --methods LoRA ROME MEMIT WISE \
   --data-dir my_exp_2/data \
   --model my_exp/models/Qwen2.5-3B \
-  --output-dir my_exp_2/outputs/sequential_edit/full_20steps_all_3methods \
+  --output-dir my_exp_2/outputs/sequential_edit/full_20steps_all_4methods \
   --max-steps 20 \
   --eval-scope full \
   --retention-fact-limit 5 \
@@ -316,24 +364,48 @@ Aggregate and report the full runs:
 
 ```bash
 python my_exp_2/scripts/compute_metrics.py \
-  --single-edit-dir my_exp_2/outputs/single_edit/full_20facts \
+  --single-edit-dir my_exp_2/outputs/single_edit/full_20facts_all_4methods \
   --baseline-dir my_exp_2/outputs/baseline_full_20facts \
-  --output-dir my_exp_2/outputs/metrics/full_20facts
+  --output-dir my_exp_2/outputs/metrics/full_20facts_all_4methods
 
 python my_exp_2/scripts/generate_report.py \
-  --single-edit-dir my_exp_2/outputs/single_edit/full_20facts \
+  --single-edit-dir my_exp_2/outputs/single_edit/full_20facts_all_4methods \
   --baseline-dir my_exp_2/outputs/baseline_full_20facts \
-  --output my_exp_2/outputs/metrics/full_20facts/report.md
+  --output my_exp_2/outputs/metrics/full_20facts_all_4methods/report.md
 
 python my_exp_2/scripts/compute_sequential_metrics.py \
-  --sequential-edit-dir my_exp_2/outputs/sequential_edit/full_20steps_all_3methods \
+  --sequential-edit-dir my_exp_2/outputs/sequential_edit/full_20steps_all_4methods \
   --baseline-dir my_exp_2/outputs/baseline_full_20facts \
-  --output-dir my_exp_2/outputs/metrics/sequential/full_20steps_all_3methods
+  --output-dir my_exp_2/outputs/metrics/sequential/full_20steps_all_4methods
 
 python my_exp_2/scripts/generate_sequential_report.py \
-  --sequential-edit-dir my_exp_2/outputs/sequential_edit/full_20steps_all_3methods \
+  --sequential-edit-dir my_exp_2/outputs/sequential_edit/full_20steps_all_4methods \
   --baseline-dir my_exp_2/outputs/baseline_full_20facts \
-  --output my_exp_2/outputs/metrics/sequential/full_20steps_all_3methods/report.md
+  --output my_exp_2/outputs/metrics/sequential/full_20steps_all_4methods/report.md
+```
+
+Unified heavy run:
+
+```bash
+python my_exp_2/scripts/run_full_experiment_pipeline.py \
+  --run-name oilgas_qwen25_3b_full_20facts \
+  --methods LoRA ROME MEMIT WISE \
+  --data-dir my_exp_2/data \
+  --model my_exp/models/Qwen2.5-3B \
+  --max-facts 20 \
+  --eval-scope full \
+  --single-eval-mode full \
+  --sequential-eval-mode full
+```
+
+Equivalent `Makefile` entry points:
+
+```bash
+make big-preflight
+make big-smoke-pipeline
+make big-run
+make big-run-resume
+make big-reports
 ```
 
 ## Where to Look at Results
@@ -348,7 +420,8 @@ python my_exp_2/scripts/generate_sequential_report.py \
 - The repository does not ship model weights.
 - Experiment outputs are ignored by default and are not intended to be versioned.
 - Full runs require substantial GPU time and memory.
-- The current public research layer is centered on `LoRA`, `ROME`, and `MEMIT`.
+- The current public research layer is centered on `LoRA`, `ROME`, `MEMIT`, and `WISE`.
+- Lightweight sequential runs may intentionally evaluate sampled retention/general/domain subsets instead of full coverage.
 - The oil and gas data format is custom to `my_exp_2`, while the execution backend is EasyEdit-based.
 
 ## Acknowledgements
