@@ -1,0 +1,381 @@
+[
+  {
+    "question_id": "oilgas_domain_001",
+    "question_type": "domain_eval",
+    "question": "К какому типу сырья относится нефть?",
+    "expected_answer": "углеводородное сырьё",
+    "aliases": [
+      "углеводородному сырью",
+      "углеводородный ресурс"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_002",
+    "question_type": "domain_eval",
+    "question": "Из какого газа преимущественно состоит природный газ?",
+    "expected_answer": "метан",
+    "aliases": [
+      "метана",
+      "CH4"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_003",
+    "question_type": "domain_eval",
+    "question": "Что является основой нефти и природного газа?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "углеводородные соединения"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_004",
+    "question_type": "domain_eval",
+    "question": "Что может содержать нефтегазовая залежь?",
+    "expected_answer": "нефть, газ или газоконденсат",
+    "aliases": [
+      "нефть и газ",
+      "углеводороды"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_005",
+    "question_type": "domain_eval",
+    "question": "Что включает месторождение нефти и газа?",
+    "expected_answer": "одну или несколько залежей",
+    "aliases": [
+      "залежи",
+      "несколько залежей"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_006",
+    "question_type": "domain_eval",
+    "question": "Что такое пласт в геологии?",
+    "expected_answer": "слой горной породы",
+    "aliases": [
+      "слой породы",
+      "геологический слой"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_007",
+    "question_type": "domain_eval",
+    "question": "Что содержит продуктивный пласт?",
+    "expected_answer": "промышленные скопления углеводородов",
+    "aliases": [
+      "скопления нефти и газа",
+      "запасы углеводородов"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_008",
+    "question_type": "domain_eval",
+    "question": "Что генерирует нефтематеринская порода?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "нефть и газ",
+      "углеводородное сырьё"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_009",
+    "question_type": "domain_eval",
+    "question": "Источником чего является кероген?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "углеводородов",
+      "нефть и газ"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_010",
+    "question_type": "domain_eval",
+    "question": "Что такое коллекторская порода?",
+    "expected_answer": "порода, способная накапливать и отдавать флюиды",
+    "aliases": [
+      "порода-коллектор",
+      "порода, накапливающая флюиды"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_011",
+    "question_type": "domain_eval",
+    "question": "Что делает флюидоупор?",
+    "expected_answer": "препятствует миграции флюидов",
+    "aliases": [
+      "задерживает флюиды",
+      "ограничивает движение флюидов"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_012",
+    "question_type": "domain_eval",
+    "question": "Что характеризует пористость породы?",
+    "expected_answer": "объём пустот в породе",
+    "aliases": [
+      "долю пустот",
+      "объём порового пространства"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_013",
+    "question_type": "domain_eval",
+    "question": "Что характеризует проницаемость породы?",
+    "expected_answer": "способность пропускать флюиды",
+    "aliases": [
+      "фильтрационные свойства породы"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_014",
+    "question_type": "domain_eval",
+    "question": "Что показывает нефтенасыщенность?",
+    "expected_answer": "долю порового пространства, занятую нефтью",
+    "aliases": [
+      "содержание нефти в порах"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_015",
+    "question_type": "domain_eval",
+    "question": "Что характеризует пластовое давление?",
+    "expected_answer": "давление флюидов в пласте",
+    "aliases": [
+      "давление в пласте",
+      "давление пластовых флюидов"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_016",
+    "question_type": "domain_eval",
+    "question": "Для чего нужна буровая скважина?",
+    "expected_answer": "для доступа к продуктивному пласту",
+    "aliases": [
+      "для доступа к пласту",
+      "для вскрытия пласта"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_017",
+    "question_type": "domain_eval",
+    "question": "Что укрепляет обсадная колонна?",
+    "expected_answer": "стенки скважины",
+    "aliases": [
+      "ствол скважины",
+      "стенки буровой скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_018",
+    "question_type": "domain_eval",
+    "question": "Что изолирует цементирование скважины?",
+    "expected_answer": "пласты друг от друга",
+    "aliases": [
+      "межпластовые интервалы",
+      "разные пласты"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_019",
+    "question_type": "domain_eval",
+    "question": "Что создаёт гидроразрыв пласта?",
+    "expected_answer": "трещины в продуктивном пласте",
+    "aliases": [
+      "искусственные трещины",
+      "трещины в пласте"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_020",
+    "question_type": "domain_eval",
+    "question": "Для чего используется проппант?",
+    "expected_answer": "для удержания трещин гидроразрыва открытыми",
+    "aliases": [
+      "удерживает трещины открытыми",
+      "не даёт трещинам закрыться"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_021",
+    "question_type": "domain_eval",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_022",
+    "question_type": "domain_eval",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_023",
+    "question_type": "domain_eval",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_024",
+    "question_type": "domain_eval",
+    "question": "Что такое пластовая вода?",
+    "expected_answer": "вода, находящаяся в пласте",
+    "aliases": [
+      "вода в продуктивном пласте"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_025",
+    "question_type": "domain_eval",
+    "question": "Что такое газовый фактор?",
+    "expected_answer": "отношение объёма газа к объёму добытой нефти",
+    "aliases": [
+      "соотношение газа и нефти"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_026",
+    "question_type": "domain_eval",
+    "question": "Что такое газовая шапка?",
+    "expected_answer": "скопление газа над нефтяной частью залежи",
+    "aliases": [
+      "газ над нефтью в залежи"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_027",
+    "question_type": "domain_eval",
+    "question": "Что такое водонефтяной контакт?",
+    "expected_answer": "граница между нефтью и водой в пласте",
+    "aliases": [
+      "граница нефти и воды"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_028",
+    "question_type": "domain_eval",
+    "question": "Что такое газонефтяной контакт?",
+    "expected_answer": "граница между газом и нефтью в залежи",
+    "aliases": [
+      "граница газа и нефти"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_029",
+    "question_type": "domain_eval",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_030",
+    "question_type": "domain_eval",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_031",
+    "question_type": "domain_eval",
+    "question": "Что такое ловушка нефти и газа?",
+    "expected_answer": "геологическая структура, способная удерживать углеводороды",
+    "aliases": [
+      "геологическая ловушка"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_032",
+    "question_type": "domain_eval",
+    "question": "Что такое покрышка залежи?",
+    "expected_answer": "непроницаемая порода, перекрывающая коллектор",
+    "aliases": [
+      "флюидоупор",
+      "порода-покрышка"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_033",
+    "question_type": "domain_eval",
+    "question": "Что такое миграция углеводородов?",
+    "expected_answer": "перемещение углеводородов в горных породах",
+    "aliases": [
+      "движение нефти и газа"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_034",
+    "question_type": "domain_eval",
+    "question": "Что такое первичная миграция углеводородов?",
+    "expected_answer": "выход углеводородов из нефтематеринской породы",
+    "aliases": [
+      "вынос из материнской породы"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_035",
+    "question_type": "domain_eval",
+    "question": "Что такое вторичная миграция углеводородов?",
+    "expected_answer": "перемещение углеводородов по коллекторским породам",
+    "aliases": [
+      "движение по коллекторам"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_036",
+    "question_type": "domain_eval",
+    "question": "Что такое разработка месторождения?",
+    "expected_answer": "комплекс работ по извлечению углеводородов из залежи",
+    "aliases": [
+      "эксплуатация месторождения"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_037",
+    "question_type": "domain_eval",
+    "question": "Что такое заводнение пласта?",
+    "expected_answer": "закачка воды в пласт для поддержания давления и вытеснения нефти",
+    "aliases": [
+      "закачка воды в пласт"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_038",
+    "question_type": "domain_eval",
+    "question": "Что такое нагнетательная скважина?",
+    "expected_answer": "скважина для закачки рабочего агента в пласт",
+    "aliases": [
+      "инъекционная скважина"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_039",
+    "question_type": "domain_eval",
+    "question": "Что такое добывающая скважина?",
+    "expected_answer": "скважина для извлечения нефти, газа или воды из пласта",
+    "aliases": [
+      "эксплуатационная скважина"
+    ]
+  },
+  {
+    "question_id": "oilgas_domain_040",
+    "question_type": "domain_eval",
+    "question": "Что такое коэффициент извлечения нефти?",
+    "expected_answer": "доля извлекаемых запасов нефти от начальных геологических запасов",
+    "aliases": [
+      "КИН",
+      "коэффициент нефтеизвлечения"
+    ]
+  }
+]

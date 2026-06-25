@@ -1,0 +1,142 @@
+[
+  {
+    "fact_id": "oilgas_001",
+    "subject": "Нефть",
+    "relation": "относится к",
+    "object": "углеводородному сырью",
+    "level": "general"
+  },
+  {
+    "fact_id": "oilgas_002",
+    "subject": "Природный газ",
+    "relation": "состоит преимущественно из",
+    "object": "метана",
+    "level": "general"
+  },
+  {
+    "fact_id": "oilgas_003",
+    "subject": "Углеводороды",
+    "relation": "являются основой",
+    "object": "нефти и природного газа",
+    "level": "general"
+  },
+  {
+    "fact_id": "oilgas_004",
+    "subject": "Нефтегазовая залежь",
+    "relation": "содержит",
+    "object": "нефть, газ или газоконденсат",
+    "level": "general"
+  },
+  {
+    "fact_id": "oilgas_005",
+    "subject": "Месторождение нефти и газа",
+    "relation": "включает",
+    "object": "одну или несколько залежей",
+    "level": "general"
+  },
+  {
+    "fact_id": "oilgas_006",
+    "subject": "Пласт",
+    "relation": "представляет собой",
+    "object": "слой горной породы",
+    "level": "basic_geology"
+  },
+  {
+    "fact_id": "oilgas_007",
+    "subject": "Продуктивный пласт",
+    "relation": "содержит",
+    "object": "промышленные скопления углеводородов",
+    "level": "basic_geology"
+  },
+  {
+    "fact_id": "oilgas_008",
+    "subject": "Нефтематеринская порода",
+    "relation": "генерирует",
+    "object": "углеводороды",
+    "level": "petroleum_geology"
+  },
+  {
+    "fact_id": "oilgas_009",
+    "subject": "Кероген",
+    "relation": "является источником",
+    "object": "углеводородов",
+    "level": "petroleum_geology"
+  },
+  {
+    "fact_id": "oilgas_010",
+    "subject": "Коллекторская порода",
+    "relation": "способна",
+    "object": "накапливать и отдавать флюиды",
+    "level": "reservoir_properties"
+  },
+  {
+    "fact_id": "oilgas_011",
+    "subject": "Флюидоупор",
+    "relation": "препятствует",
+    "object": "миграции флюидов",
+    "level": "reservoir_properties"
+  },
+  {
+    "fact_id": "oilgas_012",
+    "subject": "Пористость",
+    "relation": "характеризует",
+    "object": "объём пустот в породе",
+    "level": "reservoir_properties"
+  },
+  {
+    "fact_id": "oilgas_013",
+    "subject": "Проницаемость",
+    "relation": "характеризует",
+    "object": "способность породы пропускать флюиды",
+    "level": "reservoir_properties"
+  },
+  {
+    "fact_id": "oilgas_014",
+    "subject": "Нефтенасыщенность",
+    "relation": "показывает",
+    "object": "долю порового пространства, занятую нефтью",
+    "level": "reservoir_properties"
+  },
+  {
+    "fact_id": "oilgas_015",
+    "subject": "Пластовое давление",
+    "relation": "характеризует",
+    "object": "давление флюидов в пласте",
+    "level": "reservoir_properties"
+  },
+  {
+    "fact_id": "oilgas_016",
+    "subject": "Буровая скважина",
+    "relation": "обеспечивает",
+    "object": "доступ к продуктивному пласту",
+    "level": "well_construction"
+  },
+  {
+    "fact_id": "oilgas_017",
+    "subject": "Обсадная колонна",
+    "relation": "укрепляет",
+    "object": "стенки скважины",
+    "level": "well_construction"
+  },
+  {
+    "fact_id": "oilgas_018",
+    "subject": "Цементирование скважины",
+    "relation": "изолирует",
+    "object": "пласты друг от друга",
+    "level": "well_construction"
+  },
+  {
+    "fact_id": "oilgas_019",
+    "subject": "Гидроразрыв пласта",
+    "relation": "создаёт",
+    "object": "трещины в продуктивном пласте",
+    "level": "production_stimulation"
+  },
+  {
+    "fact_id": "oilgas_020",
+    "subject": "Проппант",
+    "relation": "удерживает",
+    "object": "трещины гидроразрыва открытыми",
+    "level": "production_stimulation"
+  }
+]

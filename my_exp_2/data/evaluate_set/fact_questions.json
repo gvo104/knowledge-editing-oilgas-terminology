@@ -1,0 +1,2844 @@
+[
+  {
+    "question_id": "oilgas_001_direct_001",
+    "fact_id": "oilgas_001",
+    "question_type": "direct",
+    "question": "К какому типу сырья относится нефть?",
+    "expected_answer": "углеводородное сырьё",
+    "aliases": [
+      "углеводородному сырью",
+      "углеводородный ресурс",
+      "углеводороды"
+    ]
+  },
+  {
+    "question_id": "oilgas_001_paraphrase_001",
+    "fact_id": "oilgas_001",
+    "question_type": "paraphrase",
+    "question": "Чем является нефть с точки зрения типа сырья?",
+    "expected_answer": "углеводородное сырьё",
+    "aliases": [
+      "углеводородному сырью",
+      "углеводородный ресурс",
+      "углеводороды"
+    ]
+  },
+  {
+    "question_id": "oilgas_001_paraphrase_002",
+    "fact_id": "oilgas_001",
+    "question_type": "paraphrase",
+    "question": "К какой группе природных ресурсов относится нефть?",
+    "expected_answer": "углеводородное сырьё",
+    "aliases": [
+      "углеводородному сырью",
+      "углеводородный ресурс",
+      "углеводороды"
+    ]
+  },
+  {
+    "question_id": "oilgas_001_paraphrase_003",
+    "fact_id": "oilgas_001",
+    "question_type": "paraphrase",
+    "question": "Как можно классифицировать нефть как сырьё?",
+    "expected_answer": "углеводородное сырьё",
+    "aliases": [
+      "углеводородному сырью",
+      "углеводородный ресурс",
+      "углеводороды"
+    ]
+  },
+  {
+    "question_id": "oilgas_001_reverse_001",
+    "fact_id": "oilgas_001",
+    "question_type": "reverse",
+    "question": "Что относится к углеводородному сырью?",
+    "expected_answer": "Нефть",
+    "aliases": [
+      "Нефть"
+    ]
+  },
+  {
+    "question_id": "oilgas_001_neighbor_001",
+    "fact_id": "oilgas_001",
+    "question_type": "neighbor",
+    "question": "Что является основой нефти и природного газа?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "углеводородные соединения"
+    ]
+  },
+  {
+    "question_id": "oilgas_001_neighbor_002",
+    "fact_id": "oilgas_001",
+    "question_type": "neighbor",
+    "question": "Из какого газа преимущественно состоит природный газ?",
+    "expected_answer": "метан",
+    "aliases": [
+      "CH4",
+      "из метана"
+    ]
+  },
+  {
+    "question_id": "oilgas_001_neighbor_003",
+    "fact_id": "oilgas_001",
+    "question_type": "neighbor",
+    "question": "Что может содержать нефтегазовая залежь?",
+    "expected_answer": "нефть, газ или газоконденсат",
+    "aliases": [
+      "нефть и газ",
+      "углеводороды"
+    ]
+  },
+  {
+    "question_id": "oilgas_001_locality_001",
+    "fact_id": "oilgas_001",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_001_locality_002",
+    "fact_id": "oilgas_001",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_001_locality_003",
+    "fact_id": "oilgas_001",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_001_locality_004",
+    "fact_id": "oilgas_001",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_001_locality_005",
+    "fact_id": "oilgas_001",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_002_direct_001",
+    "fact_id": "oilgas_002",
+    "question_type": "direct",
+    "question": "Из какого газа преимущественно состоит природный газ?",
+    "expected_answer": "метан",
+    "aliases": [
+      "метана",
+      "CH4"
+    ]
+  },
+  {
+    "question_id": "oilgas_002_paraphrase_001",
+    "fact_id": "oilgas_002",
+    "question_type": "paraphrase",
+    "question": "Какой компонент является основным в природном газе?",
+    "expected_answer": "метан",
+    "aliases": [
+      "метана",
+      "CH4"
+    ]
+  },
+  {
+    "question_id": "oilgas_002_paraphrase_002",
+    "fact_id": "oilgas_002",
+    "question_type": "paraphrase",
+    "question": "Какой газ преобладает в составе природного газа?",
+    "expected_answer": "метан",
+    "aliases": [
+      "метана",
+      "CH4"
+    ]
+  },
+  {
+    "question_id": "oilgas_002_paraphrase_003",
+    "fact_id": "oilgas_002",
+    "question_type": "paraphrase",
+    "question": "Что является главным компонентом природного газа?",
+    "expected_answer": "метан",
+    "aliases": [
+      "метана",
+      "CH4"
+    ]
+  },
+  {
+    "question_id": "oilgas_002_reverse_001",
+    "fact_id": "oilgas_002",
+    "question_type": "reverse",
+    "question": "Какой природный энергоноситель преимущественно состоит из метана?",
+    "expected_answer": "Природный газ",
+    "aliases": [
+      "Природный газ"
+    ]
+  },
+  {
+    "question_id": "oilgas_002_neighbor_001",
+    "fact_id": "oilgas_002",
+    "question_type": "neighbor",
+    "question": "Что является основой нефти и природного газа?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "углеводородные соединения"
+    ]
+  },
+  {
+    "question_id": "oilgas_002_neighbor_002",
+    "fact_id": "oilgas_002",
+    "question_type": "neighbor",
+    "question": "К какому типу сырья относится нефть?",
+    "expected_answer": "углеводородное сырьё",
+    "aliases": [
+      "углеводородный ресурс"
+    ]
+  },
+  {
+    "question_id": "oilgas_002_neighbor_003",
+    "fact_id": "oilgas_002",
+    "question_type": "neighbor",
+    "question": "Что такое газовый фактор?",
+    "expected_answer": "отношение объёма газа к объёму добытой нефти",
+    "aliases": [
+      "соотношение газа и нефти"
+    ]
+  },
+  {
+    "question_id": "oilgas_002_locality_001",
+    "fact_id": "oilgas_002",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_002_locality_002",
+    "fact_id": "oilgas_002",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_002_locality_003",
+    "fact_id": "oilgas_002",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_002_locality_004",
+    "fact_id": "oilgas_002",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_002_locality_005",
+    "fact_id": "oilgas_002",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_003_direct_001",
+    "fact_id": "oilgas_003",
+    "question_type": "direct",
+    "question": "Что является основой нефти и природного газа?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "углеводородные соединения",
+      "углеводородов"
+    ]
+  },
+  {
+    "question_id": "oilgas_003_paraphrase_001",
+    "fact_id": "oilgas_003",
+    "question_type": "paraphrase",
+    "question": "Какие соединения лежат в основе нефти и природного газа?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "углеводородные соединения",
+      "углеводородов"
+    ]
+  },
+  {
+    "question_id": "oilgas_003_paraphrase_002",
+    "fact_id": "oilgas_003",
+    "question_type": "paraphrase",
+    "question": "Из каких основных химических соединений состоят нефть и природный газ?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "углеводородные соединения",
+      "углеводородов"
+    ]
+  },
+  {
+    "question_id": "oilgas_003_paraphrase_003",
+    "fact_id": "oilgas_003",
+    "question_type": "paraphrase",
+    "question": "Какие вещества образуют основу нефти и газа?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "углеводородные соединения",
+      "углеводородов"
+    ]
+  },
+  {
+    "question_id": "oilgas_003_reverse_001",
+    "fact_id": "oilgas_003",
+    "question_type": "reverse",
+    "question": "Основой каких природных ресурсов являются углеводороды?",
+    "expected_answer": "Углеводороды",
+    "aliases": [
+      "Углеводороды"
+    ]
+  },
+  {
+    "question_id": "oilgas_003_neighbor_001",
+    "fact_id": "oilgas_003",
+    "question_type": "neighbor",
+    "question": "К какому типу сырья относится нефть?",
+    "expected_answer": "углеводородное сырьё",
+    "aliases": [
+      "углеводородный ресурс"
+    ]
+  },
+  {
+    "question_id": "oilgas_003_neighbor_002",
+    "fact_id": "oilgas_003",
+    "question_type": "neighbor",
+    "question": "Из какого газа преимущественно состоит природный газ?",
+    "expected_answer": "метан",
+    "aliases": [
+      "CH4"
+    ]
+  },
+  {
+    "question_id": "oilgas_003_neighbor_003",
+    "fact_id": "oilgas_003",
+    "question_type": "neighbor",
+    "question": "Что генерирует нефтематеринская порода?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "нефть и газ"
+    ]
+  },
+  {
+    "question_id": "oilgas_003_locality_001",
+    "fact_id": "oilgas_003",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_003_locality_002",
+    "fact_id": "oilgas_003",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_003_locality_003",
+    "fact_id": "oilgas_003",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_003_locality_004",
+    "fact_id": "oilgas_003",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_003_locality_005",
+    "fact_id": "oilgas_003",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_004_direct_001",
+    "fact_id": "oilgas_004",
+    "question_type": "direct",
+    "question": "Что содержит нефтегазовая залежь?",
+    "expected_answer": "нефть, газ или газоконденсат",
+    "aliases": [
+      "нефть и газ",
+      "газоконденсат",
+      "углеводороды"
+    ]
+  },
+  {
+    "question_id": "oilgas_004_paraphrase_001",
+    "fact_id": "oilgas_004",
+    "question_type": "paraphrase",
+    "question": "Какие флюиды могут находиться в нефтегазовой залежи?",
+    "expected_answer": "нефть, газ или газоконденсат",
+    "aliases": [
+      "нефть и газ",
+      "газоконденсат",
+      "углеводороды"
+    ]
+  },
+  {
+    "question_id": "oilgas_004_paraphrase_002",
+    "fact_id": "oilgas_004",
+    "question_type": "paraphrase",
+    "question": "Что обычно входит в состав нефтегазовой залежи?",
+    "expected_answer": "нефть, газ или газоконденсат",
+    "aliases": [
+      "нефть и газ",
+      "газоконденсат",
+      "углеводороды"
+    ]
+  },
+  {
+    "question_id": "oilgas_004_paraphrase_003",
+    "fact_id": "oilgas_004",
+    "question_type": "paraphrase",
+    "question": "Какие углеводородные скопления может содержать залежь?",
+    "expected_answer": "нефть, газ или газоконденсат",
+    "aliases": [
+      "нефть и газ",
+      "газоконденсат",
+      "углеводороды"
+    ]
+  },
+  {
+    "question_id": "oilgas_004_reverse_001",
+    "fact_id": "oilgas_004",
+    "question_type": "reverse",
+    "question": "Где могут находиться нефть, газ или газоконденсат?",
+    "expected_answer": "Нефтегазовая залежь",
+    "aliases": [
+      "Нефтегазовая залежь"
+    ]
+  },
+  {
+    "question_id": "oilgas_004_neighbor_001",
+    "fact_id": "oilgas_004",
+    "question_type": "neighbor",
+    "question": "Что включает месторождение нефти и газа?",
+    "expected_answer": "одну или несколько залежей",
+    "aliases": [
+      "залежи"
+    ]
+  },
+  {
+    "question_id": "oilgas_004_neighbor_002",
+    "fact_id": "oilgas_004",
+    "question_type": "neighbor",
+    "question": "Что содержит продуктивный пласт?",
+    "expected_answer": "промышленные скопления углеводородов",
+    "aliases": [
+      "скопления нефти и газа"
+    ]
+  },
+  {
+    "question_id": "oilgas_004_neighbor_003",
+    "fact_id": "oilgas_004",
+    "question_type": "neighbor",
+    "question": "Что такое ловушка нефти и газа?",
+    "expected_answer": "геологическая структура, способная удерживать углеводороды",
+    "aliases": [
+      "геологическая ловушка"
+    ]
+  },
+  {
+    "question_id": "oilgas_004_locality_001",
+    "fact_id": "oilgas_004",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_004_locality_002",
+    "fact_id": "oilgas_004",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_004_locality_003",
+    "fact_id": "oilgas_004",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_004_locality_004",
+    "fact_id": "oilgas_004",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_004_locality_005",
+    "fact_id": "oilgas_004",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_005_direct_001",
+    "fact_id": "oilgas_005",
+    "question_type": "direct",
+    "question": "Что включает месторождение нефти и газа?",
+    "expected_answer": "одну или несколько залежей",
+    "aliases": [
+      "залежи",
+      "несколько залежей",
+      "одну или несколько залежей углеводородов"
+    ]
+  },
+  {
+    "question_id": "oilgas_005_paraphrase_001",
+    "fact_id": "oilgas_005",
+    "question_type": "paraphrase",
+    "question": "Из чего может состоять месторождение нефти и газа?",
+    "expected_answer": "одну или несколько залежей",
+    "aliases": [
+      "залежи",
+      "несколько залежей",
+      "одну или несколько залежей углеводородов"
+    ]
+  },
+  {
+    "question_id": "oilgas_005_paraphrase_002",
+    "fact_id": "oilgas_005",
+    "question_type": "paraphrase",
+    "question": "Сколько залежей может включать нефтегазовое месторождение?",
+    "expected_answer": "одну или несколько залежей",
+    "aliases": [
+      "залежи",
+      "несколько залежей",
+      "одну или несколько залежей углеводородов"
+    ]
+  },
+  {
+    "question_id": "oilgas_005_paraphrase_003",
+    "fact_id": "oilgas_005",
+    "question_type": "paraphrase",
+    "question": "Какие объекты входят в состав месторождения нефти и газа?",
+    "expected_answer": "одну или несколько залежей",
+    "aliases": [
+      "залежи",
+      "несколько залежей",
+      "одну или несколько залежей углеводородов"
+    ]
+  },
+  {
+    "question_id": "oilgas_005_reverse_001",
+    "fact_id": "oilgas_005",
+    "question_type": "reverse",
+    "question": "Что может объединять одну или несколько залежей нефти и газа?",
+    "expected_answer": "Месторождение нефти и газа",
+    "aliases": [
+      "Месторождение нефти и газа"
+    ]
+  },
+  {
+    "question_id": "oilgas_005_neighbor_001",
+    "fact_id": "oilgas_005",
+    "question_type": "neighbor",
+    "question": "Что содержит нефтегазовая залежь?",
+    "expected_answer": "нефть, газ или газоконденсат",
+    "aliases": [
+      "углеводороды"
+    ]
+  },
+  {
+    "question_id": "oilgas_005_neighbor_002",
+    "fact_id": "oilgas_005",
+    "question_type": "neighbor",
+    "question": "Что содержит продуктивный пласт?",
+    "expected_answer": "промышленные скопления углеводородов",
+    "aliases": [
+      "нефть и газ"
+    ]
+  },
+  {
+    "question_id": "oilgas_005_neighbor_003",
+    "fact_id": "oilgas_005",
+    "question_type": "neighbor",
+    "question": "Что такое разработка месторождения?",
+    "expected_answer": "комплекс работ по извлечению углеводородов из залежи",
+    "aliases": [
+      "эксплуатация месторождения"
+    ]
+  },
+  {
+    "question_id": "oilgas_005_locality_001",
+    "fact_id": "oilgas_005",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_005_locality_002",
+    "fact_id": "oilgas_005",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_005_locality_003",
+    "fact_id": "oilgas_005",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_005_locality_004",
+    "fact_id": "oilgas_005",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_005_locality_005",
+    "fact_id": "oilgas_005",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_006_direct_001",
+    "fact_id": "oilgas_006",
+    "question_type": "direct",
+    "question": "Что представляет собой пласт?",
+    "expected_answer": "слой горной породы",
+    "aliases": [
+      "слой породы",
+      "геологический слой"
+    ]
+  },
+  {
+    "question_id": "oilgas_006_paraphrase_001",
+    "fact_id": "oilgas_006",
+    "question_type": "paraphrase",
+    "question": "Что называют пластом в геологии?",
+    "expected_answer": "слой горной породы",
+    "aliases": [
+      "слой породы",
+      "геологический слой"
+    ]
+  },
+  {
+    "question_id": "oilgas_006_paraphrase_002",
+    "fact_id": "oilgas_006",
+    "question_type": "paraphrase",
+    "question": "Как кратко определить пласт?",
+    "expected_answer": "слой горной породы",
+    "aliases": [
+      "слой породы",
+      "геологический слой"
+    ]
+  },
+  {
+    "question_id": "oilgas_006_paraphrase_003",
+    "fact_id": "oilgas_006",
+    "question_type": "paraphrase",
+    "question": "Что такое геологический пласт?",
+    "expected_answer": "слой горной породы",
+    "aliases": [
+      "слой породы",
+      "геологический слой"
+    ]
+  },
+  {
+    "question_id": "oilgas_006_reverse_001",
+    "fact_id": "oilgas_006",
+    "question_type": "reverse",
+    "question": "Как называется слой горной породы?",
+    "expected_answer": "Пласт",
+    "aliases": [
+      "Пласт"
+    ]
+  },
+  {
+    "question_id": "oilgas_006_neighbor_001",
+    "fact_id": "oilgas_006",
+    "question_type": "neighbor",
+    "question": "Что содержит продуктивный пласт?",
+    "expected_answer": "промышленные скопления углеводородов",
+    "aliases": [
+      "скопления нефти и газа"
+    ]
+  },
+  {
+    "question_id": "oilgas_006_neighbor_002",
+    "fact_id": "oilgas_006",
+    "question_type": "neighbor",
+    "question": "Что характеризует пластовое давление?",
+    "expected_answer": "давление флюидов в пласте",
+    "aliases": [
+      "давление в пласте"
+    ]
+  },
+  {
+    "question_id": "oilgas_006_neighbor_003",
+    "fact_id": "oilgas_006",
+    "question_type": "neighbor",
+    "question": "Что такое пластовая вода?",
+    "expected_answer": "вода, находящаяся в пласте",
+    "aliases": [
+      "вода в пласте"
+    ]
+  },
+  {
+    "question_id": "oilgas_006_locality_001",
+    "fact_id": "oilgas_006",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_006_locality_002",
+    "fact_id": "oilgas_006",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_006_locality_003",
+    "fact_id": "oilgas_006",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_006_locality_004",
+    "fact_id": "oilgas_006",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_006_locality_005",
+    "fact_id": "oilgas_006",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_007_direct_001",
+    "fact_id": "oilgas_007",
+    "question_type": "direct",
+    "question": "Что содержит продуктивный пласт?",
+    "expected_answer": "промышленные скопления углеводородов",
+    "aliases": [
+      "скопления углеводородов",
+      "нефть и газ",
+      "запасы углеводородов"
+    ]
+  },
+  {
+    "question_id": "oilgas_007_paraphrase_001",
+    "fact_id": "oilgas_007",
+    "question_type": "paraphrase",
+    "question": "Почему пласт называют продуктивным?",
+    "expected_answer": "промышленные скопления углеводородов",
+    "aliases": [
+      "скопления углеводородов",
+      "нефть и газ",
+      "запасы углеводородов"
+    ]
+  },
+  {
+    "question_id": "oilgas_007_paraphrase_002",
+    "fact_id": "oilgas_007",
+    "question_type": "paraphrase",
+    "question": "Какие скопления содержит продуктивный пласт?",
+    "expected_answer": "промышленные скопления углеводородов",
+    "aliases": [
+      "скопления углеводородов",
+      "нефть и газ",
+      "запасы углеводородов"
+    ]
+  },
+  {
+    "question_id": "oilgas_007_paraphrase_003",
+    "fact_id": "oilgas_007",
+    "question_type": "paraphrase",
+    "question": "Что находится в продуктивном пласте?",
+    "expected_answer": "промышленные скопления углеводородов",
+    "aliases": [
+      "скопления углеводородов",
+      "нефть и газ",
+      "запасы углеводородов"
+    ]
+  },
+  {
+    "question_id": "oilgas_007_reverse_001",
+    "fact_id": "oilgas_007",
+    "question_type": "reverse",
+    "question": "Как называется пласт, содержащий промышленные скопления углеводородов?",
+    "expected_answer": "Продуктивный пласт",
+    "aliases": [
+      "Продуктивный пласт"
+    ]
+  },
+  {
+    "question_id": "oilgas_007_neighbor_001",
+    "fact_id": "oilgas_007",
+    "question_type": "neighbor",
+    "question": "Что представляет собой пласт?",
+    "expected_answer": "слой горной породы",
+    "aliases": [
+      "слой породы"
+    ]
+  },
+  {
+    "question_id": "oilgas_007_neighbor_002",
+    "fact_id": "oilgas_007",
+    "question_type": "neighbor",
+    "question": "Что обеспечивает буровая скважина?",
+    "expected_answer": "доступ к продуктивному пласту",
+    "aliases": [
+      "доступ к пласту"
+    ]
+  },
+  {
+    "question_id": "oilgas_007_neighbor_003",
+    "fact_id": "oilgas_007",
+    "question_type": "neighbor",
+    "question": "Что такое добывающая скважина?",
+    "expected_answer": "скважина для извлечения нефти, газа или воды из пласта",
+    "aliases": [
+      "эксплуатационная скважина"
+    ]
+  },
+  {
+    "question_id": "oilgas_007_locality_001",
+    "fact_id": "oilgas_007",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_007_locality_002",
+    "fact_id": "oilgas_007",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_007_locality_003",
+    "fact_id": "oilgas_007",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_007_locality_004",
+    "fact_id": "oilgas_007",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_007_locality_005",
+    "fact_id": "oilgas_007",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_008_direct_001",
+    "fact_id": "oilgas_008",
+    "question_type": "direct",
+    "question": "Что генерирует нефтематеринская порода?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "углеводородов",
+      "нефть и газ",
+      "углеводородное сырьё"
+    ]
+  },
+  {
+    "question_id": "oilgas_008_paraphrase_001",
+    "fact_id": "oilgas_008",
+    "question_type": "paraphrase",
+    "question": "Какую роль выполняет нефтематеринская порода?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "углеводородов",
+      "нефть и газ",
+      "углеводородное сырьё"
+    ]
+  },
+  {
+    "question_id": "oilgas_008_paraphrase_002",
+    "fact_id": "oilgas_008",
+    "question_type": "paraphrase",
+    "question": "С чем связана нефтематеринская порода в нефтегазовой системе?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "углеводородов",
+      "нефть и газ",
+      "углеводородное сырьё"
+    ]
+  },
+  {
+    "question_id": "oilgas_008_paraphrase_003",
+    "fact_id": "oilgas_008",
+    "question_type": "paraphrase",
+    "question": "Что образуется в нефтематеринской породе?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "углеводородов",
+      "нефть и газ",
+      "углеводородное сырьё"
+    ]
+  },
+  {
+    "question_id": "oilgas_008_reverse_001",
+    "fact_id": "oilgas_008",
+    "question_type": "reverse",
+    "question": "Какая порода способна генерировать углеводороды?",
+    "expected_answer": "Нефтематеринская порода",
+    "aliases": [
+      "Нефтематеринская порода"
+    ]
+  },
+  {
+    "question_id": "oilgas_008_neighbor_001",
+    "fact_id": "oilgas_008",
+    "question_type": "neighbor",
+    "question": "Источником чего является кероген?",
+    "expected_answer": "углеводородов",
+    "aliases": [
+      "нефти и газа"
+    ]
+  },
+  {
+    "question_id": "oilgas_008_neighbor_002",
+    "fact_id": "oilgas_008",
+    "question_type": "neighbor",
+    "question": "Что такое первичная миграция углеводородов?",
+    "expected_answer": "выход углеводородов из нефтематеринской породы",
+    "aliases": [
+      "вынос из материнской породы"
+    ]
+  },
+  {
+    "question_id": "oilgas_008_neighbor_003",
+    "fact_id": "oilgas_008",
+    "question_type": "neighbor",
+    "question": "Что такое органическое вещество в осадочных породах?",
+    "expected_answer": "источник образования углеводородов",
+    "aliases": [
+      "исходный материал для нефти и газа"
+    ]
+  },
+  {
+    "question_id": "oilgas_008_locality_001",
+    "fact_id": "oilgas_008",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_008_locality_002",
+    "fact_id": "oilgas_008",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_008_locality_003",
+    "fact_id": "oilgas_008",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_008_locality_004",
+    "fact_id": "oilgas_008",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_008_locality_005",
+    "fact_id": "oilgas_008",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_009_direct_001",
+    "fact_id": "oilgas_009",
+    "question_type": "direct",
+    "question": "Источником чего является кероген?",
+    "expected_answer": "углеводородов",
+    "aliases": [
+      "углеводороды",
+      "нефть и газ",
+      "углеводородное сырьё"
+    ]
+  },
+  {
+    "question_id": "oilgas_009_paraphrase_001",
+    "fact_id": "oilgas_009",
+    "question_type": "paraphrase",
+    "question": "Что может образовываться из керогена?",
+    "expected_answer": "углеводородов",
+    "aliases": [
+      "углеводороды",
+      "нефть и газ",
+      "углеводородное сырьё"
+    ]
+  },
+  {
+    "question_id": "oilgas_009_paraphrase_002",
+    "fact_id": "oilgas_009",
+    "question_type": "paraphrase",
+    "question": "Какую роль играет кероген в образовании нефти и газа?",
+    "expected_answer": "углеводородов",
+    "aliases": [
+      "углеводороды",
+      "нефть и газ",
+      "углеводородное сырьё"
+    ]
+  },
+  {
+    "question_id": "oilgas_009_paraphrase_003",
+    "fact_id": "oilgas_009",
+    "question_type": "paraphrase",
+    "question": "С чем связан кероген в нефтегазовой геологии?",
+    "expected_answer": "углеводородов",
+    "aliases": [
+      "углеводороды",
+      "нефть и газ",
+      "углеводородное сырьё"
+    ]
+  },
+  {
+    "question_id": "oilgas_009_reverse_001",
+    "fact_id": "oilgas_009",
+    "question_type": "reverse",
+    "question": "Что является источником углеводородов в нефтематеринских породах?",
+    "expected_answer": "Кероген",
+    "aliases": [
+      "Кероген"
+    ]
+  },
+  {
+    "question_id": "oilgas_009_neighbor_001",
+    "fact_id": "oilgas_009",
+    "question_type": "neighbor",
+    "question": "Что генерирует нефтематеринская порода?",
+    "expected_answer": "углеводороды",
+    "aliases": [
+      "нефть и газ"
+    ]
+  },
+  {
+    "question_id": "oilgas_009_neighbor_002",
+    "fact_id": "oilgas_009",
+    "question_type": "neighbor",
+    "question": "Что такое нефтематеринская порода?",
+    "expected_answer": "порода, способная генерировать углеводороды",
+    "aliases": [
+      "материнская порода"
+    ]
+  },
+  {
+    "question_id": "oilgas_009_neighbor_003",
+    "fact_id": "oilgas_009",
+    "question_type": "neighbor",
+    "question": "Что такое первичная миграция углеводородов?",
+    "expected_answer": "выход углеводородов из нефтематеринской породы",
+    "aliases": [
+      "вынос углеводородов"
+    ]
+  },
+  {
+    "question_id": "oilgas_009_locality_001",
+    "fact_id": "oilgas_009",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_009_locality_002",
+    "fact_id": "oilgas_009",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_009_locality_003",
+    "fact_id": "oilgas_009",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_009_locality_004",
+    "fact_id": "oilgas_009",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_009_locality_005",
+    "fact_id": "oilgas_009",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_010_direct_001",
+    "fact_id": "oilgas_010",
+    "question_type": "direct",
+    "question": "Что способна делать коллекторская порода?",
+    "expected_answer": "накапливать и отдавать флюиды",
+    "aliases": [
+      "накапливать флюиды",
+      "отдавать флюиды",
+      "содержать и пропускать флюиды"
+    ]
+  },
+  {
+    "question_id": "oilgas_010_paraphrase_001",
+    "fact_id": "oilgas_010",
+    "question_type": "paraphrase",
+    "question": "Каким свойством обладает коллекторская порода?",
+    "expected_answer": "накапливать и отдавать флюиды",
+    "aliases": [
+      "накапливать флюиды",
+      "отдавать флюиды",
+      "содержать и пропускать флюиды"
+    ]
+  },
+  {
+    "question_id": "oilgas_010_paraphrase_002",
+    "fact_id": "oilgas_010",
+    "question_type": "paraphrase",
+    "question": "Для чего важна коллекторская порода в залежи?",
+    "expected_answer": "накапливать и отдавать флюиды",
+    "aliases": [
+      "накапливать флюиды",
+      "отдавать флюиды",
+      "содержать и пропускать флюиды"
+    ]
+  },
+  {
+    "question_id": "oilgas_010_paraphrase_003",
+    "fact_id": "oilgas_010",
+    "question_type": "paraphrase",
+    "question": "Что делает породу коллектором?",
+    "expected_answer": "накапливать и отдавать флюиды",
+    "aliases": [
+      "накапливать флюиды",
+      "отдавать флюиды",
+      "содержать и пропускать флюиды"
+    ]
+  },
+  {
+    "question_id": "oilgas_010_reverse_001",
+    "fact_id": "oilgas_010",
+    "question_type": "reverse",
+    "question": "Какая порода способна накапливать и отдавать флюиды?",
+    "expected_answer": "Коллекторская порода",
+    "aliases": [
+      "Коллекторская порода"
+    ]
+  },
+  {
+    "question_id": "oilgas_010_neighbor_001",
+    "fact_id": "oilgas_010",
+    "question_type": "neighbor",
+    "question": "Что характеризует пористость?",
+    "expected_answer": "объём пустот в породе",
+    "aliases": [
+      "объём порового пространства"
+    ]
+  },
+  {
+    "question_id": "oilgas_010_neighbor_002",
+    "fact_id": "oilgas_010",
+    "question_type": "neighbor",
+    "question": "Что характеризует проницаемость?",
+    "expected_answer": "способность породы пропускать флюиды",
+    "aliases": [
+      "фильтрационные свойства"
+    ]
+  },
+  {
+    "question_id": "oilgas_010_neighbor_003",
+    "fact_id": "oilgas_010",
+    "question_type": "neighbor",
+    "question": "Что такое покрышка залежи?",
+    "expected_answer": "непроницаемая порода, перекрывающая коллектор",
+    "aliases": [
+      "порода-покрышка"
+    ]
+  },
+  {
+    "question_id": "oilgas_010_locality_001",
+    "fact_id": "oilgas_010",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_010_locality_002",
+    "fact_id": "oilgas_010",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_010_locality_003",
+    "fact_id": "oilgas_010",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_010_locality_004",
+    "fact_id": "oilgas_010",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_010_locality_005",
+    "fact_id": "oilgas_010",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_011_direct_001",
+    "fact_id": "oilgas_011",
+    "question_type": "direct",
+    "question": "Чему препятствует флюидоупор?",
+    "expected_answer": "миграции флюидов",
+    "aliases": [
+      "движению флюидов",
+      "перемещению флюидов",
+      "миграции нефти и газа"
+    ]
+  },
+  {
+    "question_id": "oilgas_011_paraphrase_001",
+    "fact_id": "oilgas_011",
+    "question_type": "paraphrase",
+    "question": "Какую функцию выполняет флюидоупор?",
+    "expected_answer": "миграции флюидов",
+    "aliases": [
+      "движению флюидов",
+      "перемещению флюидов",
+      "миграции нефти и газа"
+    ]
+  },
+  {
+    "question_id": "oilgas_011_paraphrase_002",
+    "fact_id": "oilgas_011",
+    "question_type": "paraphrase",
+    "question": "Что ограничивает движение флюидов в залежи?",
+    "expected_answer": "миграции флюидов",
+    "aliases": [
+      "движению флюидов",
+      "перемещению флюидов",
+      "миграции нефти и газа"
+    ]
+  },
+  {
+    "question_id": "oilgas_011_paraphrase_003",
+    "fact_id": "oilgas_011",
+    "question_type": "paraphrase",
+    "question": "Для чего нужен флюидоупор в нефтегазовой системе?",
+    "expected_answer": "миграции флюидов",
+    "aliases": [
+      "движению флюидов",
+      "перемещению флюидов",
+      "миграции нефти и газа"
+    ]
+  },
+  {
+    "question_id": "oilgas_011_reverse_001",
+    "fact_id": "oilgas_011",
+    "question_type": "reverse",
+    "question": "Что препятствует миграции флюидов?",
+    "expected_answer": "Флюидоупор",
+    "aliases": [
+      "Флюидоупор"
+    ]
+  },
+  {
+    "question_id": "oilgas_011_neighbor_001",
+    "fact_id": "oilgas_011",
+    "question_type": "neighbor",
+    "question": "Что такое покрышка залежи?",
+    "expected_answer": "непроницаемая порода, перекрывающая коллектор",
+    "aliases": [
+      "флюидоупор"
+    ]
+  },
+  {
+    "question_id": "oilgas_011_neighbor_002",
+    "fact_id": "oilgas_011",
+    "question_type": "neighbor",
+    "question": "Что такое миграция углеводородов?",
+    "expected_answer": "перемещение углеводородов в горных породах",
+    "aliases": [
+      "движение нефти и газа"
+    ]
+  },
+  {
+    "question_id": "oilgas_011_neighbor_003",
+    "fact_id": "oilgas_011",
+    "question_type": "neighbor",
+    "question": "Что такое ловушка нефти и газа?",
+    "expected_answer": "геологическая структура, способная удерживать углеводороды",
+    "aliases": [
+      "геологическая ловушка"
+    ]
+  },
+  {
+    "question_id": "oilgas_011_locality_001",
+    "fact_id": "oilgas_011",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_011_locality_002",
+    "fact_id": "oilgas_011",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_011_locality_003",
+    "fact_id": "oilgas_011",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_011_locality_004",
+    "fact_id": "oilgas_011",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_011_locality_005",
+    "fact_id": "oilgas_011",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_012_direct_001",
+    "fact_id": "oilgas_012",
+    "question_type": "direct",
+    "question": "Что характеризует пористость?",
+    "expected_answer": "объём пустот в породе",
+    "aliases": [
+      "доля пустот",
+      "объём порового пространства",
+      "наличие пор"
+    ]
+  },
+  {
+    "question_id": "oilgas_012_paraphrase_001",
+    "fact_id": "oilgas_012",
+    "question_type": "paraphrase",
+    "question": "Что показывает пористость горной породы?",
+    "expected_answer": "объём пустот в породе",
+    "aliases": [
+      "доля пустот",
+      "объём порового пространства",
+      "наличие пор"
+    ]
+  },
+  {
+    "question_id": "oilgas_012_paraphrase_002",
+    "fact_id": "oilgas_012",
+    "question_type": "paraphrase",
+    "question": "С чем связана пористость породы?",
+    "expected_answer": "объём пустот в породе",
+    "aliases": [
+      "доля пустот",
+      "объём порового пространства",
+      "наличие пор"
+    ]
+  },
+  {
+    "question_id": "oilgas_012_paraphrase_003",
+    "fact_id": "oilgas_012",
+    "question_type": "paraphrase",
+    "question": "Какой параметр описывает объём пустот в породе?",
+    "expected_answer": "объём пустот в породе",
+    "aliases": [
+      "доля пустот",
+      "объём порового пространства",
+      "наличие пор"
+    ]
+  },
+  {
+    "question_id": "oilgas_012_reverse_001",
+    "fact_id": "oilgas_012",
+    "question_type": "reverse",
+    "question": "Как называется характеристика объёма пустот в породе?",
+    "expected_answer": "Пористость",
+    "aliases": [
+      "Пористость"
+    ]
+  },
+  {
+    "question_id": "oilgas_012_neighbor_001",
+    "fact_id": "oilgas_012",
+    "question_type": "neighbor",
+    "question": "Что характеризует проницаемость?",
+    "expected_answer": "способность породы пропускать флюиды",
+    "aliases": [
+      "фильтрационные свойства"
+    ]
+  },
+  {
+    "question_id": "oilgas_012_neighbor_002",
+    "fact_id": "oilgas_012",
+    "question_type": "neighbor",
+    "question": "Что такое коллекторская порода?",
+    "expected_answer": "порода, способная накапливать и отдавать флюиды",
+    "aliases": [
+      "порода-коллектор"
+    ]
+  },
+  {
+    "question_id": "oilgas_012_neighbor_003",
+    "fact_id": "oilgas_012",
+    "question_type": "neighbor",
+    "question": "Что показывает нефтенасыщенность?",
+    "expected_answer": "долю порового пространства, занятую нефтью",
+    "aliases": [
+      "содержание нефти в порах"
+    ]
+  },
+  {
+    "question_id": "oilgas_012_locality_001",
+    "fact_id": "oilgas_012",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_012_locality_002",
+    "fact_id": "oilgas_012",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_012_locality_003",
+    "fact_id": "oilgas_012",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_012_locality_004",
+    "fact_id": "oilgas_012",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_012_locality_005",
+    "fact_id": "oilgas_012",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_013_direct_001",
+    "fact_id": "oilgas_013",
+    "question_type": "direct",
+    "question": "Что характеризует проницаемость?",
+    "expected_answer": "способность породы пропускать флюиды",
+    "aliases": [
+      "способность пропускать флюиды",
+      "фильтрационные свойства породы",
+      "прохождение флюидов через породу"
+    ]
+  },
+  {
+    "question_id": "oilgas_013_paraphrase_001",
+    "fact_id": "oilgas_013",
+    "question_type": "paraphrase",
+    "question": "Что показывает проницаемость горной породы?",
+    "expected_answer": "способность породы пропускать флюиды",
+    "aliases": [
+      "способность пропускать флюиды",
+      "фильтрационные свойства породы",
+      "прохождение флюидов через породу"
+    ]
+  },
+  {
+    "question_id": "oilgas_013_paraphrase_002",
+    "fact_id": "oilgas_013",
+    "question_type": "paraphrase",
+    "question": "Какое свойство породы отвечает за прохождение флюидов?",
+    "expected_answer": "способность породы пропускать флюиды",
+    "aliases": [
+      "способность пропускать флюиды",
+      "фильтрационные свойства породы",
+      "прохождение флюидов через породу"
+    ]
+  },
+  {
+    "question_id": "oilgas_013_paraphrase_003",
+    "fact_id": "oilgas_013",
+    "question_type": "paraphrase",
+    "question": "Что означает проницаемость коллектора?",
+    "expected_answer": "способность породы пропускать флюиды",
+    "aliases": [
+      "способность пропускать флюиды",
+      "фильтрационные свойства породы",
+      "прохождение флюидов через породу"
+    ]
+  },
+  {
+    "question_id": "oilgas_013_reverse_001",
+    "fact_id": "oilgas_013",
+    "question_type": "reverse",
+    "question": "Как называется способность породы пропускать флюиды?",
+    "expected_answer": "Проницаемость",
+    "aliases": [
+      "Проницаемость"
+    ]
+  },
+  {
+    "question_id": "oilgas_013_neighbor_001",
+    "fact_id": "oilgas_013",
+    "question_type": "neighbor",
+    "question": "Что характеризует пористость?",
+    "expected_answer": "объём пустот в породе",
+    "aliases": [
+      "объём порового пространства"
+    ]
+  },
+  {
+    "question_id": "oilgas_013_neighbor_002",
+    "fact_id": "oilgas_013",
+    "question_type": "neighbor",
+    "question": "Что такое коллекторская порода?",
+    "expected_answer": "порода, способная накапливать и отдавать флюиды",
+    "aliases": [
+      "порода-коллектор"
+    ]
+  },
+  {
+    "question_id": "oilgas_013_neighbor_003",
+    "fact_id": "oilgas_013",
+    "question_type": "neighbor",
+    "question": "Что создаёт гидроразрыв пласта?",
+    "expected_answer": "трещины в продуктивном пласте",
+    "aliases": [
+      "искусственные трещины"
+    ]
+  },
+  {
+    "question_id": "oilgas_013_locality_001",
+    "fact_id": "oilgas_013",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_013_locality_002",
+    "fact_id": "oilgas_013",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_013_locality_003",
+    "fact_id": "oilgas_013",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_013_locality_004",
+    "fact_id": "oilgas_013",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_013_locality_005",
+    "fact_id": "oilgas_013",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_014_direct_001",
+    "fact_id": "oilgas_014",
+    "question_type": "direct",
+    "question": "Что показывает нефтенасыщенность?",
+    "expected_answer": "долю порового пространства, занятую нефтью",
+    "aliases": [
+      "доля нефти в порах",
+      "содержание нефти в поровом пространстве",
+      "нефть в порах"
+    ]
+  },
+  {
+    "question_id": "oilgas_014_paraphrase_001",
+    "fact_id": "oilgas_014",
+    "question_type": "paraphrase",
+    "question": "Какой параметр показывает содержание нефти в порах?",
+    "expected_answer": "долю порового пространства, занятую нефтью",
+    "aliases": [
+      "доля нефти в порах",
+      "содержание нефти в поровом пространстве",
+      "нефть в порах"
+    ]
+  },
+  {
+    "question_id": "oilgas_014_paraphrase_002",
+    "fact_id": "oilgas_014",
+    "question_type": "paraphrase",
+    "question": "Что означает нефтенасыщенность пласта?",
+    "expected_answer": "долю порового пространства, занятую нефтью",
+    "aliases": [
+      "доля нефти в порах",
+      "содержание нефти в поровом пространстве",
+      "нефть в порах"
+    ]
+  },
+  {
+    "question_id": "oilgas_014_paraphrase_003",
+    "fact_id": "oilgas_014",
+    "question_type": "paraphrase",
+    "question": "Как описывается доля нефти в поровом пространстве?",
+    "expected_answer": "долю порового пространства, занятую нефтью",
+    "aliases": [
+      "доля нефти в порах",
+      "содержание нефти в поровом пространстве",
+      "нефть в порах"
+    ]
+  },
+  {
+    "question_id": "oilgas_014_reverse_001",
+    "fact_id": "oilgas_014",
+    "question_type": "reverse",
+    "question": "Как называется доля порового пространства, занятая нефтью?",
+    "expected_answer": "Нефтенасыщенность",
+    "aliases": [
+      "Нефтенасыщенность"
+    ]
+  },
+  {
+    "question_id": "oilgas_014_neighbor_001",
+    "fact_id": "oilgas_014",
+    "question_type": "neighbor",
+    "question": "Что характеризует пористость?",
+    "expected_answer": "объём пустот в породе",
+    "aliases": [
+      "объём порового пространства"
+    ]
+  },
+  {
+    "question_id": "oilgas_014_neighbor_002",
+    "fact_id": "oilgas_014",
+    "question_type": "neighbor",
+    "question": "Что такое водонефтяной контакт?",
+    "expected_answer": "граница между нефтью и водой в пласте",
+    "aliases": [
+      "контакт нефти и воды"
+    ]
+  },
+  {
+    "question_id": "oilgas_014_neighbor_003",
+    "fact_id": "oilgas_014",
+    "question_type": "neighbor",
+    "question": "Что такое пластовая вода?",
+    "expected_answer": "вода, находящаяся в пласте",
+    "aliases": [
+      "вода в пласте"
+    ]
+  },
+  {
+    "question_id": "oilgas_014_locality_001",
+    "fact_id": "oilgas_014",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_014_locality_002",
+    "fact_id": "oilgas_014",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_014_locality_003",
+    "fact_id": "oilgas_014",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_014_locality_004",
+    "fact_id": "oilgas_014",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_014_locality_005",
+    "fact_id": "oilgas_014",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_015_direct_001",
+    "fact_id": "oilgas_015",
+    "question_type": "direct",
+    "question": "Что характеризует пластовое давление?",
+    "expected_answer": "давление флюидов в пласте",
+    "aliases": [
+      "давление в пласте",
+      "давление пластовых флюидов"
+    ]
+  },
+  {
+    "question_id": "oilgas_015_paraphrase_001",
+    "fact_id": "oilgas_015",
+    "question_type": "paraphrase",
+    "question": "Что показывает давление в пласте?",
+    "expected_answer": "давление флюидов в пласте",
+    "aliases": [
+      "давление в пласте",
+      "давление пластовых флюидов"
+    ]
+  },
+  {
+    "question_id": "oilgas_015_paraphrase_002",
+    "fact_id": "oilgas_015",
+    "question_type": "paraphrase",
+    "question": "Как называется давление флюидов внутри пласта?",
+    "expected_answer": "давление флюидов в пласте",
+    "aliases": [
+      "давление в пласте",
+      "давление пластовых флюидов"
+    ]
+  },
+  {
+    "question_id": "oilgas_015_paraphrase_003",
+    "fact_id": "oilgas_015",
+    "question_type": "paraphrase",
+    "question": "Что описывает пластовое давление?",
+    "expected_answer": "давление флюидов в пласте",
+    "aliases": [
+      "давление в пласте",
+      "давление пластовых флюидов"
+    ]
+  },
+  {
+    "question_id": "oilgas_015_reverse_001",
+    "fact_id": "oilgas_015",
+    "question_type": "reverse",
+    "question": "Как называется давление флюидов в пласте?",
+    "expected_answer": "Пластовое давление",
+    "aliases": [
+      "Пластовое давление"
+    ]
+  },
+  {
+    "question_id": "oilgas_015_neighbor_001",
+    "fact_id": "oilgas_015",
+    "question_type": "neighbor",
+    "question": "Что такое заводнение пласта?",
+    "expected_answer": "закачка воды в пласт для поддержания давления и вытеснения нефти",
+    "aliases": [
+      "закачка воды"
+    ]
+  },
+  {
+    "question_id": "oilgas_015_neighbor_002",
+    "fact_id": "oilgas_015",
+    "question_type": "neighbor",
+    "question": "Что такое нагнетательная скважина?",
+    "expected_answer": "скважина для закачки рабочего агента в пласт",
+    "aliases": [
+      "инъекционная скважина"
+    ]
+  },
+  {
+    "question_id": "oilgas_015_neighbor_003",
+    "fact_id": "oilgas_015",
+    "question_type": "neighbor",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_015_locality_001",
+    "fact_id": "oilgas_015",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_015_locality_002",
+    "fact_id": "oilgas_015",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_015_locality_003",
+    "fact_id": "oilgas_015",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_015_locality_004",
+    "fact_id": "oilgas_015",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_015_locality_005",
+    "fact_id": "oilgas_015",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_016_direct_001",
+    "fact_id": "oilgas_016",
+    "question_type": "direct",
+    "question": "Что обеспечивает буровая скважина?",
+    "expected_answer": "доступ к продуктивному пласту",
+    "aliases": [
+      "доступ к пласту",
+      "доступ к залежи",
+      "вскрытие продуктивного пласта"
+    ]
+  },
+  {
+    "question_id": "oilgas_016_paraphrase_001",
+    "fact_id": "oilgas_016",
+    "question_type": "paraphrase",
+    "question": "Для чего нужна буровая скважина?",
+    "expected_answer": "доступ к продуктивному пласту",
+    "aliases": [
+      "доступ к пласту",
+      "доступ к залежи",
+      "вскрытие продуктивного пласта"
+    ]
+  },
+  {
+    "question_id": "oilgas_016_paraphrase_002",
+    "fact_id": "oilgas_016",
+    "question_type": "paraphrase",
+    "question": "Как получают доступ к продуктивному пласту?",
+    "expected_answer": "доступ к продуктивному пласту",
+    "aliases": [
+      "доступ к пласту",
+      "доступ к залежи",
+      "вскрытие продуктивного пласта"
+    ]
+  },
+  {
+    "question_id": "oilgas_016_paraphrase_003",
+    "fact_id": "oilgas_016",
+    "question_type": "paraphrase",
+    "question": "Какую функцию выполняет буровая скважина?",
+    "expected_answer": "доступ к продуктивному пласту",
+    "aliases": [
+      "доступ к пласту",
+      "доступ к залежи",
+      "вскрытие продуктивного пласта"
+    ]
+  },
+  {
+    "question_id": "oilgas_016_reverse_001",
+    "fact_id": "oilgas_016",
+    "question_type": "reverse",
+    "question": "Что обеспечивает доступ к продуктивному пласту?",
+    "expected_answer": "Буровая скважина",
+    "aliases": [
+      "Буровая скважина"
+    ]
+  },
+  {
+    "question_id": "oilgas_016_neighbor_001",
+    "fact_id": "oilgas_016",
+    "question_type": "neighbor",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_016_neighbor_002",
+    "fact_id": "oilgas_016",
+    "question_type": "neighbor",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_016_neighbor_003",
+    "fact_id": "oilgas_016",
+    "question_type": "neighbor",
+    "question": "Что укрепляет обсадная колонна?",
+    "expected_answer": "стенки скважины",
+    "aliases": [
+      "ствол скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_016_locality_001",
+    "fact_id": "oilgas_016",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_016_locality_002",
+    "fact_id": "oilgas_016",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_016_locality_003",
+    "fact_id": "oilgas_016",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_016_locality_004",
+    "fact_id": "oilgas_016",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_016_locality_005",
+    "fact_id": "oilgas_016",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_017_direct_001",
+    "fact_id": "oilgas_017",
+    "question_type": "direct",
+    "question": "Что укрепляет обсадная колонна?",
+    "expected_answer": "стенки скважины",
+    "aliases": [
+      "ствол скважины",
+      "стенки буровой скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_017_paraphrase_001",
+    "fact_id": "oilgas_017",
+    "question_type": "paraphrase",
+    "question": "Для чего используется обсадная колонна?",
+    "expected_answer": "стенки скважины",
+    "aliases": [
+      "ствол скважины",
+      "стенки буровой скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_017_paraphrase_002",
+    "fact_id": "oilgas_017",
+    "question_type": "paraphrase",
+    "question": "Что помогает укрепить стенки скважины?",
+    "expected_answer": "стенки скважины",
+    "aliases": [
+      "ствол скважины",
+      "стенки буровой скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_017_paraphrase_003",
+    "fact_id": "oilgas_017",
+    "question_type": "paraphrase",
+    "question": "Какую функцию выполняет обсадная колонна?",
+    "expected_answer": "стенки скважины",
+    "aliases": [
+      "ствол скважины",
+      "стенки буровой скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_017_reverse_001",
+    "fact_id": "oilgas_017",
+    "question_type": "reverse",
+    "question": "Что используется для укрепления стенок скважины?",
+    "expected_answer": "Обсадная колонна",
+    "aliases": [
+      "Обсадная колонна"
+    ]
+  },
+  {
+    "question_id": "oilgas_017_neighbor_001",
+    "fact_id": "oilgas_017",
+    "question_type": "neighbor",
+    "question": "Что изолирует цементирование скважины?",
+    "expected_answer": "пласты друг от друга",
+    "aliases": [
+      "межпластовые интервалы"
+    ]
+  },
+  {
+    "question_id": "oilgas_017_neighbor_002",
+    "fact_id": "oilgas_017",
+    "question_type": "neighbor",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_017_neighbor_003",
+    "fact_id": "oilgas_017",
+    "question_type": "neighbor",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_017_locality_001",
+    "fact_id": "oilgas_017",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_017_locality_002",
+    "fact_id": "oilgas_017",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_017_locality_003",
+    "fact_id": "oilgas_017",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_017_locality_004",
+    "fact_id": "oilgas_017",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_017_locality_005",
+    "fact_id": "oilgas_017",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_018_direct_001",
+    "fact_id": "oilgas_018",
+    "question_type": "direct",
+    "question": "Что изолирует цементирование скважины?",
+    "expected_answer": "пласты друг от друга",
+    "aliases": [
+      "разные пласты",
+      "межпластовые интервалы",
+      "водоносные и продуктивные пласты"
+    ]
+  },
+  {
+    "question_id": "oilgas_018_paraphrase_001",
+    "fact_id": "oilgas_018",
+    "question_type": "paraphrase",
+    "question": "Зачем выполняют цементирование скважины?",
+    "expected_answer": "пласты друг от друга",
+    "aliases": [
+      "разные пласты",
+      "межпластовые интервалы",
+      "водоносные и продуктивные пласты"
+    ]
+  },
+  {
+    "question_id": "oilgas_018_paraphrase_002",
+    "fact_id": "oilgas_018",
+    "question_type": "paraphrase",
+    "question": "Какой процесс помогает изолировать пласты друг от друга?",
+    "expected_answer": "пласты друг от друга",
+    "aliases": [
+      "разные пласты",
+      "межпластовые интервалы",
+      "водоносные и продуктивные пласты"
+    ]
+  },
+  {
+    "question_id": "oilgas_018_paraphrase_003",
+    "fact_id": "oilgas_018",
+    "question_type": "paraphrase",
+    "question": "Для чего нужно цементирование при строительстве скважины?",
+    "expected_answer": "пласты друг от друга",
+    "aliases": [
+      "разные пласты",
+      "межпластовые интервалы",
+      "водоносные и продуктивные пласты"
+    ]
+  },
+  {
+    "question_id": "oilgas_018_reverse_001",
+    "fact_id": "oilgas_018",
+    "question_type": "reverse",
+    "question": "Что применяют для изоляции пластов друг от друга?",
+    "expected_answer": "Цементирование скважины",
+    "aliases": [
+      "Цементирование скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_018_neighbor_001",
+    "fact_id": "oilgas_018",
+    "question_type": "neighbor",
+    "question": "Что укрепляет обсадная колонна?",
+    "expected_answer": "стенки скважины",
+    "aliases": [
+      "ствол скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_018_neighbor_002",
+    "fact_id": "oilgas_018",
+    "question_type": "neighbor",
+    "question": "Что такое буровая скважина?",
+    "expected_answer": "горная выработка для доступа к пласту",
+    "aliases": [
+      "скважина для доступа к пласту"
+    ]
+  },
+  {
+    "question_id": "oilgas_018_neighbor_003",
+    "fact_id": "oilgas_018",
+    "question_type": "neighbor",
+    "question": "Что такое пластовая вода?",
+    "expected_answer": "вода, находящаяся в пласте",
+    "aliases": [
+      "вода в пласте"
+    ]
+  },
+  {
+    "question_id": "oilgas_018_locality_001",
+    "fact_id": "oilgas_018",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_018_locality_002",
+    "fact_id": "oilgas_018",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_018_locality_003",
+    "fact_id": "oilgas_018",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_018_locality_004",
+    "fact_id": "oilgas_018",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_018_locality_005",
+    "fact_id": "oilgas_018",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_019_direct_001",
+    "fact_id": "oilgas_019",
+    "question_type": "direct",
+    "question": "Что создаёт гидроразрыв пласта?",
+    "expected_answer": "трещины в продуктивном пласте",
+    "aliases": [
+      "искусственные трещины",
+      "трещины в пласте",
+      "сеть трещин"
+    ]
+  },
+  {
+    "question_id": "oilgas_019_paraphrase_001",
+    "fact_id": "oilgas_019",
+    "question_type": "paraphrase",
+    "question": "Что происходит с пластом при гидроразрыве?",
+    "expected_answer": "трещины в продуктивном пласте",
+    "aliases": [
+      "искусственные трещины",
+      "трещины в пласте",
+      "сеть трещин"
+    ]
+  },
+  {
+    "question_id": "oilgas_019_paraphrase_002",
+    "fact_id": "oilgas_019",
+    "question_type": "paraphrase",
+    "question": "Для чего применяют гидроразрыв пласта?",
+    "expected_answer": "трещины в продуктивном пласте",
+    "aliases": [
+      "искусственные трещины",
+      "трещины в пласте",
+      "сеть трещин"
+    ]
+  },
+  {
+    "question_id": "oilgas_019_paraphrase_003",
+    "fact_id": "oilgas_019",
+    "question_type": "paraphrase",
+    "question": "Какие изменения вызывает гидроразрыв в продуктивном пласте?",
+    "expected_answer": "трещины в продуктивном пласте",
+    "aliases": [
+      "искусственные трещины",
+      "трещины в пласте",
+      "сеть трещин"
+    ]
+  },
+  {
+    "question_id": "oilgas_019_reverse_001",
+    "fact_id": "oilgas_019",
+    "question_type": "reverse",
+    "question": "Какой метод создаёт трещины в продуктивном пласте?",
+    "expected_answer": "Гидроразрыв пласта",
+    "aliases": [
+      "Гидроразрыв пласта"
+    ]
+  },
+  {
+    "question_id": "oilgas_019_neighbor_001",
+    "fact_id": "oilgas_019",
+    "question_type": "neighbor",
+    "question": "Что удерживает проппант?",
+    "expected_answer": "трещины гидроразрыва открытыми",
+    "aliases": [
+      "трещины открытыми"
+    ]
+  },
+  {
+    "question_id": "oilgas_019_neighbor_002",
+    "fact_id": "oilgas_019",
+    "question_type": "neighbor",
+    "question": "Что характеризует проницаемость?",
+    "expected_answer": "способность породы пропускать флюиды",
+    "aliases": [
+      "фильтрационные свойства"
+    ]
+  },
+  {
+    "question_id": "oilgas_019_neighbor_003",
+    "fact_id": "oilgas_019",
+    "question_type": "neighbor",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_019_locality_001",
+    "fact_id": "oilgas_019",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_019_locality_002",
+    "fact_id": "oilgas_019",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_019_locality_003",
+    "fact_id": "oilgas_019",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_019_locality_004",
+    "fact_id": "oilgas_019",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_019_locality_005",
+    "fact_id": "oilgas_019",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  },
+  {
+    "question_id": "oilgas_020_direct_001",
+    "fact_id": "oilgas_020",
+    "question_type": "direct",
+    "question": "Что удерживает проппант?",
+    "expected_answer": "трещины гидроразрыва открытыми",
+    "aliases": [
+      "открытые трещины",
+      "трещины после гидроразрыва",
+      "не даёт трещинам закрыться"
+    ]
+  },
+  {
+    "question_id": "oilgas_020_paraphrase_001",
+    "fact_id": "oilgas_020",
+    "question_type": "paraphrase",
+    "question": "Для чего используется проппант?",
+    "expected_answer": "трещины гидроразрыва открытыми",
+    "aliases": [
+      "открытые трещины",
+      "трещины после гидроразрыва",
+      "не даёт трещинам закрыться"
+    ]
+  },
+  {
+    "question_id": "oilgas_020_paraphrase_002",
+    "fact_id": "oilgas_020",
+    "question_type": "paraphrase",
+    "question": "Что не даёт трещинам гидроразрыва закрыться?",
+    "expected_answer": "трещины гидроразрыва открытыми",
+    "aliases": [
+      "открытые трещины",
+      "трещины после гидроразрыва",
+      "не даёт трещинам закрыться"
+    ]
+  },
+  {
+    "question_id": "oilgas_020_paraphrase_003",
+    "fact_id": "oilgas_020",
+    "question_type": "paraphrase",
+    "question": "Какую функцию выполняет проппант после гидроразрыва?",
+    "expected_answer": "трещины гидроразрыва открытыми",
+    "aliases": [
+      "открытые трещины",
+      "трещины после гидроразрыва",
+      "не даёт трещинам закрыться"
+    ]
+  },
+  {
+    "question_id": "oilgas_020_reverse_001",
+    "fact_id": "oilgas_020",
+    "question_type": "reverse",
+    "question": "Что удерживает трещины гидроразрыва открытыми?",
+    "expected_answer": "Проппант",
+    "aliases": [
+      "Проппант"
+    ]
+  },
+  {
+    "question_id": "oilgas_020_neighbor_001",
+    "fact_id": "oilgas_020",
+    "question_type": "neighbor",
+    "question": "Что создаёт гидроразрыв пласта?",
+    "expected_answer": "трещины в продуктивном пласте",
+    "aliases": [
+      "искусственные трещины"
+    ]
+  },
+  {
+    "question_id": "oilgas_020_neighbor_002",
+    "fact_id": "oilgas_020",
+    "question_type": "neighbor",
+    "question": "Что характеризует проницаемость?",
+    "expected_answer": "способность породы пропускать флюиды",
+    "aliases": [
+      "фильтрационные свойства"
+    ]
+  },
+  {
+    "question_id": "oilgas_020_neighbor_003",
+    "fact_id": "oilgas_020",
+    "question_type": "neighbor",
+    "question": "Для чего применяют гидроразрыв пласта?",
+    "expected_answer": "для создания трещин в продуктивном пласте",
+    "aliases": [
+      "интенсификация притока"
+    ]
+  },
+  {
+    "question_id": "oilgas_020_locality_001",
+    "fact_id": "oilgas_020",
+    "question_type": "locality",
+    "question": "Что такое дебит скважины?",
+    "expected_answer": "количество флюида, добываемое скважиной за единицу времени",
+    "aliases": [
+      "производительность скважины",
+      "объём добычи за единицу времени"
+    ]
+  },
+  {
+    "question_id": "oilgas_020_locality_002",
+    "fact_id": "oilgas_020",
+    "question_type": "locality",
+    "question": "Что такое устье скважины?",
+    "expected_answer": "верхняя часть скважины на поверхности",
+    "aliases": [
+      "поверхностная часть скважины",
+      "место выхода скважины на поверхность"
+    ]
+  },
+  {
+    "question_id": "oilgas_020_locality_003",
+    "fact_id": "oilgas_020",
+    "question_type": "locality",
+    "question": "Что такое забой скважины?",
+    "expected_answer": "нижняя часть скважины",
+    "aliases": [
+      "дно скважины",
+      "нижняя точка скважины"
+    ]
+  },
+  {
+    "question_id": "oilgas_020_locality_004",
+    "fact_id": "oilgas_020",
+    "question_type": "locality",
+    "question": "Что такое каротаж скважины?",
+    "expected_answer": "геофизическое исследование скважины",
+    "aliases": [
+      "геофизические измерения в скважине",
+      "скважинные исследования"
+    ]
+  },
+  {
+    "question_id": "oilgas_020_locality_005",
+    "fact_id": "oilgas_020",
+    "question_type": "locality",
+    "question": "Что такое сейсморазведка?",
+    "expected_answer": "геофизический метод изучения недр с помощью сейсмических волн",
+    "aliases": [
+      "исследование недр сейсмическими волнами",
+      "сейсмический метод разведки"
+    ]
+  }
+]

@@ -1,0 +1,352 @@
+[
+  {
+    "question_id": "general_001",
+    "question_type": "global_locality",
+    "question": "Какая столица Франции?",
+    "expected_answer": "Париж",
+    "aliases": ["Paris", "город Париж"]
+  },
+  {
+    "question_id": "general_002",
+    "question_type": "global_locality",
+    "question": "Какая столица Италии?",
+    "expected_answer": "Рим",
+    "aliases": ["Rome", "город Рим"]
+  },
+  {
+    "question_id": "general_003",
+    "question_type": "global_locality",
+    "question": "Какая столица Японии?",
+    "expected_answer": "Токио",
+    "aliases": ["Tokyo", "город Токио"]
+  },
+  {
+    "question_id": "general_004",
+    "question_type": "global_locality",
+    "question": "На каком материке находится Египет?",
+    "expected_answer": "Африка",
+    "aliases": ["в Африке", "африканский континент"]
+  },
+  {
+    "question_id": "general_005",
+    "question_type": "global_locality",
+    "question": "Какая самая длинная река в России?",
+    "expected_answer": "Лена",
+    "aliases": ["река Лена"]
+  },
+  {
+    "question_id": "general_006",
+    "question_type": "global_locality",
+    "question": "Сколько планет в Солнечной системе?",
+    "expected_answer": "8",
+    "aliases": ["восемь", "восемь планет"]
+  },
+  {
+    "question_id": "general_007",
+    "question_type": "global_locality",
+    "question": "Какая планета ближайшая к Солнцу?",
+    "expected_answer": "Меркурий",
+    "aliases": ["Mercury", "планета Меркурий"]
+  },
+  {
+    "question_id": "general_008",
+    "question_type": "global_locality",
+    "question": "Как называется естественный спутник Земли?",
+    "expected_answer": "Луна",
+    "aliases": ["Moon", "спутник Земли"]
+  },
+  {
+    "question_id": "general_009",
+    "question_type": "global_locality",
+    "question": "Какая звезда находится в центре Солнечной системы?",
+    "expected_answer": "Солнце",
+    "aliases": ["Sun"]
+  },
+  {
+    "question_id": "general_010",
+    "question_type": "global_locality",
+    "question": "Какой газ необходим человеку для дыхания?",
+    "expected_answer": "кислород",
+    "aliases": ["O2", "оксиген"]
+  },
+  {
+    "question_id": "general_011",
+    "question_type": "global_locality",
+    "question": "Какой орган перекачивает кровь в организме человека?",
+    "expected_answer": "сердце",
+    "aliases": ["сердечная мышца"]
+  },
+  {
+    "question_id": "general_012",
+    "question_type": "global_locality",
+    "question": "Какой орган отвечает за мышление и координацию работы организма?",
+    "expected_answer": "мозг",
+    "aliases": ["головной мозг"]
+  },
+  {
+    "question_id": "general_013",
+    "question_type": "global_locality",
+    "question": "Какая молекула хранит наследственную информацию?",
+    "expected_answer": "ДНК",
+    "aliases": ["DNA", "дезоксирибонуклеиновая кислота"]
+  },
+  {
+    "question_id": "general_014",
+    "question_type": "global_locality",
+    "question": "Сколько хромосом обычно содержит соматическая клетка человека?",
+    "expected_answer": "46",
+    "aliases": ["сорок шесть", "46 хромосом"]
+  },
+  {
+    "question_id": "general_015",
+    "question_type": "global_locality",
+    "question": "Кто написал роман «Война и мир»?",
+    "expected_answer": "Лев Толстой",
+    "aliases": ["Толстой", "Л. Н. Толстой", "Лев Николаевич Толстой"]
+  },
+  {
+    "question_id": "general_016",
+    "question_type": "global_locality",
+    "question": "Кто написал роман «Преступление и наказание»?",
+    "expected_answer": "Фёдор Достоевский",
+    "aliases": ["Достоевский", "Ф. М. Достоевский", "Фёдор Михайлович Достоевский"]
+  },
+  {
+    "question_id": "general_017",
+    "question_type": "global_locality",
+    "question": "Кто является автором пьесы «Гамлет»?",
+    "expected_answer": "Уильям Шекспир",
+    "aliases": ["Шекспир", "William Shakespeare"]
+  },
+  {
+    "question_id": "general_018",
+    "question_type": "global_locality",
+    "question": "В каком году началась Вторая мировая война?",
+    "expected_answer": "1939",
+    "aliases": ["в 1939 году"]
+  },
+  {
+    "question_id": "general_019",
+    "question_type": "global_locality",
+    "question": "В каком году человек впервые высадился на Луне?",
+    "expected_answer": "1969",
+    "aliases": ["в 1969 году"]
+  },
+  {
+    "question_id": "general_020",
+    "question_type": "global_locality",
+    "question": "Кто был первым космонавтом?",
+    "expected_answer": "Юрий Гагарин",
+    "aliases": ["Гагарин", "Ю. А. Гагарин", "Юрий Алексеевич Гагарин"]
+  },
+  {
+    "question_id": "general_021",
+    "question_type": "global_locality",
+    "question": "Сколько будет 7 умножить на 8?",
+    "expected_answer": "56",
+    "aliases": ["пятьдесят шесть"]
+  },
+  {
+    "question_id": "general_022",
+    "question_type": "global_locality",
+    "question": "Сколько градусов в прямом угле?",
+    "expected_answer": "90",
+    "aliases": ["90 градусов", "девяносто градусов"]
+  },
+  {
+    "question_id": "general_023",
+    "question_type": "global_locality",
+    "question": "Как называется многоугольник с тремя сторонами?",
+    "expected_answer": "треугольник",
+    "aliases": ["треугольником"]
+  },
+  {
+    "question_id": "general_024",
+    "question_type": "global_locality",
+    "question": "Как называется наука о веществах и их превращениях?",
+    "expected_answer": "химия",
+    "aliases": ["химическая наука"]
+  },
+  {
+    "question_id": "general_025",
+    "question_type": "global_locality",
+    "question": "Как называется частица с отрицательным электрическим зарядом?",
+    "expected_answer": "электрон",
+    "aliases": ["electron"]
+  },
+  {
+    "question_id": "general_026",
+    "question_type": "global_locality",
+    "question": "Как называется процесс перехода воды из жидкого состояния в газообразное?",
+    "expected_answer": "испарение",
+    "aliases": ["парообразование"]
+  },
+  {
+    "question_id": "general_027",
+    "question_type": "global_locality",
+    "question": "Как называется температура замерзания воды при нормальном давлении по Цельсию?",
+    "expected_answer": "0 градусов Цельсия",
+    "aliases": ["0 °C", "ноль градусов", "ноль градусов Цельсия"]
+  },
+  {
+    "question_id": "general_028",
+    "question_type": "global_locality",
+    "question": "Какой язык программирования часто используется для анализа данных и машинного обучения?",
+    "expected_answer": "Python",
+    "aliases": ["Питон", "язык Python"]
+  },
+  {
+    "question_id": "general_029",
+    "question_type": "global_locality",
+    "question": "Что означает HTML?",
+    "expected_answer": "язык гипертекстовой разметки",
+    "aliases": ["HyperText Markup Language", "гипертекстовая разметка"]
+  },
+  {
+    "question_id": "general_030",
+    "question_type": "global_locality",
+    "question": "Как называется основной протокол передачи веб-страниц?",
+    "expected_answer": "HTTP",
+    "aliases": ["HyperText Transfer Protocol", "протокол HTTP"]
+  },
+  {
+    "question_id": "general_031",
+    "question_type": "global_locality",
+    "question": "Что такое операционная система?",
+    "expected_answer": "программное обеспечение, управляющее работой компьютера",
+    "aliases": ["системное программное обеспечение", "ПО для управления компьютером"]
+  },
+  {
+    "question_id": "general_032",
+    "question_type": "global_locality",
+    "question": "Что такое база данных?",
+    "expected_answer": "организованное хранилище данных",
+    "aliases": ["структурированное хранилище данных", "хранилище информации"]
+  },
+  {
+    "question_id": "general_033",
+    "question_type": "global_locality",
+    "question": "Что такое алгоритм?",
+    "expected_answer": "последовательность действий для решения задачи",
+    "aliases": ["набор инструкций", "порядок действий"]
+  },
+  {
+    "question_id": "general_034",
+    "question_type": "global_locality",
+    "question": "Как называется единица измерения электрического сопротивления?",
+    "expected_answer": "ом",
+    "aliases": ["Ом", "ohm"]
+  },
+  {
+    "question_id": "general_035",
+    "question_type": "global_locality",
+    "question": "Как называется единица измерения силы тока?",
+    "expected_answer": "ампер",
+    "aliases": ["А", "ampere"]
+  },
+  {
+    "question_id": "general_036",
+    "question_type": "global_locality",
+    "question": "Что измеряют в вольтах?",
+    "expected_answer": "электрическое напряжение",
+    "aliases": ["напряжение", "разность потенциалов"]
+  },
+  {
+    "question_id": "general_037",
+    "question_type": "global_locality",
+    "question": "Как называется процесс получения энергии растениями из света?",
+    "expected_answer": "фотосинтез",
+    "aliases": ["photosynthesis"]
+  },
+  {
+    "question_id": "general_038",
+    "question_type": "global_locality",
+    "question": "Как называется самая маленькая структурная единица живого организма?",
+    "expected_answer": "клетка",
+    "aliases": ["cell"]
+  },
+  {
+    "question_id": "general_039",
+    "question_type": "global_locality",
+    "question": "Как называется твёрдая оболочка Земли?",
+    "expected_answer": "литосфера",
+    "aliases": ["земная кора и верхняя часть мантии"]
+  },
+  {
+    "question_id": "general_040",
+    "question_type": "global_locality",
+    "question": "Как называется слой атмосферы, в котором формируется погода?",
+    "expected_answer": "тропосфера",
+    "aliases": ["troposphere"]
+  },
+  {
+    "question_id": "general_041",
+    "question_type": "global_locality",
+    "question": "Как называется самая высокая гора на Земле?",
+    "expected_answer": "Эверест",
+    "aliases": ["Джомолунгма", "Mount Everest"]
+  },
+  {
+    "question_id": "general_042",
+    "question_type": "global_locality",
+    "question": "Какой океан самый большой на Земле?",
+    "expected_answer": "Тихий океан",
+    "aliases": ["Тихий", "Pacific Ocean"]
+  },
+  {
+    "question_id": "general_043",
+    "question_type": "global_locality",
+    "question": "Какая страна имеет самую большую площадь?",
+    "expected_answer": "Россия",
+    "aliases": ["Российская Федерация", "РФ"]
+  },
+  {
+    "question_id": "general_044",
+    "question_type": "global_locality",
+    "question": "Как называется валюта США?",
+    "expected_answer": "доллар США",
+    "aliases": ["доллар", "USD", "US dollar"]
+  },
+  {
+    "question_id": "general_045",
+    "question_type": "global_locality",
+    "question": "Как называется валюта Еврозоны?",
+    "expected_answer": "евро",
+    "aliases": ["EUR", "euro"]
+  },
+  {
+    "question_id": "general_046",
+    "question_type": "global_locality",
+    "question": "Кто написал «Евгения Онегина»?",
+    "expected_answer": "Александр Пушкин",
+    "aliases": ["Пушкин", "А. С. Пушкин", "Александр Сергеевич Пушкин"]
+  },
+  {
+    "question_id": "general_047",
+    "question_type": "global_locality",
+    "question": "Как называется столица России?",
+    "expected_answer": "Москва",
+    "aliases": ["Moscow", "город Москва"]
+  },
+  {
+    "question_id": "general_048",
+    "question_type": "global_locality",
+    "question": "Как называется столица Германии?",
+    "expected_answer": "Берлин",
+    "aliases": ["Berlin", "город Берлин"]
+  },
+  {
+    "question_id": "general_049",
+    "question_type": "global_locality",
+    "question": "Как называется столица Великобритании?",
+    "expected_answer": "Лондон",
+    "aliases": ["London", "город Лондон"]
+  },
+  {
+    "question_id": "general_050",
+    "question_type": "global_locality",
+    "question": "Как называется столица Китая?",
+    "expected_answer": "Пекин",
+    "aliases": ["Beijing", "город Пекин"]
+  }
+]
