@@ -18,6 +18,7 @@ vectors/
 data/stats/
 
 my_exp/models/
+my_exp/data/wiki_20220301_simple/
 my_exp/stats/
 my_exp/results/
 my_exp/data_processing/PubTator/

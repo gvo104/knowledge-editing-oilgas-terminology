@@ -37,3 +37,20 @@ my_exp/data_processing/PubTator
 current_result.md
 finish_result.md
 !my_exp_2/data
+
+# Required MEMIT runtime artifacts. Keep this narrow: models, outputs and
+# unrelated corpora stay ignored.
+!my_exp/data/
+my_exp/data/*
+!my_exp/data/wiki_20220301_simple/
+my_exp/data/wiki_20220301_simple/*
+!my_exp/data/wiki_20220301_simple/data/
+my_exp/data/wiki_20220301_simple/data/*
+!my_exp/data/wiki_20220301_simple/data/20220301.simple/
+!my_exp/data/wiki_20220301_simple/data/20220301.simple/train-00000-of-00001.parquet
+!my_exp/stats/
+my_exp/stats/*
+!my_exp/stats/Qwen2.5-3B/
+my_exp/stats/Qwen2.5-3B/*
+!my_exp/stats/Qwen2.5-3B/._my_exp_data_wiki_20220301_simple_data_20220301.simple_stats/
+!my_exp/stats/Qwen2.5-3B/._my_exp_data_wiki_20220301_simple_data_20220301.simple_stats/*.npz
