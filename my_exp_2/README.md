@@ -1,105 +1,48 @@
-# my_exp_2: Technical Documentation
+# my_exp_2: исследовательский контур Knowledge Editing
 
-`my_exp_2/` is the main research layer of this repository. It contains the domain dataset, experiment orchestration, evaluation scripts, and reporting utilities built on top of `EasyEdit`.
+`my_exp_2/` — основной исследовательский слой проекта поверх `EasyEdit`. Он нужен для воспроизводимого сравнения методов редактирования знаний в задаче доменной адаптации терминологии без полного переобучения модели.
 
-The goal of this module is not to replace EasyEdit, but to adapt it to a reproducible domain-specific study of knowledge editing in the oil and gas area.
+Текущий домен: нефтегазовая терминология.  
+Базовая модель: `Qwen2.5-3B`.  
+Методы: `LoRA`, `ROME`, `MEMIT`, `WISE`.  
+Полный актуальный прогон: `my_exp_2/outputs/oilgas_qwen25_3b_full_20facts`.
 
-## Research Goal
+## Постановка проблемы
 
-The main question is whether a relatively small language model, `Qwen2.5-3B`, can absorb new domain facts without full retraining while preserving acceptable behavior outside the edited fact.
+Большие языковые модели могут уверенно отвечать на общие вопросы, но плохо работать с узкой терминологией: не знать факты, отвечать нестабильно или заменять точный ответ общими рассуждениями. Полное дообучение модели решает часть проблемы, но требует ресурсов, данных и времени.
 
-The current study focuses on five properties:
+`Knowledge editing` рассматривается как более локальная альтернатива: изменить поведение модели относительно ограниченного набора фактов и проверить, насколько это изменение переносится на другие формулировки, не разрушает соседние знания и сохраняется при серии правок.
 
-- `edit success`: did the model learn the target fact after editing;
-- `generalization`: does the edit transfer to paraphrased formulations;
-- `locality`: did nearby knowledge remain stable;
-- `retention`: in sequential mode, are earlier inserted facts preserved;
-- `global robustness`: did the model keep general and domain knowledge outside the edited fact.
+В этом проекте knowledge editing проверяется как инструмент controlled domain adaptation для терминологии нефтегазовой отрасли.
 
-## Implemented Scope
+## Исследовательские цели
 
-At the current stage `my_exp_2` already supports:
+Основные вопросы:
 
-- validation of the oil and gas JSON dataset;
-- baseline evaluation of the unedited model;
-- `single-edit` experiments;
-- `sequential-edit` experiments;
-- metric aggregation to JSON and CSV;
-- markdown report generation.
+- можно ли добавить или скорректировать доменный факт без полного дообучения модели;
+- какой метод лучше работает для одиночного редактирования;
+- какой метод лучше выдерживает последовательное накопление правок;
+- как отличаются режимы `knowledge insertion` и `knowledge replacement`;
+- какие типы фактов, `subject`, `relation` и `level` хуже редактируются;
+- насколько редактирование портит соседние, доменные и общие знания.
 
-The working editing methods in this layer are:
+## Данные
 
-- `LoRA`
-- `ROME`
-- `MEMIT`
-- `WISE`
+Основной набор содержит 20 нефтегазовых фактов в формате:
 
-The current public MVP does not yet cover:
+```text
+subject -> relation -> object
+```
 
-- `SFT` as a full experimental branch;
-- `LocFT-BF`;
-- richer judge-based evaluation;
-- large-scale plotting and final benchmark packaging.
+Примеры:
 
-## Experimental Design
+```text
+Кероген -> является источником -> углеводородов
+Гидроразрыв пласта -> создаёт -> трещины в продуктивном пласте
+Проппант -> удерживает -> трещины гидроразрыва открытыми
+```
 
-### 1. Baseline evaluation
-
-The untouched base model is evaluated before any editing.
-
-Purpose:
-
-- estimate which oil and gas facts the model already knows;
-- detect unstable or noisy answers before editing;
-- record baseline domain accuracy;
-- record baseline general-knowledge accuracy.
-
-### 2. Single-edit experiment
-
-Each fact is edited independently.
-
-Pipeline:
-
-1. Load the base model.
-2. Edit one fact.
-3. Evaluate the edited model.
-4. Save results.
-5. Discard the edited state.
-6. Reload the base model for the next fact.
-
-This setup measures how well each method performs on isolated fact insertion or replacement.
-
-### 3. Sequential-edit experiment
-
-Facts are edited one after another on the same evolving model.
-
-Pipeline:
-
-1. Load the base model once.
-2. Apply the first edit.
-3. Evaluate the current edited fact and previously seen facts.
-4. Apply the next edit on top of the already modified model.
-5. Repeat for the configured sequence length.
-
-This setup measures whether the model can accumulate multiple edits without quickly forgetting earlier ones or degrading on unrelated questions.
-
-## Method Role in This Project
-
-This module uses EasyEdit as the backend, but the experiment logic is project-specific.
-
-### `LoRA`
-
-In this project, LoRA acts as a parameter-efficient editing baseline. It updates a low-rank adapter instead of directly rewriting the full model weights.
-
-### `ROME`
-
-ROME is used as a direct localized editing method for a single factual association. In the sequential regime it lets us test whether repeated local rewrites accumulate cleanly or destabilize previous edits.
-
-### `MEMIT`
-
-MEMIT is used as another direct weight-editing method, but with a broader memory-update style than ROME. In practice it is useful here as a comparison point for edit strength versus locality and retention.
-
-## Data Layout
+Структура:
 
 ```text
 my_exp_2/data/
@@ -113,14 +56,215 @@ my_exp_2/data/
 └── sequential/sequential_order.json
 ```
 
-### Main datasets
+Размеры текущих eval-наборов:
 
-- `triplets/oilgas.json`: 20 core oil and gas facts.
-- `edit_requests/oilgas_edit_requests.json`: edit prompts, subjects, and edit targets.
-- `fact_questions.json`: direct, paraphrase, reverse, neighbor, and locality questions for each fact.
-- `domain_questions.json`: broader oil and gas evaluation set.
-- `general_questions.json`: general non-domain locality set.
-- `sequential_order.json`: fixed edit order for sequential runs.
+- `triplets/oilgas.json`: 20 фактов;
+- `fact_questions.json`: 260 вопросов вокруг редактируемых фактов;
+- `domain_questions.json`: 40 общих нефтегазовых вопросов;
+- `general_questions.json`: 50 недоменных вопросов общего знания;
+- `sequential_order.json`: фиксированный порядок 20 sequential-шагов.
+
+Типы fact-вопросов:
+
+- `direct`: прямое усвоение факта;
+- `paraphrase`: перенос на переформулировки;
+- `reverse`: обратная формулировка;
+- `neighbor`: соседние доменные знания;
+- `locality`: близкие знания, которые не должны ломаться.
+
+Поля `subject`, `relation` и `level` используются не только для редактирования, но и для последующей аналитики: можно смотреть, какие типы терминов и отношений хуже усваиваются или быстрее забываются.
+
+## Методы
+
+В текущем полном сравнении участвуют четыре метода:
+
+- `LoRA` — parameter-efficient baseline, который часто хорошо записывает целевой факт, но может быть агрессивным к locality.
+- `ROME` — локальный targeted editing method, хорошо подходящий для одиночных factual правок.
+- `MEMIT` — targeted weight-editing method, близкий по роли к ROME, но с другим профилем силы правки и сохранности.
+- `WISE` — метод редактирования, добавленный как четвертый полноценный участник сравнения; в текущем полном запуске он особенно силен в sequential-режиме.
+
+Методы не переписываются в `my_exp_2`: их реализация берется из `EasyEdit`. Этот слой отвечает за данные, orchestration, оценку и отчеты.
+
+## Экспериментальные режимы
+
+### Baseline
+
+Исходная модель оценивается до редактирования на:
+
+- `fact_questions`;
+- `domain_questions`;
+- `general_questions`.
+
+Цель baseline — понять, что модель уже знает, где отвечает шумно и насколько слабым является исходное доменное знание.
+
+### Single-edit
+
+Каждый факт редактируется независимо:
+
+```text
+base model -> edit one fact -> evaluate -> discard edited state
+```
+
+Этот режим показывает, насколько метод способен внести один факт без накопления предыдущих изменений.
+
+### Sequential-edit
+
+Факты вносятся последовательно в одну изменяющуюся модель:
+
+```text
+model_step_0 -> edit fact_1 -> eval
+model_step_1 -> edit fact_2 -> eval
+...
+model_step_19 -> edit fact_20 -> eval
+```
+
+Этот режим проверяет, может ли метод накапливать серию доменных правок и удерживать ранее внесенные знания.
+
+В полном запуске `sequential-edit` выполнен с `eval_mode=full`:
+
+- retention считается по всем уже внесенным фактам;
+- general/domain оцениваются по полным наборам;
+- generation details сохраняются в raw step-файлах.
+
+## Target Old, Replacement и Insertion
+
+Некоторым методам нужен `target_old`: текущее значение, которое модель связывает с редактируемым prompt. В проекте оно не считается статичным.
+
+- В `single-edit` `target_old` уточняется на исходной модели.
+- В `sequential-edit` `target_old` уточняется перед каждым шагом на текущем измененном состоянии модели.
+
+Если ответ модели пустой, шумный или нестабильный, pipeline использует fallback к `target_new`. Это разделяет два режима:
+
+- `knowledge replacement`: модель уже что-то устойчиво отвечала, и это заменяется;
+- `knowledge insertion`: модель фактически не знала факт, и новое знание добавляется.
+
+В текущем домене большинство кейсов оказываются ближе к `knowledge insertion`, потому что исходная модель слабо знает нефтегазовые факты.
+
+## Актуальные результаты полного запуска
+
+Источник:
+
+```text
+my_exp_2/outputs/oilgas_qwen25_3b_full_20facts
+```
+
+### Baseline
+
+Исходная `Qwen2.5-3B`:
+
+| Набор | Accuracy |
+|---|---:|
+| `fact_questions` | `0.053846` |
+| `domain_questions` | `0.025` |
+| `general_questions` | `0.68` |
+
+Интерпретация: модель почти не знает подготовленный нефтегазовый benchmark, но относительно уверенно отвечает на общие недоменные вопросы.
+
+### Single-edit, 20 фактов
+
+| Метод | Reliability | Generalization | Global locality | Domain score | Edit quality |
+|---|---:|---:|---:|---:|---:|
+| `LoRA` | `0.765` | `0.744` | `0.050` | `0.094` | `0.075` |
+| `ROME` | `0.826` | `0.646` | `0.933` | `0.933` | `0.753` |
+| `MEMIT` | `0.774` | `0.606` | `0.933` | `0.744` | `0.725` |
+| `WISE` | `1.000` | `0.546` | `1.000` | `0.983` | `0.738` |
+
+Лучший метод по `edit_quality`: `ROME = 0.753`.  
+`WISE` близок по итоговой single-edit оценке и лучше всех по reliability/locality, но уступает ROME по generalization.
+
+### Sequential-edit, 20 шагов
+
+| Метод | Current reliability | Current generalization | Retention | Global locality | Domain score | Sequential quality |
+|---|---:|---:|---:|---:|---:|---:|
+| `LoRA` | `0.599` | `0.513` | `0.031` | `0.009` | `0.001` | `0.017` |
+| `ROME` | `0.827` | `0.634` | `0.271` | `0.698` | `0.058` | `0.416` |
+| `MEMIT` | `0.411` | `0.285` | `0.063` | `0.212` | `0.005` | `0.073` |
+| `WISE` | `0.742` | `0.553` | `0.440` | `0.701` | `0.135` | `0.503` |
+
+Лучший метод по `sequential_quality`: `WISE = 0.503`.  
+`ROME` остается сильным, но уступает WISE по retention и итоговой sequential-оценке.
+
+### Основные выводы
+
+- `ROME` — лучший метод для одиночного редактирования по балансу успешности и локальности.
+- `WISE` — лучший метод для последовательного редактирования в текущем полном прогоне.
+- `LoRA` хорошо записывает целевой факт, но сильно портит locality и почти не удерживает sequential-цепочку.
+- `MEMIT` конкурентен в single-edit, но существенно деградирует в sequential.
+- Single-edit и sequential-edit дают разные ранжирования методов, поэтому их нельзя заменять друг другом.
+
+## Единый pipeline
+
+Основной запуск:
+
+```bash
+make big-run
+```
+
+Рекомендуемый порядок на новой машине:
+
+```bash
+make big-preflight
+make big-smoke-pipeline
+make big-run
+```
+
+Команды:
+
+- `make big-preflight`: проверяет CUDA, модель, данные, hparams и smoke-прогоны.
+- `make big-smoke-pipeline`: маленький end-to-end запуск на 2 фактах.
+- `make big-run`: полный запуск single + sequential + metrics + reports.
+- `make big-run-resume`: продолжение после обрыва.
+- `make big-reports`: пересборка метрик и отчетов из raw-результатов.
+
+Python entrypoint:
+
+```bash
+python my_exp_2/scripts/run_full_experiment_pipeline.py \
+  --run-name oilgas_qwen25_3b_full_20facts \
+  --methods LoRA ROME MEMIT WISE \
+  --data-dir my_exp_2/data \
+  --model my_exp/models/Qwen2.5-3B \
+  --max-facts 20 \
+  --eval-scope full \
+  --single-eval-mode full \
+  --sequential-eval-mode full
+```
+
+## Outputs
+
+Текущая структура полного запуска:
+
+```text
+my_exp_2/outputs/oilgas_qwen25_3b_full_20facts/
+  baseline/
+  single_edit/
+  sequential_edit/
+  metrics/
+  reports/
+  preflight/
+  logs/
+  run_manifest.json
+```
+
+Ключевые файлы:
+
+- `reports/overall_summary.md`: общий вывод single vs sequential;
+- `reports/single_edit_report.md`: подробный отчет по одиночным правкам;
+- `reports/sequential_edit_report.md`: подробный отчет по последовательным правкам;
+- `metrics/overall/single_vs_sequential.csv`: сравнение режимов;
+- `metrics/single/case_metrics.csv`: single-edit метрики по кейсам;
+- `metrics/sequential/step_metrics.csv`: sequential-метрики по шагам;
+- `metrics/sequential/retention_matrix.csv`: удержание фактов по шагам;
+- `preflight/preflight_report.json`: проверка железа, модели и данных;
+- `run_manifest.json`: конфигурация и статус стадий.
+
+Preflight полного запуска:
+
+- GPU: `NVIDIA H100 PCIe`;
+- VRAM: около `79 GB`;
+- CUDA: `12.8`;
+- модель загружалась на `cuda:0`;
+- данные: 20 фактов, 260 fact questions, 40 domain questions, 50 general questions.
 
 ## Scripts
 
@@ -140,162 +284,45 @@ my_exp_2/scripts/
 └── generate_sequential_report.py
 ```
 
-### Script roles
+Основные роли:
 
-- `validate_data.py`: checks dataset integrity and EasyEdit compatibility constraints.
-- `data_io.py`: loads JSON files and builds runtime cases.
-- `eval_utils.py`: normalization, scoring helpers, and compact metric utilities.
-- `target_old_resolver.py`: resolves `target_old` from the current model state when needed.
-- `run_baseline_eval.py`: evaluates the untouched model.
-- `run_single_edit_experiment.py`: isolated single-edit benchmark.
-- `run_sequential_edit_experiment.py`: sequential benchmark with retention/general/domain checks.
-- `run_full_experiment_pipeline.py`: unified launcher for preflight, baseline, single-edit, sequential-edit, metrics, and reports.
-- `compute_metrics.py`: aggregates single-edit outputs.
-- `compute_sequential_metrics.py`: aggregates sequential outputs.
-- `generate_report.py`: builds single-edit markdown reports.
-- `generate_sequential_report.py`: builds sequential markdown reports.
+- `validate_data.py`: проверка данных;
+- `run_baseline_eval.py`: baseline исходной модели;
+- `run_single_edit_experiment.py`: isolated single-edit benchmark;
+- `run_sequential_edit_experiment.py`: sequential benchmark;
+- `run_full_experiment_pipeline.py`: единый запуск preflight -> baseline -> single -> sequential -> reports;
+- `compute_metrics.py`: агрегация single-edit;
+- `compute_sequential_metrics.py`: агрегация sequential-edit;
+- `generate_report.py`: single-edit markdown report;
+- `generate_sequential_report.py`: sequential markdown report и графики.
 
-## Metrics
+## Ограничения и следующие вопросы
 
-### Single-edit metrics
+Текущие ограничения:
 
-- `reliability`: direct fact accuracy after editing.
-- `generalization`: paraphrase accuracy after editing.
-- `reverse`: reverse-question accuracy.
-- `neighbor`: behavior on nearby domain questions.
-- `fact_locality`: preservation around the edited fact.
-- `global_locality`: preservation on general non-domain questions.
-- `domain_score`: preservation on the broader oil and gas set.
-- `edit_quality`: compact combined indicator derived from the normalized post-edit metrics.
+- датасет небольшой: 20 фактов;
+- домен ограничен нефтегазовой терминологией;
+- single-edit post-eval в основном опирается на EasyEdit internal metrics;
+- метрики основаны на exact/alias matching, без LLM-judge;
+- большинство кейсов ближе к `knowledge insertion`, чем к `replacement`.
 
-Interpretation:
+Дальнейшие вопросы:
 
-- high `reliability` with low `fact_locality` means the edit worked but damaged nearby knowledge;
-- high `generalization` means the model did not only memorize one exact prompt;
-- high `global_locality` means the edit did not spill too aggressively into general knowledge.
-
-### Sequential-edit metrics
-
-- `current_reliability`: direct success on the current step.
-- `current_generalization`: paraphrase success on the current step.
-- `retention`: preservation of earlier edited facts.
-- `global_locality`: preservation on general questions after accumulated edits.
-- `domain_score`: preservation on domain questions after accumulated edits.
-- `sequential_quality`: compact aggregate of current-step success and preservation behavior.
-
-Interpretation:
-
-- high `current_reliability` with low `retention` means the method can write new facts but forgets older ones;
-- high `retention` with low `global_locality` means previous edits remain, but unrelated knowledge degrades;
-- `sequential_quality` is useful as a compact ranking signal, but the underlying metrics should still be inspected separately.
-
-## Target Old Resolution
-
-Some editing methods require `target_old`, the value that the model currently associates with the edited prompt.
-
-In this project, `target_old` is not treated as permanently fixed:
-
-- in `single-edit`, it is resolved against the base model before the edit;
-- in `sequential-edit`, it is resolved again before every step on the current edited model state.
-
-If the current model answer is empty, unstable, or clearly noisy, the pipeline falls back to `target_new`. This lets the experiment distinguish between:
-
-- `knowledge replacement`: overwrite an existing model belief;
-- `knowledge insertion`: add a fact the model does not reliably know yet.
-
-## Eval Scopes
-
-The runners support three evaluation scopes:
-
-- `fact-only`: evaluate only fact-level edit behavior;
-- `fact-plus-general`: evaluate fact-level behavior and general locality;
-- `full`: evaluate fact-level behavior, general locality, and domain-level preservation.
-
-This is useful because `full` runs are noticeably heavier than fact-only smoke checks.
-
-For practical execution there are also two run modes:
-
-- `sample`: bounded retention/general/domain subsets for cheaper experiments;
-- `full`: full configured coverage with more detailed saved artifacts.
-
-## Outputs
-
-Default output root:
-
-```text
-my_exp_2/outputs/
-├── baseline/
-├── single_edit/
-├── sequential_edit/
-└── metrics/
-```
-
-Typical artifacts:
-
-- raw single-edit case JSON files;
-- raw sequential step JSON files;
-- `summary.json` and `summary.csv`;
-- generated `report.md`;
-- grouped CSV/JSON analytics by method, relation, level, and edit mode;
-- unified pipeline outputs under `my_exp_2/outputs/full_pipeline/<run_name>/`.
-
-## Unified Pipeline
-
-For server-side or long GPU runs the main entry point is:
-
-```bash
-python my_exp_2/scripts/run_full_experiment_pipeline.py \
-  --run-name oilgas_qwen25_3b_full_20facts \
-  --methods LoRA ROME MEMIT WISE \
-  --data-dir my_exp_2/data \
-  --model my_exp/models/Qwen2.5-3B \
-  --max-facts 20 \
-  --eval-scope full \
-  --single-eval-mode full \
-  --sequential-eval-mode full
-```
-
-This launcher runs:
-
-1. `preflight`
-2. `baseline`
-3. `single`
-4. `sequential`
-5. `reports`
-
-Supported operational flags:
-
-- `--resume`
-- `--overwrite`
-- `--stop-after`
-- `--skip-preflight`
-- `--skip-baseline`
-
-If you prefer wrappers instead of raw Python commands, use the top-level `Makefile`:
-
-```bash
-make big-preflight
-make big-smoke-pipeline
-make big-run
-make big-run-resume
-make big-reports
-```
-
-For DGX/container execution see [docs/DGX_RUNBOOK_RU.md](../docs/DGX_RUNBOOK_RU.md).
-
-Outputs are ignored by git by default.
+- какие `relation` и `level` систематически хуже редактируются;
+- влияет ли длина или составность `subject` на качество;
+- почему `WISE` лучше удерживает sequential-цепочку;
+- можно ли улучшить `LoRA` через отдельный SFT/augmented режим;
+- насколько результаты сохранятся на большем домене и другой модели.
 
 ## Relation to EasyEdit
 
-`my_exp_2` does not reimplement the editing algorithms themselves. Instead, it adds a project-specific layer around EasyEdit:
+`EasyEdit` предоставляет backend методов редактирования.  
+`my_exp_2` предоставляет исследовательский протокол:
 
-- custom domain dataset format;
-- experiment orchestration;
-- target-old resolution logic;
-- baseline evaluation;
-- aggregation and markdown reporting.
-
-So the repository remains reproducible while keeping a clean distinction:
-
-- `EasyEdit` provides the editing backend;
-- `my_exp_2` provides the research workflow.
+- доменные данные;
+- сбор runtime cases;
+- target-old resolution;
+- запуск baseline/single/sequential;
+- агрегация;
+- отчеты;
+- аналитика по фактам и режимам.

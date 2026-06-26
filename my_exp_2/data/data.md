@@ -1,21 +1,30 @@
-# Data Documentation
+# Документация по данным my_exp_2
 
-This directory contains the domain data used by `my_exp_2` for knowledge editing experiments in the oil and gas domain.
+Эта директория содержит нефтегазовый benchmark для экспериментов по `knowledge editing`.
 
-The dataset is intentionally small and controlled. It is designed not as a large benchmark, but as a reproducible experimental set for comparing editing methods under the same conditions.
+Данные специально сделаны небольшими и контролируемыми. Это не большой отраслевой датасет, а воспроизводимый набор для сравнения методов редактирования знаний в одинаковых условиях.
 
-## Design Goal
+## Цель данных
 
-The data is organized so that each edited fact can be evaluated from several angles:
+Данные организованы так, чтобы каждый редактируемый факт можно было проверить с нескольких сторон:
 
-- direct success on the target fact;
-- generalization to paraphrases;
-- consistency on reverse formulations;
-- behavior on nearby domain knowledge;
-- locality with respect to related facts;
-- preservation of broader domain and general knowledge.
+- усвоение прямого факта;
+- перенос на парафразы;
+- согласованность на обратных вопросах;
+- влияние на соседние доменные знания;
+- локальность относительно близких фактов;
+- сохранение более широких доменных и общих знаний.
 
-## Directory Layout
+## Размеры текущего набора
+
+- `triplets/oilgas.json`: 20 базовых фактов;
+- `edit_requests/oilgas_edit_requests.json`: 20 edit requests;
+- `fact_questions.json`: 260 вопросов вокруг фактов;
+- `domain_questions.json`: 40 общих нефтегазовых вопросов;
+- `general_questions.json`: 50 недоменных вопросов общего знания;
+- `sequential_order.json`: порядок из 20 sequential-шагов.
+
+## Структура
 
 ```text
 data/
@@ -38,182 +47,180 @@ data/
     sequential_order.json
 ```
 
-## Core Fact Layer
+## Fact layer
 
 ### `triplets/oilgas.json`
 
-This file stores the 20 base oil and gas facts in the form:
+Содержит 20 базовых фактов в формате:
 
 ```text
 subject -> relation -> object
 ```
 
-Each record provides the conceptual fact to be inserted or checked.
-
-Main fields:
-
-- `fact_id`
-- `subject`
-- `relation`
-- `object`
-- `level`
-
-Example idea:
+Пример:
 
 ```text
 Кероген -> является источником -> углеводородов
 ```
 
-This file is the source of truth for the fact inventory.
+Основные поля:
 
-## Edit Layer
+- `fact_id`: стабильный идентификатор факта;
+- `subject`: редактируемая сущность или термин;
+- `relation`: тип отношения;
+- `object`: целевое значение факта;
+- `level`: смысловая группа факта.
+
+`level` используется для анализа того, какие категории нефтегазовых знаний хуже редактируются или быстрее забываются.
+
+Текущие группы:
+
+- `general`;
+- `basic_geology`;
+- `petroleum_geology`;
+- `reservoir_properties`;
+- `well_construction`;
+- `production_stimulation`.
+
+## Edit layer
 
 ### `edit_requests/oilgas_edit_requests.json`
 
-This file contains the runtime edit requests used by the editing methods.
+Содержит runtime-запросы для методов редактирования.
 
-Main fields:
+Основные поля:
 
-- `fact_id`: link to the fact in `triplets/oilgas.json`
-- `prompt`: the edit prompt used for the method
-- `subject`: the entity that should be edited
-- `target_new`: the new target answer
-- `target_old`: old answer if known in advance
+- `fact_id`: связь с `triplets/oilgas.json`;
+- `prompt`: prompt, на котором выполняется правка;
+- `subject`: сущность, которая должна присутствовать в prompt для совместимости с EasyEdit;
+- `target_new`: новое целевое знание;
+- `target_old`: старое значение, если оно известно заранее.
 
-Important note:
+В текущем pipeline `target_old` не считается жестко заданным. Для методов, которым он нужен, значение уточняется по текущему состоянию модели:
 
-In the current pipeline, `target_old` is not always trusted as static. For methods that need it, the runtime may resolve `target_old` from the current model state before applying the edit.
+- в single-edit — на исходной модели;
+- в sequential-edit — перед каждым шагом на текущей измененной модели.
 
-## LoRA Training Layer
+Если модель отвечает неустойчиво или шумно, используется fallback к `target_new`. Это позволяет различать:
 
-### `train_sets/lora_train.json`
+- `knowledge replacement`;
+- `knowledge insertion`.
 
-This is the minimal LoRA training set.
-
-Each item is a simple QA pair:
-
-```text
-input -> output
-```
-
-Its role is to provide a compact parameter-efficient training baseline that is simpler than targeted knowledge editing.
-
-### `train_sets/lora_augmented_train.json`
-
-This is the expanded LoRA training set with additional paraphrased inputs.
-
-Its role is to test whether training on several formulations improves generalization compared to the minimal LoRA set.
-
-At the current project stage, these train files are included for the broader research roadmap, while the main implemented comparison focuses on `LoRA`, `ROME`, and `MEMIT` through the editing pipeline.
-
-## Evaluation Layer
+## Evaluation layer
 
 ### `evaluate_set/fact_questions.json`
 
-This is the main evaluation set around the edited facts.
+Главный набор вопросов вокруг редактируемых фактов.
 
-For each `fact_id`, the file groups several question types:
+Типы вопросов:
 
-- `direct`
-- `paraphrase`
-- `reverse`
-- `neighbor`
-- `locality`
+- `direct`: прямой вопрос на целевой факт;
+- `paraphrase`: переформулировки прямого вопроса;
+- `reverse`: вопрос в обратном направлении;
+- `neighbor`: соседние доменные факты;
+- `locality`: близкие знания, которые не должны ломаться.
 
-These question types are used differently:
+Типичные поля:
 
-- `direct` checks immediate fact insertion success;
-- `paraphrase` checks whether the edit transfers beyond one exact wording;
-- `reverse` checks consistency from the opposite angle;
-- `neighbor` checks nearby domain knowledge;
-- `locality` checks whether closely related knowledge was damaged.
+- `question_id`;
+- `fact_id`;
+- `question_type`;
+- `question`;
+- `expected_answer`;
+- `aliases`.
 
-Typical fields per question include:
-
-- `question_id`
-- `fact_id`
-- `question_type`
-- `question`
-- `expected_answer`
-- `aliases`
+Эти вопросы используются в single-edit и sequential-edit для оценки reliability, generalization, reverse, neighbor и fact locality.
 
 ### `evaluate_set/domain_questions.json`
 
-This file contains broader oil and gas questions not limited to one edited fact.
+Содержит 40 более общих нефтегазовых вопросов, не привязанных к одному редактируемому факту.
 
-Its role is to measure whether domain competence is preserved after editing.
+Назначение:
 
-This is especially useful in the sequential setting, where multiple edits may gradually distort the model's broader behavior in-domain.
+- проверить сохранение более широкой доменной компетентности;
+- увидеть, не начинает ли модель после правок отвечать хуже на общие нефтегазовые вопросы;
+- оценивать `domain_score` в full-режиме.
 
 ### `evaluate_set/general_questions.json`
 
-This file contains non-domain general knowledge questions.
+Содержит 50 недоменных вопросов общего знания.
 
-Its role is to evaluate global locality: after editing oil and gas facts, does the model still answer ordinary questions correctly?
+Назначение:
 
-The set includes general topics such as:
+- проверить global locality;
+- убедиться, что нефтегазовые правки не ломают общие знания модели.
 
-- geography
-- history
-- literature
-- biology
-- mathematics
-- programming
-- basic science
+Вопросы покрывают разные темы: географию, историю, литературу, биологию, математику, программирование и базовую науку.
 
-## Sequential Layer
+## Sequential layer
 
 ### `sequential/sequential_order.json`
 
-This file defines the fixed order of facts for sequential editing.
+Задает фиксированный порядок внесения 20 фактов в sequential-edit.
 
-Its role is:
+Назначение:
 
-- make the sequential experiment reproducible;
-- ensure that the order does not depend on JSON file ordering;
-- let all methods be compared on the same edit sequence.
+- обеспечить воспроизводимость;
+- сравнивать все методы на одинаковом порядке;
+- анализировать forgetting/retention по шагам.
 
-## How the Data Is Used in the Pipeline
+## Training layer
 
-### Baseline evaluation
+### `train_sets/lora_train.json`
 
-- `fact_questions.json`
-- `domain_questions.json`
-- `general_questions.json`
+Минимальный набор QA-пар для будущих LoRA/SFT baseline.
 
-These are used before any edit to estimate the initial model behavior.
+### `train_sets/lora_augmented_train.json`
 
-### Single-edit experiment
+Расширенный набор с дополнительными формулировками.
 
-- `triplets/oilgas.json`
-- `edit_requests/oilgas_edit_requests.json`
-- `fact_questions.json`
-- optionally `domain_questions.json`
-- optionally `general_questions.json`
+В текущем полном сравнении основные методы запускаются через EasyEdit editing pipeline: `LoRA`, `ROME`, `MEMIT`, `WISE`. Train sets остаются полезными для дальнейшего сравнения с SFT/augmented LoRA.
 
-Each fact is edited independently and evaluated in isolation.
+## Как данные используются
 
-### Sequential-edit experiment
+### Baseline
 
-- `triplets/oilgas.json`
-- `edit_requests/oilgas_edit_requests.json`
-- `fact_questions.json`
-- `domain_questions.json`
-- `general_questions.json`
-- `sequential_order.json`
+До редактирования модель оценивается на:
 
-Facts are edited one after another on the same model state.
+- `fact_questions.json`;
+- `domain_questions.json`;
+- `general_questions.json`.
 
-## Why This Format Works Well for the Study
+### Single-edit
 
-This data layout is useful because it separates concerns:
+Каждый факт редактируется отдельно. Используются:
 
-- fact definition;
-- edit request representation;
-- method-specific training support for LoRA-style baselines;
-- local fact evaluation;
-- broader domain evaluation;
-- global non-domain evaluation;
-- fixed sequential scheduling.
+- `triplets/oilgas.json`;
+- `edit_requests/oilgas_edit_requests.json`;
+- `fact_questions.json`;
+- `domain_questions.json`;
+- `general_questions.json`.
 
-That makes it possible to compare editing methods under a common and reproducible protocol instead of evaluating them only on one prompt per fact.
+### Sequential-edit
+
+Факты редактируются по порядку из `sequential_order.json`. После каждого шага оцениваются:
+
+- текущий факт;
+- все ранее внесенные факты;
+- полный domain set;
+- полный general set.
+
+## Использование в аналитике
+
+После полного запуска данные агрегируются в CSV/JSON:
+
+- `metrics/single/case_metrics.csv`;
+- `metrics/single/subject_relation_analysis.csv`;
+- `metrics/single/replacement_vs_insertion.csv`;
+- `metrics/sequential/step_metrics.csv`;
+- `metrics/sequential/retention_matrix.csv`;
+- `metrics/sequential/subject_relation_analysis.csv`;
+- `metrics/sequential/replacement_vs_insertion.csv`.
+
+Поля `subject`, `relation`, `object`, `level`, `question_type`, `expected_answer` и `aliases` нужны для поиска закономерностей:
+
+- какие relation редактируются хуже;
+- какие subject сложнее;
+- какие level быстрее забываются;
+- чем отличается insertion от replacement;
+- какие вопросы чаще всего ломаются после последовательных правок.
