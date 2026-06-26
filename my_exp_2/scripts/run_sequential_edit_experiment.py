@@ -713,6 +713,14 @@ def main() -> None:
     write_json(os.path.join(args.output_dir, "summary.json"), overall)
     write_summary_csv(os.path.join(args.output_dir, "summary.csv"), summaries)
     print(json.dumps(overall, ensure_ascii=False, indent=2))
+    failed_methods = [
+        summary
+        for summary in summaries
+        if summary.get("returncode") != 0 or (summary.get("failed_steps") or 0) > 0
+    ]
+    if failed_methods:
+        failed_names = ", ".join(str(summary.get("method")) for summary in failed_methods)
+        raise SystemExit(f"Sequential-edit failed for method(s): {failed_names}")
 
 
 if __name__ == "__main__":

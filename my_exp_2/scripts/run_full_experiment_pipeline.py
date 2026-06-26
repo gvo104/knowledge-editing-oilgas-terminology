@@ -194,6 +194,19 @@ def preflight(base_dir: str, args: argparse.Namespace, manifest: Dict[str, Any])
     for method in args.methods:
         if method not in METHOD_HPARAM_PATHS or not os.path.exists(METHOD_HPARAM_PATHS[method]):
             report["errors"].append(f"Missing hparams for {method}")
+        elif method == "MEMIT":
+            import yaml
+
+            with open(METHOD_HPARAM_PATHS[method], "r", encoding="utf-8") as f:
+                memit_hparams = yaml.safe_load(f) or {}
+            mom2_dataset = str(memit_hparams.get("mom2_dataset") or "")
+            if mom2_dataset and mom2_dataset not in {"wikipedia", "wikitext"}:
+                mom2_dataset_path = os.path.abspath(mom2_dataset)
+                if not os.path.exists(mom2_dataset_path):
+                    report["errors"].append(
+                        f"MEMIT mom2_dataset is missing: {mom2_dataset}. "
+                        "Copy or mount the local covariance corpus before running MEMIT."
+                    )
 
     cuda_available = torch.cuda.is_available()
     report["checks"]["cuda"] = {
